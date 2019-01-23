@@ -21,10 +21,12 @@ namespace UziTrainer
         public const int WM_KEYDOWN = 0x100;
         public const int WM_KEYUP = 0x101;
 
-		// The FindWindow function retrieves a handle to the top-level window whose class name
-		// and window name match the specified strings. This function does not search child windows.
-		// This function does not perform a case-sensitive search.
-		[DllImport("User32.dll")]
+        public const uint SW_RESTORE = 0x09;
+
+        // The FindWindow function retrieves a handle to the top-level window whose class name
+        // and window name match the specified strings. This function does not search child windows.
+        // This function does not perform a case-sensitive search.
+        [DllImport("User32.dll")]
 		public static extern int FindWindow(string strClassName, string strWindowName);
 
 		// The FindWindowEx function retrieves a handle to a window whose class name 
@@ -63,6 +65,10 @@ namespace UziTrainer
 
         [DllImport("user32.dll")]
         public static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
+
+        [DllImport("user32.dll")]
+        public static extern int ShowWindow(IntPtr hWnd, uint Msg);
+        
 
         public Win32()
 		{

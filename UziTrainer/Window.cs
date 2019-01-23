@@ -27,6 +27,7 @@ namespace UziTrainer
             windowHWND = new IntPtr(hwnd);
             var mhwnd = Win32.FindWindowEx(hwnd, 0, messageWindowClass, messageWindowTitle);
             messageHWND = new IntPtr(mhwnd);
+            Win32.ShowWindow(windowHWND, Win32.SW_RESTORE);
         }
 
         public Bitmap CaptureBitmap()
@@ -59,16 +60,17 @@ namespace UziTrainer
 
         public bool ImageExists(String imagePath, Rectangle area, out Point coordinates)
         {
-            var source = CaptureBitmap(area);
-            var search = new Bitmap(imagePath);
-            return FindPoint(source, search, 0, out coordinates);
+            var haystack = CaptureBitmap(area);
+            var needle = new Bitmap(imagePath);
+            return ImageSearch.Find(needle, haystack, 0, out coordinates);
         }
 
         public bool ImageExists(String imagePath, out Point coordinates)
         {
-            var source = CaptureBitmap();
-            var search = new Bitmap(imagePath);
-            return FindPoint(source, search, 0, out coordinates);
+            var haystack = CaptureBitmap(); haystack.Save(@"C:\Users\master\Pictures\Screenshot_X.png");
+            var needle = new Bitmap(imagePath);
+            //return ImageSearch.Find(needle, haystack, 0, out coordinates);
+            return FindPoint(haystack, needle, 0, out coordinates);
         }
 
         public bool ImageExists(String imagePath)
@@ -87,13 +89,13 @@ namespace UziTrainer
             if (sourceBitmap.Width < needleBitmap.Width || sourceBitmap.Height < needleBitmap.Height)
                 throw new ArgumentException("Size of serchingBitmap bigger then sourceBitmap");
 
-            #endregion
-
+            #endregion            
             var pixelFormatSize = System.Drawing.Image.GetPixelFormatSize(PixelFormat.Format32bppArgb) / 8;
 
             LockedBitmap haystack = new LockedBitmap(sourceBitmap);
+            //AssemblyLoadEventHandler red green blue
             LockedBitmap needle = new LockedBitmap(needleBitmap);
-            
+
             // Serching entries
             // minimazing serching zone
             // sourceBitmap.Height - serchingBitmap.Height + 1
@@ -104,17 +106,11 @@ namespace UziTrainer
                 {// mainY & mainX - pixel coordinates of sourceBitmap
                  // sourceY + sourceX = pointer in array sourceBitmap bytes
                     var sourceX = mainX * pixelFormatSize;
-
-                    var isEqual = true;
-                    for (var c = 0; c < pixelFormatSize; c++)
-                    {// through the bytes in pixel
-                        if (haystack.bytes[sourceX + sourceY + c] == needle.bytes[c])
-                            continue;
-                        isEqual = false;
-                        break;
+                    var index = sourceX + sourceY;
+                    if (!IsSameColor(haystack.bytes, needle.bytes, index, 0, tolerance))
+                    {
+                        continue;
                     }
-
-                    if (!isEqual) continue;
                     var isStop = false;
 
                     // find fist equalation and now we go deeper) 
@@ -154,6 +150,15 @@ namespace UziTrainer
             coordinates = Point.Empty;
             return false;
         }
+
+        private bool IsSameColor(byte[] haystack, byte[] needle, int haystackIndex, int needleIndex, int tolerance)
+        {
+            return !(Math.Abs(haystack[haystackIndex] - needle[needleIndex]) > tolerance ||
+                        Math.Abs(haystack[haystackIndex + 1] - needle[needleIndex + 1]) > tolerance ||
+                        Math.Abs(haystack[haystackIndex + 2] - needle[needleIndex + 2]) > tolerance);
+        }
+
+        // private isSameColor()
 
         private class LockedBitmap {
             public readonly BitmapData data;

@@ -31,7 +31,7 @@ namespace UziTrainer
         {
             var c = "Qt5QWindowIcon";
             var window = new Window(c, "NoxPlayer", c, "ScreenBoardClassWindow");            
-            var r = window.ImageExists(@"C:\Users\master\Pictures\Screenshot_5.png");
+            var r = window.ImageExists(@"C:\Users\master\Pictures\Screenshot_3.png");
             Console.WriteLine(r);
             /*
             var source = new Bitmap(@"C:\Users\master\Nox_share\ImageShare\Screenshot_2019-01-22-16-39-58.png");
