@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -33,7 +34,7 @@ namespace UziTrainer
         public Bitmap CaptureBitmap()
         {
             var x = _CaptureBitmap();
-            x.Save(@"C:\Users\master\Pictures\Screenshot_4.png");
+            //x.Save(@"C:\Users\master\Pictures\Screenshot_4.png");
             return x;
         }
 
@@ -51,10 +52,13 @@ namespace UziTrainer
             Bitmap bmp = new Bitmap(rc.Width, rc.Height, PixelFormat.Format32bppArgb);
             Graphics gfxBmp = Graphics.FromImage(bmp);
             IntPtr hdcBitmap = gfxBmp.GetHdc();
-            Win32.PrintWindow(windowHWND, hdcBitmap, 0);
+            Win32.PrintWindow(windowHWND, hdcBitmap, 0x1);
 
             gfxBmp.ReleaseHdc(hdcBitmap);
             gfxBmp.Dispose();
+#if DEBUG
+            bmp.Save(Path.Combine(Constants.DebugDir, DateTime.UtcNow.ToString("yyyyMMdd_HHmmssffffff") + ".png"), ImageFormat.Png);
+#endif
             return bmp;
         }
 
@@ -67,7 +71,7 @@ namespace UziTrainer
 
         public bool ImageExists(String imagePath, out Point coordinates)
         {
-            var haystack = CaptureBitmap(); haystack.Save(@"C:\Users\master\Pictures\Screenshot_X.png");
+            var haystack = CaptureBitmap();
             var needle = new Bitmap(imagePath);
             //return ImageSearch.Find(needle, haystack, 0, out coordinates);
             return FindPoint(haystack, needle, 0, out coordinates);

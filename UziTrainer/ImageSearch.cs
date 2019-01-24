@@ -80,7 +80,7 @@ namespace UziTrainer
         {
             for(int i = 0; i < pixelFormatSize; i++)
             {
-                if (!(Math.Abs(haystack.bytes[haystackIndex + i] - needle.bytes[needleIndex + i]) > tolerance)) {
+                if (Math.Abs(haystack.bytes[haystackIndex + i] - needle.bytes[needleIndex + i]) > tolerance) {
                     return false;
                 }
             }
