@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace UziTrainer
 {
@@ -22,7 +18,27 @@ namespace UziTrainer
             pixelFormatSize = Image.GetPixelFormatSize(_needle.PixelFormat) / 8;
         }
 
-        public static bool Find(Bitmap bmpFind, Bitmap bmpSource, int tolerance, out Point coordinates)
+        public static void Find(String imagePath, int[] area)
+        {
+            return Find(new Bitmap(imagePath), Window.CaptureBitmap(area), 20, out _);
+        }
+
+        public static bool Exists(String imagePath, int[] area)
+        {
+            return Exists(imagePath, area, out _);
+        }
+
+        public static bool Exists(String imagePath, int[] area, out Point coordinates)
+        {
+            return Search(imagePath, Window.CaptureBitmap(area), out coordinates);
+        }
+
+        private static bool Search(String needlePath, Bitmap haystack, out Point coordinates)
+        {
+            return Search(new Bitmap(needlePath), haystack, 20, out coodinates);
+        }
+
+        private static bool Search(Bitmap bmpFind, Bitmap bmpSource, int tolerance, out Point coordinates)
         {
             #region Arguments check
 

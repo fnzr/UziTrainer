@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -12,8 +12,26 @@ namespace UziTrainer
 {
     class Window
     {
+        private readonly static TraceSource Tracer = new TraceSource("fnzr.UziTrainer");
         readonly IntPtr windowHWND;
         readonly IntPtr messageHWND;
+        private static Window _Instance;
+        private static Window Instance
+        {
+            get
+            {
+                if (_Instance == null)
+                {
+                    var swc = Properties.Settings.Default.ScreenWindowClass;
+                    var swt = Properties.Settings.Default.ScreenWindowTitle;
+                    var mwc = Properties.Settings.Default.MessageWindowClass;
+                    var mwt = Properties.Settings.Default.MessageWindowTitle;
+                    _Instance = new Window(swc, swt, mwc, mwt);
+                }
+                return _Instance;
+            }
+        };
+
 
         public Window(
             String screenWindowClass,
@@ -31,38 +49,41 @@ namespace UziTrainer
             Win32.ShowWindow(windowHWND, Win32.SW_RESTORE);
         }
 
-        public Bitmap CaptureBitmap()
+        public static Bitmap CaptureBitmap()
         {
-            var x = _CaptureBitmap();
-            //x.Save(@"C:\Users\master\Pictures\Screenshot_4.png");
-            return x;
+            return _CaptureBitmap();
         }
 
-        public Bitmap CaptureBitmap(Rectangle area)
-        {
+        public static Bitmap CaptureBitmap(int[] area)
+        {            
+            if (area.Length != 4) {
+                throw new ArgumentException("Capture area requires exactly 4 values: StartX, StartY, EndX, EndY");
+            }
             var bmp = _CaptureBitmap();
-            return bmp.Clone(area, bmp.PixelFormat);
+#if DEBUG
+            var path = Path.Combine(Constants.DebugDir, DateTime.UtcNow.ToString("yyyyMMdd_HHmmssffffff") + ".png");
+            bmp.Save(path, ImageFormat.Png);
+            Tracer.TraceEvent(TraceEventType.Verbose, Constants.TraceDebug, "Captured [{0}]", path);
+#endif
+            return bmp.Clone(new Rectangle(area[0], area[1], area[2], area[3]), bmp.PixelFormat);
         }
 
-        private Bitmap _CaptureBitmap()
+        private static Bitmap _CaptureBitmap()
         {
             RECT rc;
-            Win32.GetWindowRect(windowHWND, out rc);
+            Win32.GetWindowRect(Instance.windowHWND, out rc);
 
             Bitmap bmp = new Bitmap(rc.Width, rc.Height, PixelFormat.Format32bppArgb);
             Graphics gfxBmp = Graphics.FromImage(bmp);
             IntPtr hdcBitmap = gfxBmp.GetHdc();
-            Win32.PrintWindow(windowHWND, hdcBitmap, 0x1);
+            Win32.PrintWindow(Instance.windowHWND, hdcBitmap, 0x1);
 
             gfxBmp.ReleaseHdc(hdcBitmap);
             gfxBmp.Dispose();
-#if DEBUG
-            bmp.Save(Path.Combine(Constants.DebugDir, DateTime.UtcNow.ToString("yyyyMMdd_HHmmssffffff") + ".png"), ImageFormat.Png);
-#endif
             return bmp;
         }
 
-        public bool ImageExists(String imagePath, Rectangle area, out Point coordinates)
+        public bool ImageExists(String imagePath, int[] area, out Point coordinates)
         {
             var haystack = CaptureBitmap(area);
             var needle = new Bitmap(imagePath);

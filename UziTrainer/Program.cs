@@ -32,7 +32,7 @@ namespace UziTrainer
             var mwc = Properties.Settings.Default.MessageWindowClass;
             var mwt = Properties.Settings.Default.MessageWindowTitle;
             var window = new Window(swc, swt, mwc, mwt);
-            var r = window.ImageExists(@"Z:\temp\Screenshot_25.png");
+            var r = window.ImageExists(@"C:\Users\master\Pictures\Screenshot_5.png");
             Console.WriteLine(r);
             
             //Application.EnableVisualStyles();

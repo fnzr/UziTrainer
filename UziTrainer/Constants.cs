@@ -12,5 +12,7 @@ namespace UziTrainer
         public static String AppDir = Path.Combine(Environment.GetFolderPath(
     Environment.SpecialFolder.ApplicationData), "UziTrainer");
         public static String DebugDir = Path.Combine(AppDir, "Debug");
+
+        public static int TraceDebug = 1;
     }
 }

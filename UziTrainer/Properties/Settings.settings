@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="ScreenWindowTitle" Type="System.String" Scope="User">
-      <Value Profile="(Default)">DeusEx</Value>
+      <Value Profile="(Default)">NoxPlayer</Value>
     </Setting>
     <Setting Name="ScreenWindowClass" Type="System.String" Scope="User">
       <Value Profile="(Default)">Qt5QWindowIcon</Value>
