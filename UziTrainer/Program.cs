@@ -12,11 +12,7 @@ using System.Windows.Forms;
 namespace UziTrainer
 {
     static class Program
-    {
-        static int GetLParam(int x, int y)
-        {
-            return (x & 0xFFFF) | (y & 0xFFFF) << 16;
-        }
+    {        
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -27,13 +23,11 @@ namespace UziTrainer
 #if DEBUG
             Directory.CreateDirectory(Constants.DebugDir);
 #endif
-            var swc = Properties.Settings.Default.ScreenWindowClass;
-            var swt = Properties.Settings.Default.ScreenWindowTitle;
-            var mwc = Properties.Settings.Default.MessageWindowClass;
-            var mwt = Properties.Settings.Default.MessageWindowTitle;
-            var window = new Window(swc, swt, mwc, mwt);
-            var r = window.ImageExists(@"C:\Users\master\Pictures\Screenshot_5.png");
-            Console.WriteLine(r);
+
+            //var r = window.ImageExists(@"C:\Users\master\Pictures\Screenshot_5.png");
+            Window.init();
+            Scene.Click(1160, 476);
+            //Console.WriteLine(r);
             
             //Application.EnableVisualStyles();
             //Application.SetCompatibleTextRenderingDefault(false);

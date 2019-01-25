@@ -20,7 +20,7 @@ namespace UziTrainer
 
         public static void Find(String imagePath, int[] area)
         {
-            return Find(new Bitmap(imagePath), Window.CaptureBitmap(area), 20, out _);
+            //return Find(new Bitmap(imagePath), Window.CaptureBitmap(area), 20, out _);
         }
 
         public static bool Exists(String imagePath, int[] area)
@@ -35,7 +35,7 @@ namespace UziTrainer
 
         private static bool Search(String needlePath, Bitmap haystack, out Point coordinates)
         {
-            return Search(new Bitmap(needlePath), haystack, 20, out coodinates);
+            return Search(new Bitmap(needlePath), haystack, 20, out coordinates);
         }
 
         private static bool Search(Bitmap bmpFind, Bitmap bmpSource, int tolerance, out Point coordinates)
