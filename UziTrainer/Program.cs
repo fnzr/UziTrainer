@@ -27,13 +27,14 @@ namespace UziTrainer
 #if DEBUG
             Directory.CreateDirectory(Constants.DebugDir);
 #endif
-
+            Tracer.Listeners.Add(new ConsoleTraceListener());
             //var r = window.ImageExists(@"C:\Users\master\Pictures\Screenshot_5.png");
             Window.init();
+            var Formation = new Formation();
             //var x = (1, 2, 3, 4);
-            Formation.SelectDoll(1);
-            //var x = Scene.Exists(new Query(@"Z:\projects\UCT\pics\HomePage\LV.png"));
-            Tracer.Listeners.Add(new ConsoleTraceListener());
+            var doll = Doll.Get("SVD");
+            Formation.SelectDoll(doll);
+            //var x = Scene.Exists(new Query(@"Z:\projects\UCT\pics\HomePage\LV.png"));            
             //Console.WriteLine(x);
             //Mouse.Click(1160, 476);
             //Console.WriteLine(r);

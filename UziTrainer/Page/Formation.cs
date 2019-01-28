@@ -6,11 +6,18 @@ using System.Threading.Tasks;
 
 namespace UziTrainer.Scenes
 {
-    static class Formation
+    class Formation
     {
-        public static void SelectDoll(int Doll)
+        readonly Query Query = new Query("FormationPage");
+
+        
+        public void SelectDoll(Doll doll)
         {
-            Scene.Click(new Query("Formation/Filter", new int[] { 1106, 269, 1214, 311 }));
+            Scene.Click(Query.Create("Filter", new[] { 1106, 269, 1214, 311 }));
+            if (Scene.Exists(Query.Create("FilterActive", new[] { 1164, 329, 1200, 360 }))) {
+                Scene.Click(Query.Create("Reset"));
+            }
+            Scene.Click(Query.Create("Filter", new[] { 1106, 269, 1214, 311 }));
             /*
             FindAndClick("FormationPage/Filter a1106,269,100,150")
             if ImageExists("FormationPage/FilterActive a1164,329,30,30") {

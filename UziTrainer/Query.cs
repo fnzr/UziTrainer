@@ -11,13 +11,24 @@ namespace UziTrainer
 {
     class Query
     {
+        private static readonly string[] extensions = new[] { ".png", ".jpg", ".jpeg" };
         private Bitmap _Image;
         public  Bitmap Image {
             get
             {
                 if (_Image == null) {
                     var root = Path.GetDirectoryName(Application.ExecutablePath);
-                    _Image = new Bitmap(Path.Combine(root, ImagePath));
+                    var filePath = Path.Combine(root, "assets", ImagePath);
+                    string fullPath;
+                    foreach (var ext in Query.extensions)
+                    {
+                        fullPath = filePath + ext;
+                        if (File.Exists(fullPath)) {
+                            _Image = new Bitmap(fullPath);
+                            return _Image;
+                        }
+                    }
+                    throw new ArgumentException("[{0}] not found", ImagePath);
                 }
                 return _Image;
             }
@@ -32,8 +43,14 @@ namespace UziTrainer
             private set;
         }
         public int Tolerance = 20;
+        private String assetsRoot;
 
-        public Query(string imagePath, int[] area, int tolerance)
+        public Query(string assetsRoot)
+        {
+            this.assetsRoot = assetsRoot;
+        }
+
+        private Query(string imagePath, int[] area, int tolerance)
         {
             if (area.Length != 4)
             {
@@ -44,12 +61,19 @@ namespace UziTrainer
             Tolerance = tolerance;
         }
 
-        public Query(string imagePath, int[] area) : this(imagePath, area, 20)
-        {            
+        public Query Create(string imagePath, int[] area, int tolerance)
+        {
+            return new Query(Path.Combine(assetsRoot, imagePath), area, tolerance);
         }
 
-        public Query(string imagePath) : this(imagePath, new[] { 0, 0, 1280, 720}, 20)
+        public Query Create(string imagePath, int[] area)
         {
+            return Create(imagePath, area, 20);
+        }
+
+        public Query Create(string imagePath)
+        {
+            return Create(imagePath, new[] { 0, 0, 1280, 720 }, 20);
         }
     }
 }
