@@ -25,7 +25,7 @@ namespace UziTrainer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("NoxPlayer")]
+        [global::System.Configuration.DefaultSettingValueAttribute("ZR288")]
         public string ScreenWindowTitle {
             get {
                 return ((string)(this["ScreenWindowTitle"]));

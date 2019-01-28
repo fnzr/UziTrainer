@@ -6,7 +6,7 @@ namespace UziTrainer
 	/// <summary>
 	/// Summary description for Win32.
 	/// </summary>
-	public class Win32
+	public class Message
 	{
 		// The WM_COMMAND message is sent when the user selects a command item from a menu, 
 		// when a control sends a notification message to its parent window, or when an 
@@ -70,12 +70,12 @@ namespace UziTrainer
         public static extern int ShowWindow(IntPtr hWnd, uint Msg);
         
 
-        public Win32()
+        public Message()
 		{
 			
 		}
 
-		~Win32()
+		~Message()
 		{
 		}
 

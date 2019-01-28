@@ -6,13 +6,17 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using UziTrainer.Scenes;
 
 namespace UziTrainer
 {
     static class Program
-    {        
+    {
+        private readonly static TraceSource Tracer = new TraceSource("fnzr.UziTrainer");
+        public static ManualResetEvent TrainerThread = new ManualResetEvent(false);
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -26,7 +30,12 @@ namespace UziTrainer
 
             //var r = window.ImageExists(@"C:\Users\master\Pictures\Screenshot_5.png");
             Window.init();
-            Scene.Click(1160, 476);
+            //var x = (1, 2, 3, 4);
+            Formation.SelectDoll(1);
+            //var x = Scene.Exists(new Query(@"Z:\projects\UCT\pics\HomePage\LV.png"));
+            Tracer.Listeners.Add(new ConsoleTraceListener());
+            //Console.WriteLine(x);
+            //Mouse.Click(1160, 476);
             //Console.WriteLine(r);
             
             //Application.EnableVisualStyles();
@@ -34,4 +43,5 @@ namespace UziTrainer
             //Application.Run(new Form1());
         }
     }
+
 }

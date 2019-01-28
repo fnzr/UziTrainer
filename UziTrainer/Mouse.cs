@@ -5,6 +5,7 @@ namespace UziTrainer
 {
     class Mouse
     {
+        private const int DEFAULT_VARIANCE = 10;
         private static Random random = new Random();
 
         private static int GetLParam(int x, int y)
@@ -14,12 +15,12 @@ namespace UziTrainer
 
         private static void LButtonDown(int x, int y)
         {            
-            Win32.PostMessage(Window.MessageHWND, Win32.WM_LBUTTONDOWN, 0x0001, GetLParam(x, y));
+            Message.PostMessage(Window.MessageHWND, Message.WM_LBUTTONDOWN, 0x0001, GetLParam(x, y));
         }
 
         private static void LButtonUp(int x, int y)
         {
-            Win32.PostMessage(Window.MessageHWND, Win32.WM_LBUTTONUP, 0x0000, GetLParam(x, y));
+            Message.PostMessage(Window.MessageHWND, Message.WM_LBUTTONUP, 0x0000, GetLParam(x, y));
         }
 
         private static void _Click(int x, int y)
@@ -28,18 +29,21 @@ namespace UziTrainer
             LButtonUp(x, y);
         }
 
-        public static void Click(int x, int y)
+        public static void Click(int x, int y, int varianceX, int varianceY)
         {
-            var rx = random.Next(x - variance, x + variance);
-            var ry = random.Next(y - variance, y + variance);
-            Click(rx, ry);
+            var rx = random.Next(x - varianceX, x + varianceX);
+            var ry = random.Next(y - varianceY, y + varianceY);
+            _Click(rx, ry);
         }
 
         public static void Click(int x, int y, int variance)
         {
-            var rx = random.Next(x - variance, x + variance);
-            var ry = random.Next(y - variance, y + variance);
-            Click(rx, ry);
+            Click(x, y, variance, variance);
+        }
+
+        public static void Click(int x, int y)
+        {
+            Click(x, y, Mouse.DEFAULT_VARIANCE);
         }
     }
 }

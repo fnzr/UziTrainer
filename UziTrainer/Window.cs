@@ -40,17 +40,17 @@ namespace UziTrainer
             var swt = Properties.Settings.Default.ScreenWindowTitle;
             var mwc = Properties.Settings.Default.MessageWindowClass;
             var mwt = Properties.Settings.Default.MessageWindowTitle;
-            var hwnd = Win32.FindWindow(swc, swt);
+            var hwnd = Message.FindWindow(swc, swt);
             if (hwnd <= 0)
             {
                 throw new ArgumentException(String.Format("No HWND for window [{0}]", swt));
             }
             Window.WindowHWND = hwnd;
-            var mhwnd = Win32.FindWindowEx(hwnd, 0, mwc, mwt);
+            var mhwnd = Message.FindWindowEx(hwnd, 0, mwc, mwt);
             Window.MessageHWND = mhwnd;
             Window.WindowHWNDPtr = new IntPtr(hwnd);
             Window.MessageHWNDPtr = new IntPtr(mhwnd);
-            Win32.ShowWindow(WindowHWNDPtr, Win32.SW_RESTORE);
+            Message.ShowWindow(WindowHWNDPtr, Message.SW_RESTORE);
         }
 
         public static Bitmap CaptureBitmap()
@@ -75,12 +75,12 @@ namespace UziTrainer
         private static Bitmap _CaptureBitmap()
         {
             RECT rc;
-            Win32.GetWindowRect(WindowHWNDPtr, out rc);
+            Message.GetWindowRect(WindowHWNDPtr, out rc);
 
             Bitmap bmp = new Bitmap(rc.Width, rc.Height, PixelFormat.Format32bppArgb);
             Graphics gfxBmp = Graphics.FromImage(bmp);
             IntPtr hdcBitmap = gfxBmp.GetHdc();
-            Win32.PrintWindow(WindowHWNDPtr, hdcBitmap, 0x1);
+            Message.PrintWindow(WindowHWNDPtr, hdcBitmap, 0x1);
 
             gfxBmp.ReleaseHdc(hdcBitmap);
             gfxBmp.Dispose();

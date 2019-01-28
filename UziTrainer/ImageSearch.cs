@@ -7,6 +7,7 @@ namespace UziTrainer
 {
     public class ImageSearch
     {
+        private const int DEFAULT_TOLERANCE = 20;
         private readonly LockedBitmap haystack;
         private readonly LockedBitmap needle;
         private readonly int pixelFormatSize;
@@ -18,24 +19,14 @@ namespace UziTrainer
             pixelFormatSize = Image.GetPixelFormatSize(_needle.PixelFormat) / 8;
         }
 
-        public static void Find(String imagePath, int[] area)
+        public static bool FindPoint(Bitmap needle, out Point coordinates)
         {
-            //return Find(new Bitmap(imagePath), Window.CaptureBitmap(area), 20, out _);
+            return FindPoint(needle, DEFAULT_TOLERANCE, out coordinates);
         }
 
-        public static bool Exists(String imagePath, int[] area)
+        public static bool FindPoint(Bitmap needle, int tolerance, out Point coordinates)
         {
-            return Exists(imagePath, area, out _);
-        }
-
-        public static bool Exists(String imagePath, int[] area, out Point coordinates)
-        {
-            return Search(imagePath, Window.CaptureBitmap(area), out coordinates);
-        }
-
-        private static bool Search(String needlePath, Bitmap haystack, out Point coordinates)
-        {
-            return Search(new Bitmap(needlePath), haystack, 20, out coordinates);
+            return Search(needle, Window.CaptureBitmap(), tolerance, out coordinates);
         }
 
         private static bool Search(Bitmap bmpFind, Bitmap bmpSource, int tolerance, out Point coordinates)
