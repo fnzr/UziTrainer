@@ -70,5 +70,17 @@ namespace UziTrainer.Properties {
                 this["MessageWindowClass"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool DebugSearchArea {
+            get {
+                return ((bool)(this["DebugSearchArea"]));
+            }
+            set {
+                this["DebugSearchArea"] = value;
+            }
+        }
     }
 }

@@ -30,15 +30,23 @@ namespace UziTrainer
             Tracer.Listeners.Add(new ConsoleTraceListener());
             //var r = window.ImageExists(@"C:\Users\master\Pictures\Screenshot_5.png");
             Window.init();
-            var Formation = new Formation();
+            Form f = new Form();
+            f.BackColor = Color.White;
+            f.FormBorderStyle = FormBorderStyle.None;
+            f.Bounds = Screen.PrimaryScreen.Bounds;
+            f.TopMost = true;
+
+            Application.EnableVisualStyles();
+            Application.Run(f);
+            //var Formation = new Formation();
             //var x = (1, 2, 3, 4);
-            var doll = Doll.Get("SVD");
-            Formation.SelectDoll(doll);
+            //var doll = Doll.Get("SVD");
+            //Formation.SelectDoll(doll);
             //var x = Scene.Exists(new Query(@"Z:\projects\UCT\pics\HomePage\LV.png"));            
             //Console.WriteLine(x);
             //Mouse.Click(1160, 476);
             //Console.WriteLine(r);
-            
+
             //Application.EnableVisualStyles();
             //Application.SetCompatibleTextRenderingDefault(false);
             //Application.Run(new Form1());

@@ -14,5 +14,8 @@
     <Setting Name="MessageWindowClass" Type="System.String" Scope="User">
       <Value Profile="(Default)">Qt5QWindowIcon</Value>
     </Setting>
+    <Setting Name="DebugSearchArea" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

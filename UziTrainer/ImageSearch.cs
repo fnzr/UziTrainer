@@ -31,16 +31,6 @@ namespace UziTrainer
 
         private static bool Search(Bitmap bmpFind, Bitmap bmpSource, int tolerance, out Point coordinates)
         {
-            #region Arguments check
-
-            if (bmpSource == null || bmpFind == null)
-                throw new ArgumentNullException();
-            if (bmpSource.PixelFormat != bmpFind.PixelFormat)
-                throw new ArgumentException("Pixel formats aren't equal");
-            if (bmpSource.Width < bmpFind.Width || bmpSource.Height < bmpFind.Height)
-                throw new ArgumentException("Size of serchingBitmap bigger then sourceBitmap");
-
-            #endregion            
             var search = new ImageSearch(bmpFind, bmpSource);
             var haystack = search.haystack;
             var needle = search.needle;

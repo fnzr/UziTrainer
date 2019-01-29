@@ -17,8 +17,7 @@ namespace UziTrainer
             get
             {
                 if (_Image == null) {
-                    var root = Path.GetDirectoryName(Application.ExecutablePath);
-                    var filePath = Path.Combine(root, "assets", ImagePath);
+                    var filePath = Path.Combine("../../assets", ImagePath);
                     string fullPath;
                     foreach (var ext in Query.extensions)
                     {
