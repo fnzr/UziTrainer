@@ -105,6 +105,8 @@ namespace UziTrainer
             drawForm.StartPosition = FormStartPosition.Manual;
             drawForm.DesktopBounds = new Rectangle(capturedArea.Left + searchArea.Left, capturedArea.Top + searchArea.Top, searchArea.Width, searchArea.Height);
             drawForm.TopMost = true;
+            var initialStyle = Message.GetWindowLongPtr(drawForm.Handle, -20).ToInt32();
+            Message.SetWindowLongPtr(drawForm.Handle, -20, new IntPtr(initialStyle | 0x80000 | 0x20));
             drawForm.Show();
         }
 

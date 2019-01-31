@@ -27,11 +27,15 @@ namespace UziTrainer
 #if DEBUG
             Directory.CreateDirectory(Constants.DebugDir);
 #endif
-            Tracer.Listeners.Add(new ConsoleTraceListener());
+            Trace.Listeners.Add(new ConsoleTraceListener());
             //var r = window.ImageExists(@"C:\Users\master\Pictures\Screenshot_5.png");
             Window.Init();
             //var Formation = new Formation();
             //var doll = Doll.Get("SVD");
+            //Console.WriteLine("????");
+            var q = new Query("../../assets");
+            Scene.Wait(q.Create("HomePage/LV"));
+            //Console.WriteLine("wtf");
             //Formation.SelectDoll(doll);            
             Application.EnableVisualStyles();
             Application.Run(new Form1());

@@ -16,12 +16,11 @@ namespace UziTrainer
         public  Bitmap Image {
             get
             {
-                if (_Image == null) {
-                    var filePath = Path.Combine("../../assets", ImagePath);
+                if (_Image == null) {                    
                     string fullPath;
                     foreach (var ext in Query.extensions)
                     {
-                        fullPath = filePath + ext;
+                        fullPath = ImagePath + ext;
                         if (File.Exists(fullPath)) {
                             _Image = new Bitmap(fullPath);
                             return _Image;
@@ -72,7 +71,7 @@ namespace UziTrainer
 
         public Query Create(string imagePath)
         {
-            return Create(imagePath, new[] { 0, 0, 1280, 720 }, 20);
+            return Create(imagePath, new[] { 0, 0, 1285, 754 }, 20);
         }
     }
 }
