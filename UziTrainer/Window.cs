@@ -3,14 +3,11 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace UziTrainer
 {
-    class Window
+    public class Window : IDisposable
     {
         private readonly static TraceSource Tracer = new TraceSource("fnzr.UziTrainer");
         public static int MessageHWND
@@ -33,8 +30,10 @@ namespace UziTrainer
             get;
             private set;
         }
+        private Rectangle capturedArea;
+        private Form drawForm = new Form();
 
-        public static void init()
+        public static void Init()
         {
             var swc = Properties.Settings.Default.ScreenWindowClass;
             var swt = Properties.Settings.Default.ScreenWindowTitle;
@@ -53,29 +52,38 @@ namespace UziTrainer
             Message.ShowWindow(WindowHWNDPtr, Message.SW_RESTORE);
         }
 
-        public static Bitmap CaptureBitmap()
+        Rectangle searchArea;
+
+        public Window(Rectangle searchArea)
+        {
+            this.searchArea = searchArea;
+            RECT rc;
+            Message.GetWindowRect(WindowHWNDPtr, out rc);
+            capturedArea = rc;
+            drawSearchArea();
+        }
+
+        public Bitmap CaptureBitmap()
         {
             return _CaptureBitmap();
         }
 
-        public static Bitmap CaptureBitmap(int[] area)
-        {            
-            if (area.Length != 4) {
-                throw new ArgumentException("Capture area requires exactly 4 values: StartX, StartY, EndX, EndY");
-            }
+        public Bitmap CaptureBitmap(Rectangle searchArea)
+        {   
             var bmp = _CaptureBitmap();
 #if DEBUG
             var path = Path.Combine(Constants.DebugDir, DateTime.UtcNow.ToString("yyyyMMdd_HHmmssffffff") + ".png");
             bmp.Save(path, ImageFormat.Png);
             Tracer.TraceEvent(TraceEventType.Verbose, Constants.TraceDebug, "Captured [{0}]", path);
 #endif
-            return bmp.Clone(new Rectangle(area[0], area[1], area[2], area[3]), bmp.PixelFormat);
+            return bmp.Clone(searchArea, bmp.PixelFormat);
         }
 
-        private static Bitmap _CaptureBitmap()
+        private Bitmap _CaptureBitmap()
         {
             RECT rc;
             Message.GetWindowRect(WindowHWNDPtr, out rc);
+            capturedArea = rc;
 
             Bitmap bmp = new Bitmap(rc.Width, rc.Height, PixelFormat.Format32bppArgb);
             Graphics gfxBmp = Graphics.FromImage(bmp);
@@ -85,6 +93,24 @@ namespace UziTrainer
             gfxBmp.ReleaseHdc(hdcBitmap);
             gfxBmp.Dispose();
             return bmp;
+        }
+
+        private void drawSearchArea()
+        {
+            drawForm = new Form();
+            drawForm.BackColor = Color.Fuchsia;
+            drawForm.ShowInTaskbar = false;
+            drawForm.Opacity = .3f;
+            drawForm.FormBorderStyle = FormBorderStyle.None;
+            drawForm.StartPosition = FormStartPosition.Manual;
+            drawForm.DesktopBounds = new Rectangle(capturedArea.Left + searchArea.Left, capturedArea.Top + searchArea.Top, searchArea.Width, searchArea.Height);
+            drawForm.TopMost = true;
+            drawForm.Show();
+        }
+
+        public void Dispose()
+        {
+            drawForm.Dispose();
         }
     }
 }

@@ -8,9 +8,9 @@ namespace UziTrainer
 {
     class Doll
     {
-        public readonly string Rarity;
-        public readonly string Name;
-        public readonly string Type;
+        public string Rarity;
+        public string Name;
+        public string Type;
         private static JObject _rss;
         private static JObject rss
         {
@@ -28,6 +28,13 @@ namespace UziTrainer
         }
 
         private Doll() { }
+
+        public Doll(string rarity, string name, string type)
+        {
+            Rarity = rarity;
+            Name = name;
+            Type = type;
+        }
 
         public static Doll Get(string name)
         {

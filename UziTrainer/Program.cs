@@ -29,15 +29,23 @@ namespace UziTrainer
 #endif
             Tracer.Listeners.Add(new ConsoleTraceListener());
             //var r = window.ImageExists(@"C:\Users\master\Pictures\Screenshot_5.png");
-            Window.init();
+            Window.Init();
+            //var Formation = new Formation();
+            //var doll = Doll.Get("SVD");
+            //Formation.SelectDoll(doll);            
+            Application.EnableVisualStyles();
+            Application.Run(new Form1());
+            /*
             Form f = new Form();
             f.BackColor = Color.White;
+            f.Opacity = .3f;
             f.FormBorderStyle = FormBorderStyle.None;
-            f.Bounds = Screen.PrimaryScreen.Bounds;
+            f.Bounds = new Rectangle()
             f.TopMost = true;
-
+            
             Application.EnableVisualStyles();
             Application.Run(f);
+            */
             //var Formation = new Formation();
             //var x = (1, 2, 3, 4);
             //var doll = Doll.Get("SVD");

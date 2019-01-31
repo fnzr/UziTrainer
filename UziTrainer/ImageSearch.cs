@@ -19,6 +19,7 @@ namespace UziTrainer
             pixelFormatSize = Image.GetPixelFormatSize(_needle.PixelFormat) / 8;
         }
 
+        /*
         public static bool FindPoint(Bitmap needle, out Point coordinates)
         {
             return FindPoint(needle, DEFAULT_TOLERANCE, out coordinates);
@@ -27,6 +28,12 @@ namespace UziTrainer
         public static bool FindPoint(Bitmap needle, int tolerance, out Point coordinates)
         {
             return Search(needle, Window.CaptureBitmap(), tolerance, out coordinates);
+        }
+        */
+
+        public static bool FindPoint(Window window, Query query, out Point coordinates)
+        {
+            return Search(query.Image, window.CaptureBitmap(query.Area), query.Tolerance, out coordinates);
         }
 
         private static bool Search(Bitmap bmpFind, Bitmap bmpSource, int tolerance, out Point coordinates)

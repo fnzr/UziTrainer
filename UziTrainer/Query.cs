@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace UziTrainer
 {
-    class Query
+    public class Query
     {
         private static readonly string[] extensions = new[] { ".png", ".jpg", ".jpeg" };
         private Bitmap _Image;

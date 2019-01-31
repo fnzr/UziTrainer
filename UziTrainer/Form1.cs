@@ -16,5 +16,10 @@ namespace UziTrainer
         {
             InitializeComponent();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            //Window.CaptureBitmap(new Rectangle(100, 100, 300, 300));
+        }
     }
 }

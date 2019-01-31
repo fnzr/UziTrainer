@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Drawing;
-using System.Drawing.Imaging;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace UziTrainer
 {
@@ -21,16 +14,20 @@ namespace UziTrainer
 
         public static void Wait(Query query, out Point coordinates)
         {
-            var stopwatch = Stopwatch.StartNew();
-            while (!ImageSearch.FindPoint(query.Image, query.Tolerance, out coordinates)) {
-                Thread.Sleep(500);
-                if (stopwatch.ElapsedMilliseconds > 120000)
+            using (Window window = new Window(query.Area))
+            {
+                var stopwatch = Stopwatch.StartNew();
+                while (!ImageSearch.FindPoint(window, query, out coordinates))
                 {
-                    Tracer.TraceInformation("Could not find [{0}] in 120s. Stopping.", query.ImagePath);
-                    Program.TrainerThread.WaitOne();
+                    Thread.Sleep(500);
+                    if (stopwatch.ElapsedMilliseconds > 120000)
+                    {
+                        Tracer.TraceInformation("Could not find [{0}] in 120s. Stopping.", query.ImagePath);
+                        Program.TrainerThread.WaitOne();
+                    }
                 }
+                Tracer.TraceInformation("Found [{0}]", query.ImagePath);
             }
-            Tracer.TraceInformation("Found [{0}]", query.ImagePath);
         }
 
         public static bool Exists(Query query)
@@ -40,16 +37,19 @@ namespace UziTrainer
 
         public static bool Exists(Query query, int timeout, out Point coordinates)
         {
-            var stopwatch = Stopwatch.StartNew();
-            while (!ImageSearch.FindPoint(query.Image, query.Tolerance, out coordinates))
+            using (Window window = new Window(query.Area))
             {
-                Thread.Sleep(50);
-                if (stopwatch.ElapsedMilliseconds > timeout)
+                var stopwatch = Stopwatch.StartNew();
+                while (!ImageSearch.FindPoint(window, query, out coordinates))
                 {
-                    return false;
+                    Thread.Sleep(50);
+                    if (stopwatch.ElapsedMilliseconds > timeout)
+                    {
+                        return false;
+                    }
                 }
+                return true;
             }
-            return true;
         }        
 
         public static void Click(Query query)
