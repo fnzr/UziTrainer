@@ -1,22 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace UziTrainer.Scenes
 {
     class Formation
     {
-        readonly Query Query = new Query("FormationPage");
+        private readonly Query query = new Query("FormationPage");
 
-        
         public void SelectDoll(Doll doll)
         {
-            Scene.Click(Query.Create("Filter", new[] { 1106, 269, 1214, 311 }));
-            if (Scene.Exists(Query.Create("FilterActive", new[] { 1164, 329, 1200, 360 }))) {
-                Scene.Click(Query.Create("Reset"));
+            Scene.Click(query.Create("Filter", new Rectangle(1106, 269, 110, 45)));
+            if (Scene.Exists(query.Create("FilterActive", new Rectangle(1164, 329, 35, 31)))) {
+                Scene.Click(query.Create("Reset"));
+                Thread.Sleep(500);
+                Scene.Click(query.Create("Filter", new Rectangle(1106, 269, 110, 45)));
             }
+            Scene.Click(query.Create("Filter" + doll.Rarity, new Rectangle(527, 168, 550, 170)));
+            Scene.Click(query.Create("Filter" + doll.Type, new Rectangle(527, 384, 550, 170)));
+            Mouse.Click(928, 714, 5);
+            Scene.Click(query.Create("Filter" + doll.Name));
             //Scene.Click(Query.Create("Filter", new[] { 1106, 269, 1214, 311 }));
             /*
             FindAndClick("FormationPage/Filter a1106,269,100,150")

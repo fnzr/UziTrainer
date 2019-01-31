@@ -25,6 +25,7 @@ namespace UziTrainer
 
         private static void _Click(int x, int y)
         {
+            DebugForm.DebugClick(x, y);
             LButtonDown(x, y);
             LButtonUp(x, y);
         }

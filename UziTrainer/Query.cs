@@ -12,6 +12,7 @@ namespace UziTrainer
     public class Query
     {
         private static readonly string[] extensions = new[] { ".png", ".jpg", ".jpeg" };
+        public static string assetsRoot = "../../assets";
         private Bitmap _Image;
         public  Bitmap Image {
             get
@@ -20,7 +21,7 @@ namespace UziTrainer
                     string fullPath;
                     foreach (var ext in Query.extensions)
                     {
-                        fullPath = ImagePath + ext;
+                        fullPath = Path.Combine(assetsRoot, ImagePath + ext);
                         if (File.Exists(fullPath)) {
                             _Image = new Bitmap(fullPath);
                             return _Image;
@@ -41,37 +42,33 @@ namespace UziTrainer
             private set;
         }
         public int Tolerance = 20;
-        private String assetsRoot;
+        private string subdir;
 
-        public Query(string assetsRoot)
+        public Query(string subdir)
         {
-            this.assetsRoot = assetsRoot;
+            this.subdir = subdir;
         }
 
-        private Query(string imagePath, int[] area, int tolerance)
+        private Query(string imagePath, Rectangle area, int tolerance)
         {
-            if (area.Length != 4)
-            {
-                throw new ArgumentException("Capture area requires exactly 4 values: StartX, StartY, EndX, EndY");
-            }
             ImagePath = imagePath;
-            Area = new Rectangle(area[0], area[1], area[2] - area[0], area[3] - area[1]);
+            Area = area;
             Tolerance = tolerance;
         }
 
-        public Query Create(string imagePath, int[] area, int tolerance)
+        public Query Create(string imagePath, Rectangle area, int tolerance)
         {
-            return new Query(Path.Combine(assetsRoot, imagePath), area, tolerance);
+            return new Query(Path.Combine(subdir, imagePath), area, tolerance);
         }
 
-        public Query Create(string imagePath, int[] area)
+        public Query Create(string imagePath, Rectangle area)
         {
             return Create(imagePath, area, 20);
         }
 
         public Query Create(string imagePath)
         {
-            return Create(imagePath, new[] { 0, 0, 1285, 754 }, 20);
+            return Create(imagePath, Window.FullArea, 20);
         }
     }
 }

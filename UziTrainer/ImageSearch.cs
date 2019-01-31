@@ -19,44 +19,39 @@ namespace UziTrainer
             pixelFormatSize = Image.GetPixelFormatSize(_needle.PixelFormat) / 8;
         }
 
-        /*
-        public static bool FindPoint(Bitmap needle, out Point coordinates)
+        public static bool FindPoint(Query query, out Point coordinates)
         {
-            return FindPoint(needle, DEFAULT_TOLERANCE, out coordinates);
-        }
-
-        public static bool FindPoint(Bitmap needle, int tolerance, out Point coordinates)
-        {
-            return Search(needle, Window.CaptureBitmap(), tolerance, out coordinates);
-        }
-        */
-
-        public static bool FindPoint(Window window, Query query, out Point coordinates)
-        {
-            return Search(query.Image, window.CaptureBitmap(query.Area), query.Tolerance, out coordinates);
+            //SearchDebug.Show(query.Area);
+            var found = Search(query.Image, Window.CaptureBitmap(query.Area), query.Tolerance, out coordinates);
+            if (found)
+            {
+                coordinates.X += query.Area.X;
+                coordinates.Y += query.Area.Y;
+            }
+            return found;
         }
 
         private static bool Search(Bitmap bmpFind, Bitmap bmpSource, int tolerance, out Point coordinates)
         {
-            var search = new ImageSearch(bmpFind, bmpSource);
-            var haystack = search.haystack;
-            var needle = search.needle;
+            var search = new ImageSearch(bmpFind, bmpSource);           
+                var haystack = search.haystack;
+                var needle = search.needle;
 
-            for (var mainY = 0; mainY < bmpSource.Height - bmpFind.Height + 1; mainY++)
-            {
-                var sourceY = mainY * haystack.data.Stride;
-                for (var mainX = 0; mainX < bmpSource.Width - bmpFind.Width + 1; mainX++)
-                {                
-                    var sourceX = mainX * search.pixelFormatSize;
-                    if (search.RegionSearch(sourceX, sourceY, tolerance))
+                for (var mainY = 0; mainY < bmpSource.Height - bmpFind.Height + 1; mainY++)
+                {
+                    var sourceY = mainY * haystack.data.Stride;
+                    for (var mainX = 0; mainX < bmpSource.Width - bmpFind.Width + 1; mainX++)
                     {
-                        coordinates = new Point(mainX, mainY);
-                        return true;
+                        var sourceX = mainX * search.pixelFormatSize;
+                        if (search.RegionSearch(sourceX, sourceY, tolerance))
+                        {
+                            coordinates = new Point(mainX, mainY);
+                            return true;
+                        }
                     }
                 }
-            }
-            coordinates = Point.Empty;
-            return false;
+                coordinates = Point.Empty;
+                return false;
         }
 
         private bool RegionSearch(int startX, int startY, int tolerance)
@@ -89,6 +84,11 @@ namespace UziTrainer
                 }
             }
             return true;
+        }
+
+        public void Dispose()
+        {
+            
         }
 
         private class LockedBitmap

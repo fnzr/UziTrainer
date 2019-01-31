@@ -7,9 +7,8 @@ using System.Windows.Forms;
 
 namespace UziTrainer
 {
-    public class Window : IDisposable
+    public class Window
     {
-        private readonly static TraceSource Tracer = new TraceSource("fnzr.UziTrainer");
         public static int MessageHWND
         {
             get;
@@ -30,8 +29,9 @@ namespace UziTrainer
             get;
             private set;
         }
-        private Rectangle capturedArea;
-        private Form drawForm = new Form();
+        private static Bitmap bitmap =  new Bitmap(1,1);
+        public static readonly Rectangle FullArea = new Rectangle(0, 0, 1284, 754);
+
 
         public static void Init()
         {
@@ -52,67 +52,45 @@ namespace UziTrainer
             Message.ShowWindow(WindowHWNDPtr, Message.SW_RESTORE);
         }
 
-        Rectangle searchArea;
-
-        public Window(Rectangle searchArea)
-        {
-            this.searchArea = searchArea;
-            RECT rc;
-            Message.GetWindowRect(WindowHWNDPtr, out rc);
-            capturedArea = rc;
-            drawSearchArea();
-        }
-
-        public Bitmap CaptureBitmap()
+        public static Bitmap CaptureBitmap()
         {
             return _CaptureBitmap();
         }
 
-        public Bitmap CaptureBitmap(Rectangle searchArea)
+        public static Bitmap CaptureBitmap(Rectangle searchArea)
         {   
             var bmp = _CaptureBitmap();
-#if DEBUG
-            var path = Path.Combine(Constants.DebugDir, DateTime.UtcNow.ToString("yyyyMMdd_HHmmssffffff") + ".png");
-            bmp.Save(path, ImageFormat.Png);
-            Tracer.TraceEvent(TraceEventType.Verbose, Constants.TraceDebug, "Captured [{0}]", path);
-#endif
-            return bmp.Clone(searchArea, bmp.PixelFormat);
+//#if DEBUG
+            //var path = Path.Combine(Constants.DebugDir, DateTime.UtcNow.ToString("yyyyMMdd_HHmmssffffff") + ".png");
+            //bmp.Save(path, ImageFormat.Png);
+            //Tracer.TraceEvent(TraceEventType.Verbose, Constants.TraceDebug, "Captured [{0}]", path);
+//#endif
+try
+            {
+                return bmp.Clone(searchArea, bmp.PixelFormat);
+
+            }catch(OutOfMemoryException e)
+            {
+                Trace.TraceError("Provided area is out of bounds! Capturing entire image. Fix this. Provided area is: " + searchArea.ToString());
+                return bmp;
+            }
         }
 
-        private Bitmap _CaptureBitmap()
+        private static Bitmap _CaptureBitmap()
         {
             RECT rc;
             Message.GetWindowRect(WindowHWNDPtr, out rc);
-            capturedArea = rc;
+            DebugForm.Reference = rc;
 
-            Bitmap bmp = new Bitmap(rc.Width, rc.Height, PixelFormat.Format32bppArgb);
-            Graphics gfxBmp = Graphics.FromImage(bmp);
+            bitmap.Dispose();
+            bitmap = new Bitmap(rc.Width, rc.Height, PixelFormat.Format32bppArgb);
+            Graphics gfxBmp = Graphics.FromImage(bitmap);
             IntPtr hdcBitmap = gfxBmp.GetHdc();
             Message.PrintWindow(WindowHWNDPtr, hdcBitmap, 0x1);
 
             gfxBmp.ReleaseHdc(hdcBitmap);
             gfxBmp.Dispose();
-            return bmp;
-        }
-
-        private void drawSearchArea()
-        {
-            drawForm = new Form();
-            drawForm.BackColor = Color.Fuchsia;
-            drawForm.ShowInTaskbar = false;
-            drawForm.Opacity = .3f;
-            drawForm.FormBorderStyle = FormBorderStyle.None;
-            drawForm.StartPosition = FormStartPosition.Manual;
-            drawForm.DesktopBounds = new Rectangle(capturedArea.Left + searchArea.Left, capturedArea.Top + searchArea.Top, searchArea.Width, searchArea.Height);
-            drawForm.TopMost = true;
-            var initialStyle = Message.GetWindowLongPtr(drawForm.Handle, -20).ToInt32();
-            Message.SetWindowLongPtr(drawForm.Handle, -20, new IntPtr(initialStyle | 0x80000 | 0x20));
-            drawForm.Show();
-        }
-
-        public void Dispose()
-        {
-            drawForm.Dispose();
+            return bitmap;
         }
     }
 }

@@ -14,20 +14,18 @@ namespace UziTrainer
 
         public static void Wait(Query query, out Point coordinates)
         {
-            using (Window window = new Window(query.Area))
+            Trace.WriteLine(string.Format("Waiting for [{0}]", query.ImagePath));
+            var stopwatch = Stopwatch.StartNew();
+            while (!ImageSearch.FindPoint(query, out coordinates))
             {
-                var stopwatch = Stopwatch.StartNew();
-                while (!ImageSearch.FindPoint(window, query, out coordinates))
+                Thread.Sleep(500);
+                if (stopwatch.ElapsedMilliseconds > 120000)
                 {
-                    Thread.Sleep(500);
-                    if (stopwatch.ElapsedMilliseconds > 120000)
-                    {
-                        Trace.WriteLine("Could not find [{0}] in 120s. Stopping.", query.ImagePath);
-                        Program.TrainerThread.WaitOne();
-                    }
+                    Trace.WriteLine("Could not find [{0}] in 120s. Stopping.", query.ImagePath);
+                    Program.TrainerThread.WaitOne();
                 }
-                Trace.WriteLine(string.Format("Found [{0}]", query.ImagePath));
             }
+            Trace.WriteLine(string.Format("Found [{0}]", query.ImagePath));
         }
 
         public static bool Exists(Query query)
@@ -37,19 +35,19 @@ namespace UziTrainer
 
         public static bool Exists(Query query, int timeout, out Point coordinates)
         {
-            using (Window window = new Window(query.Area))
+            Trace.WriteLine(string.Format("Searching for [{0}]", query.ImagePath));
+            var stopwatch = Stopwatch.StartNew();
+            while (!ImageSearch.FindPoint(query, out coordinates))
             {
-                var stopwatch = Stopwatch.StartNew();
-                while (!ImageSearch.FindPoint(window, query, out coordinates))
+                Thread.Sleep(50);
+                if (stopwatch.ElapsedMilliseconds > timeout)
                 {
-                    Thread.Sleep(50);
-                    if (stopwatch.ElapsedMilliseconds > timeout)
-                    {
-                        return false;
-                    }
+                    Trace.WriteLine(string.Format("Not found [{0}]", query.ImagePath));
+                    return false;
                 }
-                return true;
             }
+            Trace.WriteLine(string.Format("Found [{0}]", query.ImagePath));
+            return true;
         }        
 
         public static void Click(Query query)
