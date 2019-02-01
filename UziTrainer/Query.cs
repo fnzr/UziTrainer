@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Emgu.CV;
+using Emgu.CV.Structure;
+using System;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace UziTrainer
 {
@@ -13,8 +10,8 @@ namespace UziTrainer
     {
         private static readonly string[] extensions = new[] { ".png", ".jpg", ".jpeg" };
         public static string assetsRoot = "../../assets";
-        private Bitmap _Image;
-        public  Bitmap Image {
+        private Image<Rgba, byte> _Image;
+        public Image<Rgba, byte> Image {
             get
             {
                 if (_Image == null) {                    
@@ -23,7 +20,7 @@ namespace UziTrainer
                     {
                         fullPath = Path.Combine(assetsRoot, ImagePath + ext);
                         if (File.Exists(fullPath)) {
-                            _Image = new Bitmap(fullPath);
+                            _Image = new Image<Rgba, byte>(fullPath);
                             return _Image;
                         }
                     }
@@ -41,34 +38,33 @@ namespace UziTrainer
             get;
             private set;
         }
-        public int Tolerance = 20;
-        private string subdir;
+        public float Tolerance = .9f;
 
-        public Query(string subdir)
-        {
-            this.subdir = subdir;
-        }
-
-        private Query(string imagePath, Rectangle area, int tolerance)
+        private Query(string imagePath, Rectangle area, float tolerance)
         {
             ImagePath = imagePath;
             Area = area;
             Tolerance = tolerance;
         }
 
-        public Query Create(string imagePath, Rectangle area, int tolerance)
+        public static Query Create(string imagePath, Rectangle area, float tolerance)
         {
-            return new Query(Path.Combine(subdir, imagePath), area, tolerance);
+            return new Query(imagePath, area, tolerance);
         }
 
-        public Query Create(string imagePath, Rectangle area)
+        public static Query Create(string imagePath, Rectangle area)
         {
-            return Create(imagePath, area, 20);
+            return Create(imagePath, area, .9f);
         }
 
-        public Query Create(string imagePath)
+        public static Query Create(string imagePath, float tolerance)
         {
-            return Create(imagePath, Window.FullArea, 20);
+            return Create(imagePath, Window.FullArea, tolerance);
+        }
+
+        public static Query Create(string imagePath)
+        {
+            return Create(imagePath, Window.FullArea);
         }
     }
 }

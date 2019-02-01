@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Emgu.CV;
+using Emgu.CV.Structure;
+using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -29,7 +31,7 @@ namespace UziTrainer
             get;
             private set;
         }
-        private static Bitmap bitmap =  new Bitmap(1,1);
+        private static Image<Rgba, byte> Image = new Image<Rgba, byte>(1,1);
         public static readonly Rectangle FullArea = new Rectangle(0, 0, 1284, 754);
 
 
@@ -50,16 +52,20 @@ namespace UziTrainer
             Window.WindowHWNDPtr = new IntPtr(hwnd);
             Window.MessageHWNDPtr = new IntPtr(mhwnd);
             Message.ShowWindow(WindowHWNDPtr, Message.SW_RESTORE);
+
+            RECT rc;
+            Message.GetWindowRect(WindowHWNDPtr, out rc);
+            DebugForm.Reference = rc;
         }
 
-        public static Bitmap CaptureBitmap()
+        public static Image<Rgba, byte> CaptureBitmap()
         {
             return _CaptureBitmap();
         }
 
-        public static Bitmap CaptureBitmap(Rectangle searchArea)
+        public static Image<Rgba, byte> CaptureBitmap(Rectangle searchArea)
         {   
-            var bmp = _CaptureBitmap();
+            var img = _CaptureBitmap();
 //#if DEBUG
             //var path = Path.Combine(Constants.DebugDir, DateTime.UtcNow.ToString("yyyyMMdd_HHmmssffffff") + ".png");
             //bmp.Save(path, ImageFormat.Png);
@@ -67,30 +73,34 @@ namespace UziTrainer
 //#endif
 try
             {
-                return bmp.Clone(searchArea, bmp.PixelFormat);
+                return img.Copy(searchArea);
 
-            }catch(OutOfMemoryException e)
+            }catch(OutOfMemoryException)
             {
                 Trace.TraceError("Provided area is out of bounds! Capturing entire image. Fix this. Provided area is: " + searchArea.ToString());
-                return bmp;
+                return img;
             }
         }
 
-        private static Bitmap _CaptureBitmap()
+        private static Image<Rgba, byte> _CaptureBitmap()
         {
             RECT rc;
             Message.GetWindowRect(WindowHWNDPtr, out rc);
             DebugForm.Reference = rc;
 
-            bitmap.Dispose();
-            bitmap = new Bitmap(rc.Width, rc.Height, PixelFormat.Format32bppArgb);
+            var bitmap = new Bitmap(rc.Width, rc.Height, PixelFormat.Format32bppArgb);
             Graphics gfxBmp = Graphics.FromImage(bitmap);
             IntPtr hdcBitmap = gfxBmp.GetHdc();
             Message.PrintWindow(WindowHWNDPtr, hdcBitmap, 0x1);
-
             gfxBmp.ReleaseHdc(hdcBitmap);
+            //bitmap.Save(@"G:\temp\1.png");
+            Image.Dispose();
+            Image = new Image<Rgba, byte>(bitmap);
+
+            
             gfxBmp.Dispose();
-            return bitmap;
+            //Image.Save(@"G:\temp\0.png");
+            return Image;
         }
     }
 }

@@ -39,7 +39,9 @@ namespace UziTrainer
         public static Doll Get(string name)
         {
             //JObject rss = JObject.Parse(Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "dolls.json"));
-            return ((JObject)rss[name]).ToObject<Doll>();
+            Doll doll = ((JObject)rss[name]).ToObject<Doll>();
+            doll.Name = name;
+            return doll;
         }
     }
 }

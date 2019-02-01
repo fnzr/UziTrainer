@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Emgu.CV;
+using Emgu.CV.Structure;
+using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
@@ -21,7 +23,7 @@ namespace UziTrainer
 
         public static bool FindPoint(Query query, out Point coordinates)
         {
-            //SearchDebug.Show(query.Area);
+            DebugForm.DebugSearch(query.Area);
             var found = Search(query.Image, Window.CaptureBitmap(query.Area), query.Tolerance, out coordinates);
             if (found)
             {
@@ -31,27 +33,46 @@ namespace UziTrainer
             return found;
         }
 
-        private static bool Search(Bitmap bmpFind, Bitmap bmpSource, int tolerance, out Point coordinates)
+        private static bool Search(Image<Rgba, byte> needle, Image<Rgba, byte> haystack, float threshold, out Point coordinates)
         {
-            var search = new ImageSearch(bmpFind, bmpSource);           
-                var haystack = search.haystack;
-                var needle = search.needle;
+            using (Image<Gray, float> result = haystack.MatchTemplate(needle, Emgu.CV.CvEnum.TemplateMatchingType.CcoeffNormed))
+            {
+                double[] maxValues;
+                Point[] maxLocations;
+                result.MinMax(out _, out maxValues, out _, out maxLocations);
 
-                for (var mainY = 0; mainY < bmpSource.Height - bmpFind.Height + 1; mainY++)
+                // You can try different values of the threshold. I guess somewhere between 0.75 and 0.95 would be good.
+                if (maxValues[0] >= threshold)
                 {
-                    var sourceY = mainY * haystack.data.Stride;
-                    for (var mainX = 0; mainX < bmpSource.Width - bmpFind.Width + 1; mainX++)
+                    coordinates = maxLocations[0];
+                    return true;
+                }
+            }
+            coordinates = Point.Empty;
+            return false;
+        }
+
+        private static bool _Search(Bitmap bmpFind, Bitmap bmpSource, int tolerance, out Point coordinates)
+        {
+            var search = new ImageSearch(bmpFind, bmpSource);
+            var haystack = search.haystack;
+            var needle = search.needle;
+
+            for (var mainY = 0; mainY < bmpSource.Height - bmpFind.Height + 1; mainY++)
+            {
+                var sourceY = mainY * haystack.data.Stride;
+                for (var mainX = 0; mainX < bmpSource.Width - bmpFind.Width + 1; mainX++)
+                {
+                    var sourceX = mainX * search.pixelFormatSize;
+                    if (search.RegionSearch(sourceX, sourceY, tolerance))
                     {
-                        var sourceX = mainX * search.pixelFormatSize;
-                        if (search.RegionSearch(sourceX, sourceY, tolerance))
-                        {
-                            coordinates = new Point(mainX, mainY);
-                            return true;
-                        }
+                        coordinates = new Point(mainX, mainY);
+                        return true;
                     }
                 }
-                coordinates = Point.Empty;
-                return false;
+            }
+            coordinates = Point.Empty;
+            return false;
         }
 
         private bool RegionSearch(int startX, int startY, int tolerance)
@@ -67,7 +88,8 @@ namespace UziTrainer
 
                     var haystackIndex = haystackIndexX + haystackIndexY;
                     var needleIndex = needleIndexX + needleIndexY;
-                    if (!IsSameColor(haystackIndex, needleIndex, tolerance)) {
+                    if (!IsSameColor(haystackIndex, needleIndex, tolerance))
+                    {
                         return false;
                     }
                 }
@@ -77,9 +99,10 @@ namespace UziTrainer
 
         private bool IsSameColor(int haystackIndex, int needleIndex, int tolerance)
         {
-            for(int i = 0; i < pixelFormatSize; i++)
+            for (int i = 0; i < pixelFormatSize; i++)
             {
-                if (Math.Abs(haystack.bytes[haystackIndex + i] - needle.bytes[needleIndex + i]) > tolerance) {
+                if (Math.Abs(haystack.bytes[haystackIndex + i] - needle.bytes[needleIndex + i]) > tolerance)
+                {
                     return false;
                 }
             }
@@ -88,7 +111,7 @@ namespace UziTrainer
 
         public void Dispose()
         {
-            
+
         }
 
         private class LockedBitmap

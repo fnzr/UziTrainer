@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Emgu.CV;
+using Emgu.CV.Structure;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -30,41 +32,23 @@ namespace UziTrainer
             //Trace.Listeners.Add(new ConsoleTraceListener());
             //var r = window.ImageExists(@"C:\Users\master\Pictures\Screenshot_5.png");
             Window.Init();
+            //Window.CaptureBitmap();
             //var q = new Query("FormationPage");
             //Scene.Click(q.Create("Filter", new Rectangle(1106, 269, 110, 45)));
             var Formation = new Formation();
-            var doll = Doll.Get("SVD");
-            Formation.SelectDoll(doll);
-            //Console.WriteLine("????");
-            //var q = new Query("");
-            //Scene.Wait(q.Create("HomePage/LV"));
-            //Console.WriteLine("wtf");
-            //Formation.SelectDoll(doll);            
+            //Scene.Exists(Query.Create("Dolls/MG5"));
+            //var doll = Doll.Get("SVD");
+            //Formation.SelectDoll(doll); 
+            Formation.ReplaceDoll(Doll.Get("WA2000"), Doll.Get("SVD"));
+            //Scene.Exists(Query.Create("Dolls/SVD"));
+            //var sw = Stopwatch.StartNew();
+            //Scene.Exists(Query.Create("Dolls/MG5"));
+            //Trace.WriteLine(sw.Elapsed);
             Application.EnableVisualStyles();
             Application.Run(new Form1());
-            /*
-            Form f = new Form();
-            f.BackColor = Color.White;
-            f.Opacity = .3f;
-            f.FormBorderStyle = FormBorderStyle.None;
-            f.Bounds = new Rectangle()
-            f.TopMost = true;
+            var sw = Stopwatch.StartNew();            
             
-            Application.EnableVisualStyles();
-            Application.Run(f);
-            */
-            //var Formation = new Formation();
-            //var x = (1, 2, 3, 4);
-            //var doll = Doll.Get("SVD");
-            //Formation.SelectDoll(doll);
-            //var x = Scene.Exists(new Query(@"Z:\projects\UCT\pics\HomePage\LV.png"));            
-            //Console.WriteLine(x);
-            //Mouse.Click(1160, 476);
-            //Console.WriteLine(r);
-
-            //Application.EnableVisualStyles();
-            //Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new Form1());
+            Trace.WriteLine(sw.Elapsed);
         }
     }
 
