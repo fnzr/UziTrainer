@@ -17,5 +17,8 @@
     <Setting Name="DebugSearchArea" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
+    <Setting Name="BaseBackground" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Default</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -61,19 +61,13 @@ namespace UziTrainer
 
         public new void Dispose()
         {
-            Action action;
-            foreach (var form in this.debugForms) {
-                action = delegate ()
-                {
-                    form.Dispose();
-                };
-                this.BeginInvoke(action);
-            }
-            action = delegate ()
+            foreach (var form in this.debugForms)
             {
-                base.Dispose();
-            };
-            this.BeginInvoke(action);
+                //this.BeginInvoke((Action)(() => form.Dispose()));
+                form.Dispose();
+            }
+            //this.BeginInvoke((Action)(() => base.Dispose()));
+            base.Dispose();
         }
 
         public void DebugClick(int x, int y)
@@ -92,11 +86,22 @@ namespace UziTrainer
             SearchForm.BackColor = color;
             SearchForm.DesktopBounds = new Rectangle(reference.Left + area.Left, reference.Top + area.Top, area.Width, area.Height);
             SearchForm.Show();
+            var x = SearchForm.Handle;
+        }
+
+        public new void Close()
+        {
+            foreach (var form in this.debugForms)
+            {
+                form.Close();
+            }
+            base.Close();
         }
 
         private void buttonContinue_Click(object sender, EventArgs e)
         {
-            DebugThread.Set();
+            Close();
+            DebugThread.Set();            
         }
 
         private void InitializeComponent()

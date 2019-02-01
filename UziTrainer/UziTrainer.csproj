@@ -60,18 +60,23 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Constants.cs" />
     <Compile Include="ImageSearchForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Doll.cs" />
-    <Compile Include="Form1.cs">
+    <Compile Include="FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="FormMain.Designer.cs">
+      <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
     <Compile Include="ImageSearch.cs" />
+    <Compile Include="SwapDoll.cs" />
+    <Compile Include="SwapDoll.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>SwapDoll.settings</DependentUpon>
+    </Compile>
     <Compile Include="Win32\MemoryDC.cs" />
     <Compile Include="Mouse.cs" />
     <Compile Include="Program.cs" />
@@ -82,8 +87,8 @@
     <Compile Include="Page\Formation.cs" />
     <Compile Include="Win32\Message.cs" />
     <Compile Include="Window.cs" />
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="FormMain.resx">
+      <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ImageSearchForm.resx">
       <DependentUpon>ImageSearchForm.cs</DependentUpon>
@@ -108,6 +113,10 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="SwapDoll.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>SwapDoll.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

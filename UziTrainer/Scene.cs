@@ -30,7 +30,12 @@ namespace UziTrainer
 
         public static bool Exists(Query query)
         {
-            return Exists(query, 5000, out _);
+            return Exists(query, 3000, out _);
+        }
+
+        public static bool Exists(Query query, out Point coordinates)
+        {
+            return Exists(query, 3000, out coordinates);
         }
 
         public static bool Exists(Query query, int timeout, out Point coordinates)
@@ -55,5 +60,40 @@ namespace UziTrainer
             Wait(query, out Point coordinates);
             Mouse.Click(coordinates.X, coordinates.Y);
         }
+
+        public static readonly Query HomeQuery = new Query("HomePage/" + Properties.Settings.Default.BaseBackground, new Rectangle(835, 571, 396, 95));
+        public static readonly Query RepairQuery = new Query("RepairPage/RepairPage", new Rectangle(195, 73, 25, 25));
+        public static readonly Query FormationQuery = new Query("FormationPage/FormationPage", new Rectangle(124, 82, 15, 6));
+
+        public static void WaitHome()
+        {
+            Scene.Wait(HomeQuery);
+            Scene.Wait(new Query("HomePage/LV", new Rectangle(29, 45, 25, 20), true));
+            Thread.Sleep(2000);
+        }
+
+        public static void Transition(Query leave, Query enter, Point? click = null)
+        {
+            var sw = Stopwatch.StartNew();
+            Wait(leave);
+            while (true)
+            {
+                Point coords;
+                if (Exists(leave, out coords))
+                {
+                    coords = click.HasValue ? (Point)click : coords;
+                    Mouse.Click(coords.X, coords.Y);
+                }
+                if (Exists(enter, 2000, out _))
+                {
+                    break;
+                }
+                if (sw.Elapsed.Milliseconds > 120000)
+                {
+                    Trace.WriteLine(string.Format("Could not perform transition [{0}] => [{1}]. Stopping.", leave.ImagePath, enter.ImagePath));
+                    Program.Pause();
+                }
+            }
+        }        
     }
 }

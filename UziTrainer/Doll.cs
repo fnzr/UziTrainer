@@ -29,6 +29,8 @@ namespace UziTrainer
 
         private Doll() { }
 
+        public static readonly Doll Empty = new Doll();
+
         public Doll(string rarity, string name, string type)
         {
             Rarity = rarity;
@@ -39,9 +41,16 @@ namespace UziTrainer
         public static Doll Get(string name)
         {
             //JObject rss = JObject.Parse(Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "dolls.json"));
-            Doll doll = ((JObject)rss[name]).ToObject<Doll>();
-            doll.Name = name;
-            return doll;
+            try
+            {
+                Doll doll = ((JObject)rss[name]).ToObject<Doll>();
+                doll.Name = name;
+                return doll;
+            }
+            catch (System.NullReferenceException)
+            {
+                return Doll.Empty;
+            }
         }
     }
 }

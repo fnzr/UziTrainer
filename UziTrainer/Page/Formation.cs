@@ -50,12 +50,16 @@ namespace UziTrainer.Scenes
             SelectDoll(DollIn);
         }
 
-        public void SetDragFormation(string dollOut, string dollIn)
+        public void SetDragFormation()
         {
-            var doll1 = Doll.Get(dollOut);
-            var doll2 = Doll.Get(dollIn);
+            var doll1 = Doll.Get(SwapDoll.Default.ExhaustedDoll);
+            var doll2 = Doll.Get(SwapDoll.Default.LoadedDoll);
             ReplaceDoll(doll1, doll2);
             AddDollToEchelon(doll1, 2, 1);
+
+            SwapDoll.Default.ExhaustedDoll = doll2.Name;
+            SwapDoll.Default.LoadedDoll = doll1.Name;
+            SwapDoll.Default.Save();
         }
     }
 }

@@ -82,5 +82,17 @@ namespace UziTrainer.Properties {
                 this["DebugSearchArea"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Default")]
+        public string BaseBackground {
+            get {
+                return ((string)(this["BaseBackground"]));
+            }
+            set {
+                this["BaseBackground"] = value;
+            }
+        }
     }
 }
