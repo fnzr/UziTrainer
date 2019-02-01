@@ -38,33 +38,31 @@ namespace UziTrainer
             get;
             private set;
         }
-        public float Tolerance = .9f;
+        public float Tolerance;
+        public bool Debug
+        {
+            get;
+            private set;
+        }
 
-        private Query(string imagePath, Rectangle area, float tolerance)
+        public Query(string imagePath, Rectangle area, float tolerance, bool debug = false)
         {
             ImagePath = imagePath;
             Area = area;
             Tolerance = tolerance;
+            Debug = debug;
         }
 
-        public static Query Create(string imagePath, Rectangle area, float tolerance)
+        public Query(string imagePath, Rectangle area, bool debug = false) : this(imagePath, area, .9f, debug)
         {
-            return new Query(imagePath, area, tolerance);
         }
 
-        public static Query Create(string imagePath, Rectangle area)
+        public Query(string imagePath, float tolerance, bool debug = false) : this(imagePath, Window.FullArea, tolerance, debug)
         {
-            return Create(imagePath, area, .9f);
         }
 
-        public static Query Create(string imagePath, float tolerance)
+        public Query(string imagePath, bool debug = false) : this(imagePath, Window.FullArea, debug)
         {
-            return Create(imagePath, Window.FullArea, tolerance);
-        }
-
-        public static Query Create(string imagePath)
-        {
-            return Create(imagePath, Window.FullArea);
         }
     }
 }

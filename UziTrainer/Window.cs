@@ -33,6 +33,15 @@ namespace UziTrainer
         }
         private static Image<Rgba, byte> Image = new Image<Rgba, byte>(1,1);
         public static readonly Rectangle FullArea = new Rectangle(0, 0, 1284, 754);
+        public static Rectangle WindowRectangle
+        {
+            get {
+                RECT rc;
+                Message.GetWindowRect(WindowHWNDPtr, out rc);
+                return rc;
+            }
+            private set { }
+        }
 
 
         public static void Init()
@@ -52,11 +61,7 @@ namespace UziTrainer
             Window.WindowHWNDPtr = new IntPtr(hwnd);
             Window.MessageHWNDPtr = new IntPtr(mhwnd);
             Message.ShowWindow(WindowHWNDPtr, Message.SW_RESTORE);
-
-            RECT rc;
-            Message.GetWindowRect(WindowHWNDPtr, out rc);
-            DebugForm.Reference = rc;
-        }
+        }        
 
         public static Image<Rgba, byte> CaptureBitmap()
         {
@@ -84,22 +89,15 @@ try
 
         private static Image<Rgba, byte> _CaptureBitmap()
         {
-            RECT rc;
-            Message.GetWindowRect(WindowHWNDPtr, out rc);
-            DebugForm.Reference = rc;
-
+            var rc = WindowRectangle;
             var bitmap = new Bitmap(rc.Width, rc.Height, PixelFormat.Format32bppArgb);
             Graphics gfxBmp = Graphics.FromImage(bitmap);
             IntPtr hdcBitmap = gfxBmp.GetHdc();
             Message.PrintWindow(WindowHWNDPtr, hdcBitmap, 0x1);
             gfxBmp.ReleaseHdc(hdcBitmap);
-            //bitmap.Save(@"G:\temp\1.png");
             Image.Dispose();
             Image = new Image<Rgba, byte>(bitmap);
-
-            
             gfxBmp.Dispose();
-            //Image.Save(@"G:\temp\0.png");
             return Image;
         }
     }

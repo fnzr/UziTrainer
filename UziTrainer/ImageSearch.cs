@@ -1,9 +1,12 @@
 ﻿using Emgu.CV;
 using Emgu.CV.Structure;
 using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
+using System.Threading;
+using System.Windows.Forms;
 
 namespace UziTrainer
 {
@@ -22,13 +25,32 @@ namespace UziTrainer
         }
 
         public static bool FindPoint(Query query, out Point coordinates)
-        {
-            DebugForm.DebugSearch(query.Area);
+        {                   
             var found = Search(query.Image, Window.CaptureBitmap(query.Area), query.Tolerance, out coordinates);
             if (found)
             {
                 coordinates.X += query.Area.X;
                 coordinates.Y += query.Area.Y;
+            }            
+            if (query.Debug)
+            {
+                Trace.WriteLine("Starting debug");
+                var position = coordinates;
+                var debugForm = new ImageSearchForm(query);
+                var thread = new Thread(new ThreadStart(delegate(){
+                    debugForm.Show();
+                    debugForm.SetFoundAt(position);
+                    debugForm.DebugArea(query.Area, Color.Fuchsia);
+                    if (found)
+                    {
+                        debugForm.DebugArea(new Rectangle(position, query.Image.Size), Color.Green);
+                    }
+                    Application.Run(debugForm);
+                }));
+                thread.Start();
+                Trace.WriteLine("Waiting continue message");
+                debugForm.DebugThread.WaitOne();
+                debugForm.Dispose();
             }
             return found;
         }

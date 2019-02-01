@@ -16,7 +16,7 @@ namespace UziTrainer
         {
             Trace.WriteLine(string.Format("Waiting for [{0}]", query.ImagePath));
             var stopwatch = Stopwatch.StartNew();
-            while (!ImageSearch.FindPoint(query, out coordinates))
+            for(uint i = 1; !ImageSearch.FindPoint(query, out coordinates); i++)
             {
                 Thread.Sleep(500);
                 if (stopwatch.ElapsedMilliseconds > 120000)
