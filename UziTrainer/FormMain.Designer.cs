@@ -41,6 +41,7 @@
             this.labelRunCounter = new System.Windows.Forms.Label();
             this.labelLog = new System.Windows.Forms.Label();
             this.buttonTogglePause = new System.Windows.Forms.Button();
+            this.buttonDebug = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -159,11 +160,22 @@
             this.buttonTogglePause.UseVisualStyleBackColor = true;
             this.buttonTogglePause.Click += new System.EventHandler(this.buttonTogglePause_Click);
             // 
+            // buttonDebug
+            // 
+            this.buttonDebug.Location = new System.Drawing.Point(127, 12);
+            this.buttonDebug.Name = "buttonDebug";
+            this.buttonDebug.Size = new System.Drawing.Size(64, 23);
+            this.buttonDebug.TabIndex = 13;
+            this.buttonDebug.Text = "Debug";
+            this.buttonDebug.UseVisualStyleBackColor = true;
+            this.buttonDebug.Click += new System.EventHandler(this.buttonDebug_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(281, 152);
+            this.Controls.Add(this.buttonDebug);
             this.Controls.Add(this.buttonTogglePause);
             this.Controls.Add(this.labelLog);
             this.Controls.Add(this.labelRunCounter);
@@ -199,6 +211,7 @@
         private System.Windows.Forms.Label labelRunCounter;
         private System.Windows.Forms.Label labelLog;
         private System.Windows.Forms.Button buttonTogglePause;
+        private System.Windows.Forms.Button buttonDebug;
     }
 }
 

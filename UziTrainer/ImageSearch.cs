@@ -12,9 +12,12 @@ namespace UziTrainer
 {
     public class ImageSearch
     {
+        static ImageSearchForm debugForm;
 
         public static bool FindPoint(Query query, out Point coordinates)
-        {                   
+        {
+            Thread.Sleep(500);
+            debugForm = new ImageSearchForm(query);
             var found = Search(query.Image, Window.CaptureBitmap(query.Area), query.Tolerance, out coordinates);
             if (found)
             {
@@ -24,8 +27,7 @@ namespace UziTrainer
             if (query.Debug)
             {
                 Trace.WriteLine("Starting debug");
-                var position = coordinates;
-                var debugForm = new ImageSearchForm(query);
+                var position = coordinates;                
                 var thread = new Thread(new ThreadStart(delegate(){
                     debugForm.Show();
                     debugForm.SetFoundAt(position);
@@ -38,9 +40,10 @@ namespace UziTrainer
                 }));
                 thread.Start();
                 Trace.WriteLine("Waiting continue message");
-                debugForm.DebugThread.WaitOne();
-                debugForm.Dispose();
+                debugForm.DebugThread.WaitOne();                
             }
+            debugForm.Dispose();
+            debugForm = null;
             return found;
         }
 
@@ -51,6 +54,16 @@ namespace UziTrainer
                 double[] maxValues;
                 Point[] maxLocations;
                 result.MinMax(out _, out maxValues, out _, out maxLocations);
+
+                if (debugForm != null)
+                {
+                    debugForm.Image = haystack;
+                    for(var i=0; i < maxValues.Length && i < 5; i++)
+                    {
+                        debugForm.DebugArea(new Rectangle(maxLocations[i], needle.Size), Color.Blue);
+                    }                    
+                    debugForm.SearchEvaluation(maxValues[0]);
+                }                
 
                 // You can try different values of the threshold. I guess somewhere between 0.75 and 0.95 would be good.
                 if (maxValues[0] >= threshold)

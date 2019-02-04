@@ -20,7 +20,7 @@ namespace UziTrainer.Scenes
             Scene.Click(new Query("FormationPage/Filter" + doll.Rarity, new Rectangle(527, 168, 550, 170)));
             Scene.Click(new Query("FormationPage/Filter" + doll.Type, new Rectangle(527, 384, 550, 170)));
             Mouse.Click(928, 714, 5);
-            Scene.Click(new Query("Dolls/" + doll.Name));
+            Scene.Click(new Query("Dolls/" + doll.Name, true));
         }
 
         public static void AddDollToEchelon(Doll doll, int echelon, int slot)

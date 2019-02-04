@@ -33,6 +33,11 @@ namespace UziTrainer
             return Exists(query, 3000, out _);
         }
 
+        public static bool Exists(Query query, int timeout)
+        {
+            return Exists(query, timeout, out _);
+        }
+
         public static bool Exists(Query query, out Point coordinates)
         {
             return Exists(query, 3000, out coordinates);
@@ -69,7 +74,7 @@ namespace UziTrainer
         public static void WaitHome()
         {
             Scene.Wait(HomeQuery);
-            Scene.Wait(new Query("HomePage/LV", new Rectangle(29, 45, 25, 20), true));
+            Scene.Wait(new Query("HomePage/LV", new Rectangle(29, 45, 25, 20)));
             Thread.Sleep(2000);
         }
 
@@ -85,7 +90,7 @@ namespace UziTrainer
                     coords = click.HasValue ? (Point)click : coords;
                     Mouse.Click(coords.X, coords.Y);
                 }
-                if (Exists(enter, 2000, out _))
+                if (Exists(enter, 2000))
                 {
                     break;
                 }

@@ -53,7 +53,7 @@ namespace UziTrainer
             Debug = debug;
         }
 
-        public Query(string imagePath, Rectangle area, bool debug = false) : this(imagePath, area, .9f, debug)
+        public Query(string imagePath, Rectangle area, bool debug = false) : this(imagePath, area, .95f, debug)
         {
         }
 

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Emgu.CV;
+using Emgu.CV.Structure;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -21,7 +23,12 @@ namespace UziTrainer
         private Button buttonContinue;
 
         public ManualResetEvent DebugThread = new ManualResetEvent(false);
+        private Label label4;
+        private Label labelEvaluation;
+        private Button buttonImage;
         private List<Form> debugForms = new List<Form>();
+
+        public Image<Rgba, byte> Image;
 
         public ImageSearchForm(Query query)
         {
@@ -70,6 +77,18 @@ namespace UziTrainer
             base.Dispose();
         }
 
+        internal void SearchEvaluation(double v)
+        {
+            if (InvokeRequired)
+            {
+                Invoke((Action)(() => labelEvaluation.Text = v.ToString()));
+            }
+            else
+            {
+                labelEvaluation.Text = v.ToString();
+            }            
+        }
+
         public void DebugClick(int x, int y)
         {
             var reference = Window.WindowRectangle;
@@ -86,7 +105,6 @@ namespace UziTrainer
             SearchForm.BackColor = color;
             SearchForm.DesktopBounds = new Rectangle(reference.Left + area.Left, reference.Top + area.Top, area.Width, area.Height);
             SearchForm.Show();
-            var x = SearchForm.Handle;
         }
 
         public new void Close()
@@ -113,6 +131,9 @@ namespace UziTrainer
             this.labelArea = new System.Windows.Forms.Label();
             this.labelFound = new System.Windows.Forms.Label();
             this.buttonContinue = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.labelEvaluation = new System.Windows.Forms.Label();
+            this.buttonImage = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -171,7 +192,7 @@ namespace UziTrainer
             // 
             // buttonContinue
             // 
-            this.buttonContinue.Location = new System.Drawing.Point(197, 58);
+            this.buttonContinue.Location = new System.Drawing.Point(197, 42);
             this.buttonContinue.Name = "buttonContinue";
             this.buttonContinue.Size = new System.Drawing.Size(75, 23);
             this.buttonContinue.TabIndex = 6;
@@ -179,9 +200,40 @@ namespace UziTrainer
             this.buttonContinue.UseVisualStyleBackColor = true;
             this.buttonContinue.Click += new System.EventHandler(this.buttonContinue_Click);
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(12, 80);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(57, 13);
+            this.label4.TabIndex = 7;
+            this.label4.Text = "Evaluation";
+            // 
+            // labelEvaluation
+            // 
+            this.labelEvaluation.AutoSize = true;
+            this.labelEvaluation.Location = new System.Drawing.Point(93, 80);
+            this.labelEvaluation.Name = "labelEvaluation";
+            this.labelEvaluation.Size = new System.Drawing.Size(50, 13);
+            this.labelEvaluation.TabIndex = 8;
+            this.labelEvaluation.Text = "labelEval";
+            // 
+            // buttonImage
+            // 
+            this.buttonImage.Location = new System.Drawing.Point(197, 13);
+            this.buttonImage.Name = "buttonImage";
+            this.buttonImage.Size = new System.Drawing.Size(75, 23);
+            this.buttonImage.TabIndex = 9;
+            this.buttonImage.Text = "Show Image";
+            this.buttonImage.UseVisualStyleBackColor = true;
+            this.buttonImage.Click += new System.EventHandler(this.buttonImage_Click);
+            // 
             // ImageSearchForm
             // 
-            this.ClientSize = new System.Drawing.Size(284, 93);
+            this.ClientSize = new System.Drawing.Size(284, 102);
+            this.Controls.Add(this.buttonImage);
+            this.Controls.Add(this.labelEvaluation);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.buttonContinue);
             this.Controls.Add(this.labelFound);
             this.Controls.Add(this.labelArea);
@@ -194,6 +246,14 @@ namespace UziTrainer
             this.ResumeLayout(false);
             this.PerformLayout();
 
+        }
+
+        private void buttonImage_Click(object sender, EventArgs e)
+        {
+            PictureBox pb1 = new PictureBox();
+            pb1.Image = Image.Bitmap;
+            pb1.SizeMode = PictureBoxSizeMode.AutoSize;
+            pb1.Show();
         }
     }
 }

@@ -5,6 +5,8 @@ using System.IO;
 using System.IO.Compression;
 using System.Security.Cryptography;
 using System.Threading;
+using System.Windows.Forms;
+using UziTrainer.Page;
 using UziTrainer.Scenes;
 
 namespace UziTrainer
@@ -24,11 +26,9 @@ namespace UziTrainer
             PrepareResources();
             Window.Init();
             main = new FormMain();
-            //Scene.Wait(new Query("HomePage/LV", new Rectangle(0,0, 100, 100), true));
-            //var Formation = new Formation();
-            //Formation.ReplaceDoll(Doll.Get("SVD"), Doll.Get("WA2000"));
-            //Application.EnableVisualStyles();
-            //Application.Run(main);
+            Application.EnableVisualStyles();
+            Application.Run(main);
+            Application.Exit();
         }
 
         public static void Pause()
@@ -55,7 +55,7 @@ namespace UziTrainer
                         Properties.Settings.Default.Save();
                     }
                 }
-                Directory.Delete("./assets");
+                Directory.Delete("./assets", true);
             }
             Trace.WriteLine("Extracting new assets");
             ZipFile.ExtractToDirectory("./assets.zip", "./");
@@ -63,6 +63,7 @@ namespace UziTrainer
 
         public static void Run()
         {
+
             Scene.WaitHome();
             if (Scene.Exists(new Query("CriticalRepair", new Rectangle(1007, 264, 25, 25))))
             {
@@ -77,7 +78,7 @@ namespace UziTrainer
                 Formation.SetDragFormation();
             }
             Scene.Transition(Scene.HomeQuery, Scene.CombatQuery, new Point(924, 496));
-
+            Combat.Setup(Properties.Settings.Default.SelectedMission);
         }
     }
 
