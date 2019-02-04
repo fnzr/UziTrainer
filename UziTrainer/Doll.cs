@@ -2,11 +2,12 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.IO;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace UziTrainer
 {
-    class Doll
+    public class Doll
     {
         public string Rarity;
         public string Name;
@@ -17,7 +18,10 @@ namespace UziTrainer
             get {
                 if (_rss == null)
                 {
-                    using (StreamReader reader = File.OpenText(Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "dolls.json")))
+                    var assembly = Assembly.GetExecutingAssembly();
+                    var resourceName = "UziTrainer.dolls.json";
+                    using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+                    using (StreamReader reader = new StreamReader(stream))
                     {
                         _rss = (JObject)JToken.ReadFrom(new JsonTextReader(reader));
                     }

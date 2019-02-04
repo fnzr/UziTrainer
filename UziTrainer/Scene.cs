@@ -64,6 +64,7 @@ namespace UziTrainer
         public static readonly Query HomeQuery = new Query("HomePage/" + Properties.Settings.Default.BaseBackground, new Rectangle(835, 571, 396, 95));
         public static readonly Query RepairQuery = new Query("RepairPage/RepairPage", new Rectangle(195, 73, 25, 25));
         public static readonly Query FormationQuery = new Query("FormationPage/FormationPage", new Rectangle(124, 82, 15, 6));
+        public static readonly Query CombatQuery = new Query("CombatPage/CombatPage", new Rectangle(365, 65, 80, 50));
 
         public static void WaitHome()
         {

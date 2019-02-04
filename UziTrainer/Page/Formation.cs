@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
+﻿using System.Drawing;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace UziTrainer.Scenes
 {
-    class Formation
+    public class Formation
     {
-        private readonly int EchelonSlotX = 160;
-        private readonly int EchelonSlotXSize = 185;
+        private static readonly int EchelonSlotX = 160;
+        private static readonly int EchelonSlotXSize = 185;
 
-        private void SelectDoll(Doll doll)
+
+        private static void SelectDoll(Doll doll)
         {
             Scene.Click(new Query("FormationPage/Filter", new Rectangle(1106, 269, 110, 45)));
             if (Scene.Exists(new Query("FormationPage/FilterActive", new Rectangle(1164, 329, 35, 31)))) {
@@ -27,7 +23,7 @@ namespace UziTrainer.Scenes
             Scene.Click(new Query("Dolls/" + doll.Name));
         }
 
-        public void AddDollToEchelon(Doll doll, int echelon, int slot)
+        public static void AddDollToEchelon(Doll doll, int echelon, int slot)
         {
             if (echelon > 7)
             {
@@ -43,14 +39,14 @@ namespace UziTrainer.Scenes
             SelectDoll(doll);
         }
 
-        public void ReplaceDoll(Doll DollOut, Doll DollIn)
+        public static void ReplaceDoll(Doll DollOut, Doll DollIn)
         {
             Scene.Wait(new Query("FormationPage/WaitForFormation", new Rectangle(1198,149,25,25)));
             Scene.Click(new Query("Dolls/" + DollOut.Name, new Rectangle(136, 137, 934, 378)));
             SelectDoll(DollIn);
         }
 
-        public void SetDragFormation()
+        public static void SetDragFormation()
         {
             var doll1 = Doll.Get(SwapDoll.Default.ExhaustedDoll);
             var doll2 = Doll.Get(SwapDoll.Default.LoadedDoll);

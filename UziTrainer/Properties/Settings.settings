@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="ScreenWindowTitle" Type="System.String" Scope="User">
-      <Value Profile="(Default)">NoxPlayer</Value>
+      <Value Profile="(Default)">ZR288</Value>
     </Setting>
     <Setting Name="ScreenWindowClass" Type="System.String" Scope="User">
       <Value Profile="(Default)">Qt5QWindowIcon</Value>
@@ -19,6 +19,12 @@
     </Setting>
     <Setting Name="BaseBackground" Type="System.String" Scope="User">
       <Value Profile="(Default)">Default</Value>
+    </Setting>
+    <Setting Name="AssetsHash" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="LastMission" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
     </Setting>
   </Settings>
 </SettingsFile>

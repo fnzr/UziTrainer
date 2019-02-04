@@ -25,7 +25,7 @@ namespace UziTrainer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("NoxPlayer")]
+        [global::System.Configuration.DefaultSettingValueAttribute("ZR288")]
         public string ScreenWindowTitle {
             get {
                 return ((string)(this["ScreenWindowTitle"]));
@@ -92,6 +92,30 @@ namespace UziTrainer.Properties {
             }
             set {
                 this["BaseBackground"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string AssetsHash {
+            get {
+                return ((string)(this["AssetsHash"]));
+            }
+            set {
+                this["AssetsHash"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string LastMission {
+            get {
+                return ((string)(this["LastMission"]));
+            }
+            set {
+                this["LastMission"] = value;
             }
         }
     }

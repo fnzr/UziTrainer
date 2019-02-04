@@ -9,7 +9,7 @@ namespace UziTrainer
     public class Query
     {
         private static readonly string[] extensions = new[] { ".png", ".jpg", ".jpeg" };
-        public static string assetsRoot = "../../assets";
+        public static string assetsRoot = "./assets";
         private Image<Rgba, byte> _Image;
         public Image<Rgba, byte> Image {
             get
