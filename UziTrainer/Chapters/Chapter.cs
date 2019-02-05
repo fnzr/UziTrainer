@@ -59,7 +59,7 @@ namespace UziTrainer.Chapters
                 {
                     Program.main.WriteLog("Executing Plan");
                 }
-                else if (Scene.Exists(new Query("Combat/CombatPaus", new Rectangle(557, 29, 100, 30)))){
+                else if (Scene.Exists(new Query("Combat/CombatPause", new Rectangle(557, 29, 100, 30)))){
                     WaitBattle();
                 }
             }

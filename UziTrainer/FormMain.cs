@@ -9,6 +9,8 @@ namespace UziTrainer
 {
     public partial class FormMain : Form
     {
+        private Thread ExecutionThread;
+        private int RunCounter = 0;
         private static readonly string[] maps = {
                 "0_2", "1_1N"
         };
@@ -18,17 +20,10 @@ namespace UziTrainer
             UpdateDollText();
             comboMaps.Items.AddRange(maps);
             checkBoxSwapActive.Checked = SwapDoll.Default.Active;
-            comboMaps.SelectedValue = Properties.Settings.Default.SelectedMission;
+            comboMaps.SelectedIndex = Array.IndexOf(maps, Properties.Settings.Default.SelectedMission);
             comboMaps.SelectedIndexChanged += selectedIndexChanged;
-            textLoaded.LostFocus += TextSwap_TextChanged;
-            textExhausted.LostFocus += TextSwap_TextChanged;
             SwapDoll.Default.PropertyChanged += Default_PropertyChanged;
             Trace.Listeners.Add(new FormMainTraceListener(this));
-        }
-
-        private void TextSwap_TextChanged(object sender, EventArgs e)
-        {
-            UpdateSettings();
         }
 
         private void Default_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -79,8 +74,9 @@ namespace UziTrainer
 
         private void buttonSwap_Click(object sender, EventArgs e)
         {
+            var loaded = textExhausted.Text;
             SwapDoll.Default.ExhaustedDoll = textLoaded.Text;
-            SwapDoll.Default.LoadedDoll = textExhausted.Text;
+            SwapDoll.Default.LoadedDoll = loaded;
             SwapDoll.Default.Save();
         }
 
@@ -104,41 +100,50 @@ namespace UziTrainer
 
         public void SetPausedInfo()
         {
-            //buttonTogglePause.Text = "Resume";
+            buttonTogglePause.Text = "Resume";
         }
 
         private void buttonRun_Click(object sender, EventArgs e)
         {
-            var executionThread = new Thread(new ThreadStart(delegate ()
+            UpdateSettings();
+            ExecutionThread = new Thread(new ThreadStart(delegate ()
             {
-                Program.Run();
+                while (true)
+                {
+                    Program.Run();
+                    BeginInvoke((Action)(() => labelCounter.Text = (++RunCounter).ToString()));
+                }
             }));
-            executionThread.Start();
+            ExecutionThread.Start();
         }
 
         private void buttonTogglePause_Click(object sender, EventArgs e)
         {
-            if (Program.TrainerThread.WaitOne(0))
+            if (ExecutionThread.ThreadState == System.Threading.ThreadState.Suspended)
             {
-                //buttonTogglePause.Text = "Pause";
-                Program.TrainerThread.Set();
+                buttonTogglePause.Text = "Pause";
+                ExecutionThread.Resume();
             }
             else
             {
-               // buttonTogglePause.Text = "Resume";
-                Program.TrainerThread.WaitOne();
+                buttonTogglePause.Text = "Resume";
+                ExecutionThread.Suspend();
             }
         }
 
-        private void buttonDebug_Click(object sender, EventArgs e)
+        public new void Close()
+        {
+            ExecutionThread.Abort();
+            base.Close();
+        }
+
+        private void debugMenuItem_Click(object sender, EventArgs e)
         {
             var executionThread = new Thread(new ThreadStart(delegate ()
             {
-                //Formation.SetDragFormation();
-                //ImageSearch.FindPoint(new Query("Dolls/G11", true), out _);
-                //Combat.Setup("0_2");
-                //Mouse.ZoomOut();
-                Mouse.DragRightToLeft(300, 1250, 850);
+                //Mouse.DragUpToDown(700, 104, 734);
+                //Factory.ClickEnhanceableDoll();
+                Factory.DollEnhancement();
             }));
             executionThread.Start();
         }

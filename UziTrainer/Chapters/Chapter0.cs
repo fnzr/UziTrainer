@@ -15,7 +15,6 @@ namespace UziTrainer.Chapters
             Scene.Click(DEPLOY_ECHELON);
             Mouse.Click(START_OPERATION);
             Thread.Sleep(2000);
-
             Scene.Transition(new Query("Missions/0_2/SanityCheck"), RESUPPLY, new Point(263, 381));
             Scene.Click(RESUPPLY);
             Thread.Sleep(500);

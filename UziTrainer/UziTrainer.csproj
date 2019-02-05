@@ -84,6 +84,8 @@
     </Compile>
     <Compile Include="ImageSearch.cs" />
     <Compile Include="Page\Combat.cs" />
+    <Compile Include="Page\Factory.cs" />
+    <Compile Include="Page\Repair.cs" />
     <Compile Include="SwapDoll.cs" />
     <Compile Include="SwapDoll.Designer.cs">
       <AutoGen>True</AutoGen>

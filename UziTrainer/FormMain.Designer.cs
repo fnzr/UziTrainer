@@ -38,15 +38,19 @@
             this.checkBoxSwapActive = new System.Windows.Forms.CheckBox();
             this.buttonRun = new System.Windows.Forms.Button();
             this.buttonLogistics = new System.Windows.Forms.Button();
-            this.labelRunCounter = new System.Windows.Forms.Label();
+            this.labelRun = new System.Windows.Forms.Label();
             this.labelLog = new System.Windows.Forms.Label();
-            this.buttonDebug = new System.Windows.Forms.Button();
+            this.buttonTogglePause = new System.Windows.Forms.Button();
+            this.labelCounter = new System.Windows.Forms.Label();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.debugMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 75);
+            this.label1.Location = new System.Drawing.Point(12, 93);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(78, 13);
             this.label1.TabIndex = 0;
@@ -54,14 +58,14 @@
             // 
             // textExhausted
             // 
-            this.textExhausted.Location = new System.Drawing.Point(107, 68);
+            this.textExhausted.Location = new System.Drawing.Point(106, 86);
             this.textExhausted.Name = "textExhausted";
             this.textExhausted.Size = new System.Drawing.Size(64, 20);
             this.textExhausted.TabIndex = 1;
             // 
             // textLoaded
             // 
-            this.textLoaded.Location = new System.Drawing.Point(107, 94);
+            this.textLoaded.Location = new System.Drawing.Point(106, 112);
             this.textLoaded.Name = "textLoaded";
             this.textLoaded.Size = new System.Drawing.Size(64, 20);
             this.textLoaded.TabIndex = 3;
@@ -69,7 +73,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(13, 101);
+            this.label2.Location = new System.Drawing.Point(12, 119);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(64, 13);
             this.label2.TabIndex = 2;
@@ -78,7 +82,7 @@
             // comboMaps
             // 
             this.comboMaps.FormattingEnabled = true;
-            this.comboMaps.Location = new System.Drawing.Point(47, 12);
+            this.comboMaps.Location = new System.Drawing.Point(46, 30);
             this.comboMaps.Name = "comboMaps";
             this.comboMaps.Size = new System.Drawing.Size(73, 21);
             this.comboMaps.TabIndex = 4;
@@ -86,7 +90,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(13, 20);
+            this.label3.Location = new System.Drawing.Point(12, 38);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(28, 13);
             this.label3.TabIndex = 5;
@@ -94,7 +98,7 @@
             // 
             // buttonSwap
             // 
-            this.buttonSwap.Location = new System.Drawing.Point(107, 39);
+            this.buttonSwap.Location = new System.Drawing.Point(106, 57);
             this.buttonSwap.Name = "buttonSwap";
             this.buttonSwap.Size = new System.Drawing.Size(64, 23);
             this.buttonSwap.TabIndex = 6;
@@ -105,7 +109,7 @@
             // checkBoxSwapActive
             // 
             this.checkBoxSwapActive.AutoSize = true;
-            this.checkBoxSwapActive.Location = new System.Drawing.Point(16, 45);
+            this.checkBoxSwapActive.Location = new System.Drawing.Point(15, 63);
             this.checkBoxSwapActive.Name = "checkBoxSwapActive";
             this.checkBoxSwapActive.Size = new System.Drawing.Size(85, 17);
             this.checkBoxSwapActive.TabIndex = 7;
@@ -115,7 +119,7 @@
             // 
             // buttonRun
             // 
-            this.buttonRun.Location = new System.Drawing.Point(197, 12);
+            this.buttonRun.Location = new System.Drawing.Point(196, 30);
             this.buttonRun.Name = "buttonRun";
             this.buttonRun.Size = new System.Drawing.Size(75, 23);
             this.buttonRun.TabIndex = 8;
@@ -125,49 +129,76 @@
             // 
             // buttonLogistics
             // 
-            this.buttonLogistics.Location = new System.Drawing.Point(197, 38);
+            this.buttonLogistics.Location = new System.Drawing.Point(196, 56);
             this.buttonLogistics.Name = "buttonLogistics";
             this.buttonLogistics.Size = new System.Drawing.Size(75, 23);
             this.buttonLogistics.TabIndex = 9;
             this.buttonLogistics.Text = "Logistics";
             this.buttonLogistics.UseVisualStyleBackColor = true;
             // 
-            // labelRunCounter
+            // labelRun
             // 
-            this.labelRunCounter.AutoSize = true;
-            this.labelRunCounter.Location = new System.Drawing.Point(197, 100);
-            this.labelRunCounter.Name = "labelRunCounter";
-            this.labelRunCounter.Size = new System.Drawing.Size(44, 13);
-            this.labelRunCounter.TabIndex = 10;
-            this.labelRunCounter.Text = "Runs: 0";
+            this.labelRun.AutoSize = true;
+            this.labelRun.Location = new System.Drawing.Point(196, 118);
+            this.labelRun.Name = "labelRun";
+            this.labelRun.Size = new System.Drawing.Size(35, 13);
+            this.labelRun.TabIndex = 10;
+            this.labelRun.Text = "Runs:";
             // 
             // labelLog
             // 
             this.labelLog.AutoSize = true;
-            this.labelLog.Location = new System.Drawing.Point(12, 130);
+            this.labelLog.Location = new System.Drawing.Point(11, 148);
             this.labelLog.Name = "labelLog";
             this.labelLog.Size = new System.Drawing.Size(54, 13);
             this.labelLog.TabIndex = 11;
             this.labelLog.Text = "Why hello";
             // 
-            // buttonDebug
+            // buttonTogglePause
             // 
-            this.buttonDebug.Location = new System.Drawing.Point(127, 12);
-            this.buttonDebug.Name = "buttonDebug";
-            this.buttonDebug.Size = new System.Drawing.Size(64, 23);
-            this.buttonDebug.TabIndex = 13;
-            this.buttonDebug.Text = "Debug";
-            this.buttonDebug.UseVisualStyleBackColor = true;
-            this.buttonDebug.Click += new System.EventHandler(this.buttonDebug_Click);
+            this.buttonTogglePause.Location = new System.Drawing.Point(126, 30);
+            this.buttonTogglePause.Name = "buttonTogglePause";
+            this.buttonTogglePause.Size = new System.Drawing.Size(64, 23);
+            this.buttonTogglePause.TabIndex = 13;
+            this.buttonTogglePause.Text = "Pause";
+            this.buttonTogglePause.UseVisualStyleBackColor = true;
+            this.buttonTogglePause.Click += new System.EventHandler(this.buttonTogglePause_Click);
+            // 
+            // labelCounter
+            // 
+            this.labelCounter.AutoSize = true;
+            this.labelCounter.Location = new System.Drawing.Point(228, 118);
+            this.labelCounter.Name = "labelCounter";
+            this.labelCounter.Size = new System.Drawing.Size(13, 13);
+            this.labelCounter.TabIndex = 14;
+            this.labelCounter.Text = "0";
+            // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.debugMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(281, 24);
+            this.menuStrip1.TabIndex = 15;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // debugMenuItem
+            // 
+            this.debugMenuItem.Name = "debugMenuItem";
+            this.debugMenuItem.Size = new System.Drawing.Size(54, 20);
+            this.debugMenuItem.Text = "Debug";
+            this.debugMenuItem.Click += new System.EventHandler(this.debugMenuItem_Click);
             // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(281, 152);
-            this.Controls.Add(this.buttonDebug);
+            this.ClientSize = new System.Drawing.Size(281, 184);
+            this.Controls.Add(this.labelCounter);
+            this.Controls.Add(this.buttonTogglePause);
             this.Controls.Add(this.labelLog);
-            this.Controls.Add(this.labelRunCounter);
+            this.Controls.Add(this.labelRun);
             this.Controls.Add(this.buttonLogistics);
             this.Controls.Add(this.buttonRun);
             this.Controls.Add(this.checkBoxSwapActive);
@@ -178,8 +209,12 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.textExhausted);
             this.Controls.Add(this.label1);
+            this.Controls.Add(this.menuStrip1);
+            this.MainMenuStrip = this.menuStrip1;
             this.Name = "FormMain";
             this.Text = "Uzi Trainer";
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -197,9 +232,12 @@
         private System.Windows.Forms.CheckBox checkBoxSwapActive;
         private System.Windows.Forms.Button buttonRun;
         private System.Windows.Forms.Button buttonLogistics;
-        private System.Windows.Forms.Label labelRunCounter;
+        private System.Windows.Forms.Label labelRun;
         private System.Windows.Forms.Label labelLog;
-        private System.Windows.Forms.Button buttonDebug;
+        private System.Windows.Forms.Button buttonTogglePause;
+        private System.Windows.Forms.Label labelCounter;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem debugMenuItem;
     }
 }
 

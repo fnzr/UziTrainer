@@ -3,8 +3,6 @@ using Emgu.CV.Structure;
 using System;
 using System.Diagnostics;
 using System.Drawing;
-using System.Drawing.Imaging;
-using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
 

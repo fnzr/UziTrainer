@@ -21,7 +21,7 @@ namespace UziTrainer
                 Thread.Sleep(500);
                 if (stopwatch.ElapsedMilliseconds > 120000)
                 {
-                    Trace.WriteLine("Could not find [{0}] in 120s. Stopping.", query.ImagePath);
+                    Trace.WriteLine("Not found in 120s. Stopping.", query.ImagePath);
                     Program.TrainerThread.WaitOne();
                 }
             }
@@ -76,6 +76,7 @@ namespace UziTrainer
         public static readonly Query RepairQuery = new Query("RepairPage/RepairPage", new Rectangle(195, 73, 25, 25));
         public static readonly Query FormationQuery = new Query("FormationPage/FormationPage", new Rectangle(124, 82, 15, 6));
         public static readonly Query CombatQuery = new Query("CombatPage/CombatPage", new Rectangle(365, 65, 80, 50));
+        public static readonly Query FactoryQuery = new Query("FactoryPage/FactoryPage", new Rectangle(56, 649, 40, 40));
 
         public static void WaitHome()
         {
@@ -90,11 +91,9 @@ namespace UziTrainer
             Wait(leave);
             while (true)
             {
-                Point coords;
-                if (Exists(leave, 1500, out coords))
+                if (Exists(leave, 1500, out Point coords))
                 {
-                    coords = click.HasValue ? (Point)click : coords;
-                    Mouse.Click(coords.X, coords.Y);
+                    Mouse.Click(click.HasValue ? (Point)click : coords);
                 }
                 if (Exists(enter, 2000))
                 {

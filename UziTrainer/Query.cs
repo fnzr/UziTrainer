@@ -24,7 +24,7 @@ namespace UziTrainer
                             return _Image;
                         }
                     }
-                    throw new ArgumentException("[{0}] not found", ImagePath);
+                    throw new ArgumentException("{0}: Not Found", ImagePath);
                 }
                 return _Image;
             }

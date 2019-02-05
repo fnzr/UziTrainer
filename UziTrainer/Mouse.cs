@@ -4,10 +4,10 @@ using System.Threading;
 
 namespace UziTrainer
 {
-    class Mouse
+    public class Mouse
     {
         private const int DEFAULT_VARIANCE = 10;
-        private const int Step = 3;
+        private const int Step = 5;
 
         private static Random random = new Random();
 
@@ -35,7 +35,7 @@ namespace UziTrainer
         private static void MiddleButtonUp(int x, int y)
         {
             var lparam = GetLParam(x, y);
-            Message.PostMessage(Window.MessageHWND, Message.WM_MBUTTONUP, 0x0010, lparam);
+            Message.PostMessage(Window.MessageHWND, Message.WM_MBUTTONUP, 0x0000, lparam);
         }
 
         private static void MouseMove(int x, int y)
@@ -55,6 +55,7 @@ namespace UziTrainer
             var rx = random.Next(x - varianceX, x + varianceX);
             var ry = random.Next(y - varianceY, y + varianceY);
             _Click(rx, ry);
+            Thread.Sleep(100);
         }
 
         public static void Click(int x, int y, int variance)
@@ -79,11 +80,11 @@ namespace UziTrainer
             y_end = random.Next(y_end - 5, y_end + 5);
             LButtonDown(x, y_start);
             var y = y_start;
-            while (y >= y_end)
+            while (y < y_end)
             {
                 y = y + Step;
                 MouseMove(x, y);
-                Thread.Sleep(1);
+                Thread.Sleep(5);
             }
             LButtonUp(x, y_end);
             Thread.Sleep(300);
@@ -97,11 +98,11 @@ namespace UziTrainer
             y_end = random.Next(y_end - 5, y_end + 5);
             LButtonDown(x, y_start);
             var y = y_start;
-            while (y <= y_end)
+            while (y > y_end)
             {
                 y = y - Step;
                 MouseMove(x, y);
-                Thread.Sleep(1);
+                Thread.Sleep(5);
             }
             LButtonUp(x, y_end);
             Thread.Sleep(300);
@@ -115,11 +116,11 @@ namespace UziTrainer
             x_end = random.Next(x_end - 5, x_end + 5);
             LButtonDown(x_start, y);
             var x = x_start;
-            while (x <= x_end)
+            while (x > x_end)
             {
                 x = x - Step;
                 MouseMove(x, y);
-                Thread.Sleep(1);
+                Thread.Sleep(5);
             }
             LButtonUp(x_end, y);
             Thread.Sleep(300);
@@ -133,27 +134,28 @@ namespace UziTrainer
             x_end = random.Next(x_end - 5, x_end + 5);
             LButtonDown(x_start, y);
             var x = x_start;
-            while (x >= x_end)
+            while (x < x_end)
             {
                 x = x + Step;
                 MouseMove(x, y);
-                Thread.Sleep(1);
+                Thread.Sleep(5);
             }
             LButtonUp(x_end, y);
             Thread.Sleep(300);
         }
 
-        public static void ZoomOut(int repeatCount = 3)
+        public static void ZoomOut(int repeatCount = 2)
         {
             MiddleButtonDown(700, 400);
+            Thread.Sleep(10);
             MiddleButtonUp(700, 400);
             for (var i = 0; i < repeatCount; i++)
             {
-                //Nox is wonky if you try to zoom too much too fast
                 DragRightToLeft(300, 1250, 850);
-                Thread.Sleep(100);
+                Thread.Sleep(50);
             }
             MiddleButtonDown(700, 400);
+            Thread.Sleep(10);
             MiddleButtonUp(700, 400);
             Thread.Sleep(10);
         }

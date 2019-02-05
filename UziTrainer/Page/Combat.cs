@@ -20,17 +20,24 @@ namespace UziTrainer.Page
 
             if (chapter > 5)
             {
-                //DragDownToUp(264, 689, 247)
+                Mouse.DragDownToUp(264, 689, 247);
             }
             var chapterClickedQuery = new Query("CombatPage/Chapter" + parts[0] + "Clicked", new Rectangle(180, 119, 250, 624));
             if (!Scene.Exists(chapterClickedQuery)) {
-                Scene.Transition(new Query("CombatPage/Chapter" + parts[0] + "NotClicked", new Rectangle(193, 119, 218, 624), true), chapterClickedQuery);
+                Scene.Transition(new Query("CombatPage/Chapter" + parts[0] + "NotClicked", new Rectangle(193, 119, 218, 624)), chapterClickedQuery);
             }
-            Combat.Execute(mission);
-            Scene.Transition(new Query("CombatPage/Return"), Scene.HomeQuery, new Point(71, 79));
+            if (Execute(mission))
+            {
+                Scene.Transition(new Query("CombatPage/Return"), Scene.HomeQuery, new Point(71, 79));
+            }
+            else
+            {
+                Scene.Transition(Scene.HomeQuery, Scene.CombatQuery, new Point(930, 500));
+                Setup(mission);
+            }
         }
 
-        public static void Execute(string mission)
+        public static bool Execute(string mission)
         {
             if (mission.IndexOf('E') != -1)
             {
@@ -43,7 +50,7 @@ namespace UziTrainer.Page
             }            
             if(Convert.ToInt32(mission.Split('_')[1]) > 4)
             {
-                //DragDownToUp(764, 665, 300)
+                Mouse.DragDownToUp(764, 665, 300);
             }
             Scene.Transition(new Query("CombatPage/" + mission, new Rectangle(639, 265, 70, 404)), new Query("CombatPage/NormalBattle", new Rectangle(734, 601, 70, 30)));
             Scene.Click(new Query("CombatPage/NormalBattle", new Rectangle(734,601,70,30)));
@@ -51,14 +58,16 @@ namespace UziTrainer.Page
             Point coords;
             if (Scene.Exists(new Query("CombatPage/DollEnhancementPopup", new Rectangle(779,508,30,30)), 1000, out coords)) {
                 Mouse.Click(coords.X, coords.Y);
-                //DollEnhancement()
-                //return
+                Factory.DollEnhancement();
+                return false;
             }
             if (Scene.Exists(new Query("CombatPage/EquipEnhancementPopup", Window.FullArea), 1000, out coords))
             {
                 Mouse.Click(coords.X, coords.Y);
                 //EquipEnhancement();
-                //return;
+                Program.main.WriteLog("Equipment full. This is not implemented.");
+                Program.Pause();
+                return false;
             }
             Scene.Wait(new Query("Combat/Turn0", new Rectangle(401, 3, 90, 120)));            
 
@@ -71,8 +80,9 @@ namespace UziTrainer.Page
             var type = Type.GetType("UziTrainer.Chapters.Chapter" + parts[0]);
             var method = type.GetMethod("Map" + mission);
             method.Invoke(new object(), null);
-            //WriteInfo("Mission Start " Mission)
-            //% Mission % ()
+            
+            Scene.ClickUntilFound(new Query("LoadScreen", new Rectangle(350, 34, 210, 420)), new Point(356, 652));
+            return true;
         }
     }
 }

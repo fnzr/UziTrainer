@@ -69,7 +69,7 @@ namespace UziTrainer
             {
                 Trace.WriteLine("Performing Repairs");
                 Scene.Transition(Scene.HomeQuery, Scene.RepairQuery, new Point(938, 302));
-                //Repair.RepairCritical();
+                Repair.RepairCritical();
             }
             if (SwapDoll.Default.Active)
             {
@@ -77,7 +77,7 @@ namespace UziTrainer
                 Scene.Transition(Scene.HomeQuery, Scene.FormationQuery, new Point(1161, 476));
                 Formation.SetDragFormation();
             }
-            Scene.Transition(Scene.HomeQuery, Scene.CombatQuery, new Point(924, 496));
+            Scene.Transition(Scene.HomeQuery, Scene.CombatQuery, new Point(930, 500));
             Combat.Setup(Properties.Settings.Default.SelectedMission);
         }
     }
