@@ -13,7 +13,6 @@
             //
             // this.SettingChanging += this.SettingChangingEventHandler;
             //
-            this.SettingsSaving += this.SettingsSavingEventHandler;
             //
         }
         

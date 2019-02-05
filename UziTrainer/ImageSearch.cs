@@ -13,10 +13,12 @@ namespace UziTrainer
     public class ImageSearch
     {
         static ImageSearchForm debugForm;
+        static bool IsDebugging;
 
         public static bool FindPoint(Query query, out Point coordinates)
         {
-            Thread.Sleep(500);
+            Thread.Sleep(300);
+            IsDebugging = query.Debug;
             debugForm = new ImageSearchForm(query);
             var found = Search(query.Image, Window.CaptureBitmap(query.Area), query.Tolerance, out coordinates);
             if (found)
@@ -24,7 +26,7 @@ namespace UziTrainer
                 coordinates.X += query.Area.X;
                 coordinates.Y += query.Area.Y;
             }            
-            if (query.Debug)
+            if (IsDebugging)
             {
                 Trace.WriteLine("Starting debug");
                 var position = coordinates;                
@@ -40,9 +42,10 @@ namespace UziTrainer
                 }));
                 thread.Start();
                 Trace.WriteLine("Waiting continue message");
-                debugForm.DebugThread.WaitOne();                
+                debugForm.DebugThread.WaitOne();
+                debugForm.Close();
+                debugForm.Dispose();
             }
-            debugForm.Dispose();
             debugForm = null;
             return found;
         }
@@ -55,13 +58,9 @@ namespace UziTrainer
                 Point[] maxLocations;
                 result.MinMax(out _, out maxValues, out _, out maxLocations);
 
-                if (debugForm != null)
+                if (IsDebugging)
                 {
-                    debugForm.Image = haystack;
-                    for(var i=0; i < maxValues.Length && i < 5; i++)
-                    {
-                        debugForm.DebugArea(new Rectangle(maxLocations[i], needle.Size), Color.Blue);
-                    }                    
+                    debugForm.Image = haystack;                   
                     debugForm.SearchEvaluation(maxValues[0]);
                 }                
 

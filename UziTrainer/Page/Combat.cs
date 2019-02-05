@@ -60,11 +60,17 @@ namespace UziTrainer.Page
                 //EquipEnhancement();
                 //return;
             }
-            Scene.Wait(new Query("Combat/Turn0", new Rectangle(401, 3, 90, 120)));
+            Scene.Wait(new Query("Combat/Turn0", new Rectangle(401, 3, 90, 120)));            
 
             if (!Scene.Exists(new Query("Missions/" + mission + "/SanityCheck", Window.FullArea), 1000, out _)){
-                //ZoomOut
+                Mouse.ZoomOut();
             }
+
+            var parts = mission.Split('_');
+
+            var type = Type.GetType("UziTrainer.Chapters.Chapter" + parts[0]);
+            var method = type.GetMethod("Map" + mission);
+            method.Invoke(new object(), null);
             //WriteInfo("Mission Start " Mission)
             //% Mission % ()
         }

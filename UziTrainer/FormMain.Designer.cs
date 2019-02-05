@@ -40,7 +40,6 @@
             this.buttonLogistics = new System.Windows.Forms.Button();
             this.labelRunCounter = new System.Windows.Forms.Label();
             this.labelLog = new System.Windows.Forms.Label();
-            this.buttonTogglePause = new System.Windows.Forms.Button();
             this.buttonDebug = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
@@ -151,15 +150,6 @@
             this.labelLog.TabIndex = 11;
             this.labelLog.Text = "Why hello";
             // 
-            // buttonTogglePause
-            // 
-            this.buttonTogglePause.Location = new System.Drawing.Point(219, 120);
-            this.buttonTogglePause.Name = "buttonTogglePause";
-            this.buttonTogglePause.Size = new System.Drawing.Size(53, 23);
-            this.buttonTogglePause.TabIndex = 12;
-            this.buttonTogglePause.UseVisualStyleBackColor = true;
-            this.buttonTogglePause.Click += new System.EventHandler(this.buttonTogglePause_Click);
-            // 
             // buttonDebug
             // 
             this.buttonDebug.Location = new System.Drawing.Point(127, 12);
@@ -176,7 +166,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(281, 152);
             this.Controls.Add(this.buttonDebug);
-            this.Controls.Add(this.buttonTogglePause);
             this.Controls.Add(this.labelLog);
             this.Controls.Add(this.labelRunCounter);
             this.Controls.Add(this.buttonLogistics);
@@ -210,7 +199,6 @@
         private System.Windows.Forms.Button buttonLogistics;
         private System.Windows.Forms.Label labelRunCounter;
         private System.Windows.Forms.Label labelLog;
-        private System.Windows.Forms.Button buttonTogglePause;
         private System.Windows.Forms.Button buttonDebug;
     }
 }

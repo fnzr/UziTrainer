@@ -13,14 +13,14 @@ namespace UziTrainer.Scenes
         {
             Scene.Click(new Query("FormationPage/Filter", new Rectangle(1106, 269, 110, 45)));
             if (Scene.Exists(new Query("FormationPage/FilterActive", new Rectangle(1164, 329, 35, 31)))) {
-                Scene.Click(new Query("FormationPage/Reset"));
+                Scene.Click(new Query("FormationPage/Reset", new Rectangle(596, 692, 30, 30)), 10, 5);
                 Thread.Sleep(500);
                 Scene.Click(new Query("FormationPage/Filter", new Rectangle(1106, 269, 110, 45)));
             }
             Scene.Click(new Query("FormationPage/Filter" + doll.Rarity, new Rectangle(527, 168, 550, 170)));
             Scene.Click(new Query("FormationPage/Filter" + doll.Type, new Rectangle(527, 384, 550, 170)));
             Mouse.Click(928, 714, 5);
-            Scene.Click(new Query("Dolls/" + doll.Name, true));
+            Scene.Click(new Query("Dolls/" + doll.Name, .85f));
         }
 
         public static void AddDollToEchelon(Doll doll, int echelon, int slot)
@@ -42,7 +42,7 @@ namespace UziTrainer.Scenes
         public static void ReplaceDoll(Doll DollOut, Doll DollIn)
         {
             Scene.Wait(new Query("FormationPage/WaitForFormation", new Rectangle(1198,149,25,25)));
-            Scene.Click(new Query("Dolls/" + DollOut.Name, new Rectangle(136, 137, 934, 378)));
+            Scene.Click(new Query("Dolls/" + DollOut.Name, new Rectangle(136, 137, 934, 378), .85f));
             SelectDoll(DollIn);
         }
 
@@ -52,7 +52,7 @@ namespace UziTrainer.Scenes
             var doll2 = Doll.Get(SwapDoll.Default.LoadedDoll);
             ReplaceDoll(doll1, doll2);
             AddDollToEchelon(doll1, 2, 1);
-
+            Scene.Transition(Scene.FormationQuery, Scene.HomeQuery);
             SwapDoll.Default.ExhaustedDoll = doll2.Name;
             SwapDoll.Default.LoadedDoll = doll1.Name;
             SwapDoll.Default.Save();

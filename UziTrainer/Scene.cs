@@ -58,12 +58,18 @@ namespace UziTrainer
             }
             Trace.WriteLine(string.Format("Found [{0}]", query.ImagePath));
             return true;
-        }        
+        }
 
-        public static void Click(Query query)
+        public static void Click(Query query, int variance)
         {
             Wait(query, out Point coordinates);
-            Mouse.Click(coordinates.X, coordinates.Y);
+            Mouse.Click(coordinates.X, coordinates.Y, variance);
+        }
+
+        public static void Click(Query query, int varianceX=10, int varianceY=10)
+        {
+            Wait(query, out Point coordinates);
+            Mouse.Click(coordinates.X, coordinates.Y, varianceX, varianceY);
         }
 
         public static readonly Query HomeQuery = new Query("HomePage/" + Properties.Settings.Default.BaseBackground, new Rectangle(835, 571, 396, 95));
@@ -85,7 +91,7 @@ namespace UziTrainer
             while (true)
             {
                 Point coords;
-                if (Exists(leave, out coords))
+                if (Exists(leave, 1500, out coords))
                 {
                     coords = click.HasValue ? (Point)click : coords;
                     Mouse.Click(coords.X, coords.Y);
@@ -101,5 +107,13 @@ namespace UziTrainer
                 }
             }
         }        
+
+        public static void ClickUntilFound(Query query, Point point)
+        {
+            do
+            {
+                Mouse.Click(point);
+            } while (!Scene.Exists(query, 1000));
+        }
     }
 }

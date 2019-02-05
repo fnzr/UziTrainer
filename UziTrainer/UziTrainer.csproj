@@ -70,6 +70,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Chapters\Chapter0.cs" />
+    <Compile Include="Chapters\Chapter.cs" />
     <Compile Include="ImageSearchForm.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -37,7 +37,7 @@ namespace UziTrainer {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("SOPMOD")]
+        [global::System.Configuration.DefaultSettingValueAttribute("M4 SOPMOD II")]
         public string ExhaustedDoll {
             get {
                 return ((string)(this["ExhaustedDoll"]));

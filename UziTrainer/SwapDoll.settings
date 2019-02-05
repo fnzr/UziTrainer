@@ -6,7 +6,7 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="ExhaustedDoll" Type="System.String" Scope="User">
-      <Value Profile="(Default)">SOPMOD</Value>
+      <Value Profile="(Default)">M4 SOPMOD II</Value>
     </Setting>
     <Setting Name="LoadedDoll" Type="System.String" Scope="User">
       <Value Profile="(Default)">G11</Value>

@@ -2,6 +2,7 @@
 using Emgu.CV.Structure;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
@@ -12,7 +13,7 @@ using System.Windows.Forms;
 
 namespace UziTrainer
 {
-    class ImageSearchForm : Form
+    internal class ImageSearchForm : Form
     {
         private Label label2;
         private Label label3;
@@ -35,6 +36,20 @@ namespace UziTrainer
             InitializeComponent();
             labelArea.Text = query.Area.ToString();
             labelSearch.Text = query.ImagePath;            
+        }
+
+        public static void InvokeIfRequired(ISynchronizeInvoke obj,
+                                         MethodInvoker action)
+        {
+            if (obj.InvokeRequired)
+            {
+                var args = new object[0];
+                obj.Invoke(action, args);
+            }
+            else
+            {
+                action();
+            }
         }
 
         public void SetFoundAt(Point position)
@@ -70,11 +85,9 @@ namespace UziTrainer
         {
             foreach (var form in this.debugForms)
             {
-                //this.BeginInvoke((Action)(() => form.Dispose()));
-                form.Dispose();
+                form.BeginInvoke((Action)(() => form.Dispose()));
             }
-            //this.BeginInvoke((Action)(() => base.Dispose()));
-            base.Dispose();
+            base.Dispose();            
         }
 
         internal void SearchEvaluation(double v)
@@ -111,7 +124,7 @@ namespace UziTrainer
         {
             foreach (var form in this.debugForms)
             {
-                form.Close();
+                form.BeginInvoke((Action)(() => form.Close()));
             }
             base.Close();
         }
@@ -192,7 +205,7 @@ namespace UziTrainer
             // 
             // buttonContinue
             // 
-            this.buttonContinue.Location = new System.Drawing.Point(197, 42);
+            this.buttonContinue.Location = new System.Drawing.Point(169, 108);
             this.buttonContinue.Name = "buttonContinue";
             this.buttonContinue.Size = new System.Drawing.Size(75, 23);
             this.buttonContinue.TabIndex = 6;
@@ -220,7 +233,7 @@ namespace UziTrainer
             // 
             // buttonImage
             // 
-            this.buttonImage.Location = new System.Drawing.Point(197, 13);
+            this.buttonImage.Location = new System.Drawing.Point(16, 108);
             this.buttonImage.Name = "buttonImage";
             this.buttonImage.Size = new System.Drawing.Size(75, 23);
             this.buttonImage.TabIndex = 9;
@@ -230,7 +243,7 @@ namespace UziTrainer
             // 
             // ImageSearchForm
             // 
-            this.ClientSize = new System.Drawing.Size(284, 102);
+            this.ClientSize = new System.Drawing.Size(284, 152);
             this.Controls.Add(this.buttonImage);
             this.Controls.Add(this.labelEvaluation);
             this.Controls.Add(this.label4);

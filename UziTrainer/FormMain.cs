@@ -15,13 +15,20 @@ namespace UziTrainer
         public FormMain()
         {
             InitializeComponent();
-            SetDolls();
+            UpdateDollText();
             comboMaps.Items.AddRange(maps);
             checkBoxSwapActive.Checked = SwapDoll.Default.Active;
             comboMaps.SelectedValue = Properties.Settings.Default.SelectedMission;
             comboMaps.SelectedIndexChanged += selectedIndexChanged;
+            textLoaded.LostFocus += TextSwap_TextChanged;
+            textExhausted.LostFocus += TextSwap_TextChanged;
             SwapDoll.Default.PropertyChanged += Default_PropertyChanged;
             Trace.Listeners.Add(new FormMainTraceListener(this));
+        }
+
+        private void TextSwap_TextChanged(object sender, EventArgs e)
+        {
+            UpdateSettings();
         }
 
         private void Default_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -62,15 +69,22 @@ namespace UziTrainer
             SwapDoll.Default.Save();
         }
 
+        private void UpdateSettings()
+        {
+            SwapDoll.Default.ExhaustedDoll = textExhausted.Text;
+            SwapDoll.Default.LoadedDoll = textLoaded.Text;
+            SwapDoll.Default.Save();
+            UpdateDollText();
+        }
+
         private void buttonSwap_Click(object sender, EventArgs e)
         {
             SwapDoll.Default.ExhaustedDoll = textLoaded.Text;
             SwapDoll.Default.LoadedDoll = textExhausted.Text;
             SwapDoll.Default.Save();
-            SetDolls();
         }
 
-        private void SetDolls()
+        private void UpdateDollText()
         {
             textLoaded.Text = SwapDoll.Default.LoadedDoll;
             textExhausted.Text = SwapDoll.Default.ExhaustedDoll;
@@ -90,7 +104,7 @@ namespace UziTrainer
 
         public void SetPausedInfo()
         {
-            buttonTogglePause.Text = "Resume";
+            //buttonTogglePause.Text = "Resume";
         }
 
         private void buttonRun_Click(object sender, EventArgs e)
@@ -106,12 +120,12 @@ namespace UziTrainer
         {
             if (Program.TrainerThread.WaitOne(0))
             {
-                buttonTogglePause.Text = "Pause";
+                //buttonTogglePause.Text = "Pause";
                 Program.TrainerThread.Set();
             }
             else
             {
-                buttonTogglePause.Text = "Resume";
+               // buttonTogglePause.Text = "Resume";
                 Program.TrainerThread.WaitOne();
             }
         }
@@ -120,8 +134,11 @@ namespace UziTrainer
         {
             var executionThread = new Thread(new ThreadStart(delegate ()
             {
-                Formation.SetDragFormation();
+                //Formation.SetDragFormation();
                 //ImageSearch.FindPoint(new Query("Dolls/G11", true), out _);
+                //Combat.Setup("0_2");
+                //Mouse.ZoomOut();
+                Mouse.DragRightToLeft(300, 1250, 850);
             }));
             executionThread.Start();
         }
