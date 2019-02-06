@@ -22,34 +22,7 @@ namespace UziTrainer
             checkBoxSwapActive.Checked = SwapDoll.Default.Active;
             comboMaps.SelectedIndex = Array.IndexOf(maps, Properties.Settings.Default.SelectedMission);
             comboMaps.SelectedIndexChanged += selectedIndexChanged;
-            SwapDoll.Default.PropertyChanged += Default_PropertyChanged;
             Trace.Listeners.Add(new FormMainTraceListener(this));
-        }
-
-        private void Default_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName.Equals("LoadedDoll"))
-            {
-                if (InvokeRequired)
-                {
-                    Invoke((Action)(() => textLoaded.Text = SwapDoll.Default.LoadedDoll));
-                }
-                else
-                {
-                    textExhausted.Text = textLoaded.Text = SwapDoll.Default.LoadedDoll;
-                }
-            }
-            if (e.PropertyName.Equals("ExhaustedDoll"))
-            {
-                if (InvokeRequired)
-                {
-                    Invoke((Action)(() => textExhausted.Text = SwapDoll.Default.ExhaustedDoll));
-                }
-                else
-                {
-                    textExhausted.Text = SwapDoll.Default.ExhaustedDoll;
-                }
-            }
         }
 
         private void selectedIndexChanged(object sender, EventArgs e)

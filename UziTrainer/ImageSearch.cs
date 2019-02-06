@@ -27,7 +27,7 @@ namespace UziTrainer
             if (IsDebugging)
             {
                 Trace.WriteLine("Starting debug");
-                var position = coordinates;                
+                var position = coordinates;             
                 var thread = new Thread(new ThreadStart(delegate(){
                     debugForm.Show();
                     debugForm.SetFoundAt(position);

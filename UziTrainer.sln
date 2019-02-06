@@ -5,8 +5,6 @@ VisualStudioVersion = 15.0.28307.136
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UziTrainer", "UziTrainer\UziTrainer.csproj", "{2FF5F965-94D0-4E4D-9677-96942769A62D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UziTrainerTests", "UziTrainerTests\UziTrainerTests.csproj", "{CAABD3CB-F1F4-4CAF-B196-C1E151F7F2DA}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{2FF5F965-94D0-4E4D-9677-96942769A62D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2FF5F965-94D0-4E4D-9677-96942769A62D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2FF5F965-94D0-4E4D-9677-96942769A62D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CAABD3CB-F1F4-4CAF-B196-C1E151F7F2DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CAABD3CB-F1F4-4CAF-B196-C1E151F7F2DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CAABD3CB-F1F4-4CAF-B196-C1E151F7F2DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CAABD3CB-F1F4-4CAF-B196-C1E151F7F2DA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
