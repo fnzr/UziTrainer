@@ -33,7 +33,7 @@ namespace UziTrainer
 
         public static void Pause()
         {
-            main.SetPausedInfo();
+            main.PauseExecution();
             TrainerThread.WaitOne();
         }
 

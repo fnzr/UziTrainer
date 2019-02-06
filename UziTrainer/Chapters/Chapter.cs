@@ -5,29 +5,33 @@ namespace UziTrainer.Chapters
 {
     class Chapter
     {
-        protected static readonly Point START_OPERATION = new Point(1126, 684);
-        protected static readonly Query DEPLOY_ECHELON = new Query("Combat/DeployOK", new Rectangle(1135, 661, 25, 25));
-        protected static readonly Point PLANNING_MODE = new Point(76, 622);
-        protected static readonly Point EXECUTE_PLAN = new Point(1187, 684);
-        protected static readonly Point END_ROUND = new Point(1176, 691);
-        protected static readonly Query RESUPPLY = new Query("Combat/Resupply", new Rectangle(1166, 583, 30, 30));
-        protected static readonly Query RETREAT = new Query("Combat/Retreat", new Rectangle(917, 646, 170, 70));
+        protected static readonly Point StartOperationN = new Point(1126, 684);
+        protected static readonly Query DeployEchelon = new Query("Combat/DeployOK", new Rectangle(1135, 661, 25, 25));
+        protected static readonly Point PlanningMode = new Point(76, 622);
+        protected static readonly Point ExecutePlan = new Point(1187, 684);
+        protected static readonly Point EndRound = new Point(1176, 691);
+        protected static readonly Query Resupply = new Query("Combat/Resupply", new Rectangle(1166, 583, 30, 30));
+        protected static readonly Query Retreat = new Query("Combat/Retreat", new Rectangle(917, 646, 170, 70));
+        protected static readonly Query CombatPause = new Query("Combat/Retreat", new Rectangle(917, 646, 170, 70));
+
 
         protected static void WaitBattle()
         {
-            Scene.Wait(new Query("Combat/CombatPause", new Rectangle(557, 29, 100, 30)));
+            Scene.Wait(CombatPause);
             Program.main.WriteLog("In Battle");
+            
             while (true)
             {
-                if (!Scene.Exists(new Query("Combat/CombatPause", new Rectangle(557, 29, 100, 30))))
+                if (!Scene.Exists(CombatPause))
                 {
                     break;
                 }
                 Thread.Sleep(500);
             }
+            var LoadScreen = new Query("LoadScreen");
             while (true)
             {
-                if (Scene.Exists(new Query("LoadScreen"), 300))
+                if (Scene.Exists(LoadScreen, 300))
                 {
                     break;
                 }
@@ -39,7 +43,7 @@ namespace UziTrainer.Chapters
         protected static void WaitExecution()
         {
             Program.main.WriteLog("Executing Plan");
-            Mouse.Click(EXECUTE_PLAN);
+            Mouse.Click(ExecutePlan);
             Thread.Sleep(1000);
             while (true)
             {
@@ -59,7 +63,7 @@ namespace UziTrainer.Chapters
                 {
                     Program.main.WriteLog("Executing Plan");
                 }
-                else if (Scene.Exists(new Query("Combat/CombatPause", new Rectangle(557, 29, 100, 30)))){
+                else if (Scene.Exists(CombatPause)){
                     WaitBattle();
                 }
             }
@@ -68,7 +72,7 @@ namespace UziTrainer.Chapters
 
         protected static void WaitTurn(string turn)
         {
-            Mouse.Click(END_ROUND);
+            Mouse.Click(EndRound);
             Program.main.WriteLog("Waiting Turn " + turn);
             while (true)
             {
@@ -88,7 +92,7 @@ namespace UziTrainer.Chapters
                 {
                     Program.main.WriteLog("SF moving");
                 }
-                if (Scene.Exists(new Query("Combat/CombatPause", new Rectangle(557, 29, 100, 30)), 1000))
+                if (Scene.Exists(CombatPause, 1000))
                 {
                     WaitBattle();
                 }

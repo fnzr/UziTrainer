@@ -71,9 +71,10 @@ namespace UziTrainer
             }
         }
 
-        public void SetPausedInfo()
+        public void PauseExecution()
         {
             buttonTogglePause.Text = "Resume";
+            ExecutionThread.Suspend();
         }
 
         private void buttonRun_Click(object sender, EventArgs e)
