@@ -2,8 +2,6 @@
 using System.Diagnostics;
 using System.Threading;
 using System.Windows.Forms;
-using UziTrainer.Page;
-using UziTrainer.Scenes;
 
 namespace UziTrainer
 {
@@ -51,12 +49,25 @@ namespace UziTrainer
             SwapDoll.Default.ExhaustedDoll = textLoaded.Text;
             SwapDoll.Default.LoadedDoll = loaded;
             SwapDoll.Default.Save();
+            UpdateDollText();
         }
 
-        private void UpdateDollText()
+        private void _UpdateDollText()
         {
             textLoaded.Text = SwapDoll.Default.LoadedDoll;
             textExhausted.Text = SwapDoll.Default.ExhaustedDoll;
+        }
+
+        public void UpdateDollText()
+        {
+            if (InvokeRequired)
+            {
+                BeginInvoke((Action)_UpdateDollText);
+            }
+            else
+            {
+                _UpdateDollText();
+            }            
         }
 
         public void WriteLog(string message)
@@ -73,7 +84,14 @@ namespace UziTrainer
 
         public void PauseExecution()
         {
-            buttonTogglePause.Text = "Resume";
+            if (InvokeRequired)
+            {
+                Invoke((Action)(() => buttonTogglePause.Text = "Resume"));
+            }
+            else
+            {
+                buttonTogglePause.Text = "Resume";
+            }
             ExecutionThread.Suspend();
         }
 
@@ -82,9 +100,10 @@ namespace UziTrainer
             UpdateSettings();
             ExecutionThread = new Thread(new ThreadStart(delegate ()
             {
+                var scene = new Scene();
                 while (true)
                 {
-                    Program.Run();
+                    Program.Run(scene);
                     BeginInvoke((Action)(() => labelCounter.Text = (++RunCounter).ToString()));
                 }
             }));
@@ -115,9 +134,10 @@ namespace UziTrainer
         {
             var executionThread = new Thread(new ThreadStart(delegate ()
             {
-                //Mouse.DragUpToDown(700, 104, 734);
-                //Factory.ClickEnhanceableDoll();
-                Factory.DollEnhancement();
+            //Mouse.DragUpToDown(700, 104, 734);
+            //Factory.ClickEnhanceableDoll();
+                //var factory = new Factory();
+                //factory.DollEnhancement();
             }));
             executionThread.Start();
         }

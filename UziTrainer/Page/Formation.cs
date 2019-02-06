@@ -3,59 +3,66 @@ using System.Threading;
 
 namespace UziTrainer.Scenes
 {
-    public class Formation
+    class Formation
     {
         private static readonly int EchelonSlotX = 160;
         private static readonly int EchelonSlotXSize = 185;
+        Scene scene;
 
-
-        private static void SelectDoll(Doll doll)
+        public Formation(Scene scene)
         {
-            Scene.Click(new Query("FormationPage/Filter", new Rectangle(1106, 269, 110, 45)));
-            if (Scene.Exists(new Query("FormationPage/FilterActive", new Rectangle(1164, 329, 35, 31)))) {
-                Scene.Click(new Query("FormationPage/Reset", new Rectangle(596, 692, 30, 30)), 10, 5);
-                Thread.Sleep(500);
-                Scene.Click(new Query("FormationPage/Filter", new Rectangle(1106, 269, 110, 45)));
-            }
-            Scene.Click(new Query("FormationPage/Filter" + doll.Rarity, new Rectangle(527, 168, 550, 170)));
-            Scene.Click(new Query("FormationPage/Filter" + doll.Type, new Rectangle(527, 384, 550, 170)));
-            Mouse.Click(928, 714, 5);
-            Scene.Click(new Query("Dolls/" + doll.Name, .85f));
+            this.scene = scene;
         }
 
-        public static void AddDollToEchelon(Doll doll, int echelon, int slot)
+
+        private void SelectDoll(Doll doll)
+        {
+            scene.Click(new Query("FormationPage/Filter", new Rectangle(1106, 269, 110, 45)));
+            if (scene.Exists(new Query("FormationPage/FilterActive", new Rectangle(1164, 329, 35, 31)))) {
+                scene.Click(new Query("FormationPage/Reset", new Rectangle(596, 692, 30, 30)), 10, 5);
+                Thread.Sleep(500);
+                scene.Click(new Query("FormationPage/Filter", new Rectangle(1106, 269, 110, 45)));
+            }
+            scene.Click(new Query("FormationPage/Filter" + doll.Rarity, new Rectangle(527, 168, 550, 170)), 10, 3);
+            scene.Click(new Query("FormationPage/Filter" + doll.Type, new Rectangle(527, 384, 550, 170)));
+            scene.Click(new Query("FormationPage/FilterConfirm", new Rectangle(876, 706, 30, 30)));
+            scene.Transition(new Query("Dolls/" + doll.Name, .85f), Scene.FormationQuery);
+        }
+
+        public void AddDollToEchelon(Doll doll, int echelon, int slot)
         {
             if (echelon > 7)
             {
                 //TODO drag
             }
-            if (!Scene.Exists(new Query("FormationPage/Echelon" + echelon.ToString() + "Clicked", new Rectangle(2,125,140,625)))) {
-                Scene.Click(new Query("FormationPage/Echelon" + echelon.ToString(), new Rectangle(2, 125, 140, 625)));
-                Scene.Wait(new Query("FormationPage/Echelon" + echelon.ToString() + "Clicked", new Rectangle(2, 125, 140, 625)));
+            if (!scene.Exists(new Query("FormationPage/Echelon" + echelon.ToString() + "Clicked", new Rectangle(2,125,140,625)))) {
+                scene.Click(new Query("FormationPage/Echelon" + echelon.ToString(), new Rectangle(2, 125, 140, 625)));
+                scene.Wait(new Query("FormationPage/Echelon" + echelon.ToString() + "Clicked", new Rectangle(2, 125, 140, 625)));
             }
-            Scene.Wait(new Query("FormationPage/WaitForFormation", new Rectangle(1198, 149, 25, 25)));
+            scene.Wait(new Query("FormationPage/WaitForFormation", new Rectangle(1198, 149, 25, 25)));
             var x = EchelonSlotX + (slot - 1) * EchelonSlotXSize + 80;
             Mouse.Click(x, 240);
             SelectDoll(doll);
         }
 
-        public static void ReplaceDoll(Doll DollOut, Doll DollIn)
+        public void ReplaceDoll(Doll DollOut, Doll DollIn)
         {
-            Scene.Wait(new Query("FormationPage/WaitForFormation", new Rectangle(1198,149,25,25)));
-            Scene.Click(new Query("Dolls/" + DollOut.Name, new Rectangle(136, 137, 934, 378), .85f));
+            scene.Wait(new Query("FormationPage/WaitForFormation", new Rectangle(1198,149,25,25)));
+            scene.Click(new Query("Dolls/" + DollOut.Name, new Rectangle(136, 137, 934, 378), .85f));
             SelectDoll(DollIn);
         }
 
-        public static void SetDragFormation()
+        public void SetDragFormation()
         {
             var doll1 = Doll.Get(SwapDoll.Default.ExhaustedDoll);
             var doll2 = Doll.Get(SwapDoll.Default.LoadedDoll);
             ReplaceDoll(doll1, doll2);
             AddDollToEchelon(doll1, 2, 1);
-            Scene.Transition(Scene.FormationQuery, Scene.HomeQuery);
+            scene.Transition(Scene.FormationQuery, Scene.HomeQuery);
             SwapDoll.Default.ExhaustedDoll = doll2.Name;
             SwapDoll.Default.LoadedDoll = doll1.Name;
             SwapDoll.Default.Save();
+            Program.UpdateDollText();
         }
     }
 }

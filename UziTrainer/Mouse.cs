@@ -4,7 +4,7 @@ using System.Threading;
 
 namespace UziTrainer
 {
-    public class Mouse
+    public static class Mouse
     {
         private const int DEFAULT_VARIANCE = 10;
         private const int Step = 5;
@@ -55,7 +55,8 @@ namespace UziTrainer
             var rx = random.Next(x - varianceX, x + varianceX);
             var ry = random.Next(y - varianceY, y + varianceY);
             _Click(rx, ry);
-            Thread.Sleep(100);
+            var sleep = random.Next(300, 800);
+            Thread.Sleep(sleep);
         }
 
         public static void Click(int x, int y, int variance)

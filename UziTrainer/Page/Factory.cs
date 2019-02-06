@@ -14,16 +14,22 @@ namespace UziTrainer.Page
         const int DollSlotY = 260;
         const int DollSlotXSize = 165;
         const int DollSlotYSize = 290;
+        Scene scene;
 
-        private static void Retire2Stars()
+        public Factory(Scene scene)
         {
-            Scene.Click(new Query("FactoryPage/SelectRetirement"));
+            this.scene = scene;
+        }
+
+        private void Retire2Stars()
+        {
+            scene.Click(new Query("FactoryPage/SelectRetirement"));
             Point coords;
-            if (Scene.Exists(new Query("FactoryPage/SmartSelect", new Rectangle(1168,662,25,25)), 2000, out coords)) {
+            if (scene.Exists(new Query("FactoryPage/SmartSelect", new Rectangle(1168,662,25,25)), 2000, out coords)) {
                 Mouse.Click(coords);
-                if (Scene.Exists(new Query("FactoryPage/OKRetire", new Rectangle(1144,655,25,25)), 2000, out coords)) {
+                if (scene.Exists(new Query("FactoryPage/OKRetire", new Rectangle(1144,655,25,25)), 2000, out coords)) {
                     Mouse.Click(coords);
-                    Scene.Wait(new Query("FactoryPage/FactoryPage", new Rectangle(56, 649, 40, 40)));
+                    scene.Wait(new Query("FactoryPage/FactoryPage", new Rectangle(56, 649, 40, 40)));
                     Mouse.Click(1182, 652);
                     Thread.Sleep(500);
                     Mouse.Click(744, 527);
@@ -32,7 +38,7 @@ namespace UziTrainer.Page
                 else
                 {
                     Mouse.Click(71, 75);
-                    Scene.Wait(Scene.FactoryQuery);
+                    scene.Wait(Scene.FactoryQuery);
                 }
             }
             else
@@ -41,12 +47,12 @@ namespace UziTrainer.Page
             }
         }
 
-        private static void Retire3Stars()
+        private void Retire3Stars()
         {
-            Scene.Click(new Query("FactoryPage/SelectRetirement"));
-            if (Scene.Exists(new Query("FactoryPage/SmartSelect", new Rectangle(1168,662,25,25)), 2000)) {
-                Scene.Click(new Query("FactoryPage/Filter", new Rectangle(1099, 266, 172, 104)));
-                Scene.Click(new Query("FactoryPage/3", new Rectangle(527, 168, 550, 170)));
+            scene.Click(new Query("FactoryPage/SelectRetirement"));
+            if (scene.Exists(new Query("FactoryPage/SmartSelect", new Rectangle(1168,662,25,25)), 2000)) {
+                scene.Click(new Query("FactoryPage/Filter", new Rectangle(1099, 266, 172, 104)));
+                scene.Click(new Query("FactoryPage/3", new Rectangle(527, 168, 550, 170)));
                 Mouse.Click(933, 709); //Confirm
                 Thread.Sleep(500);        
                 for(var j=0; j<2; j++) {
@@ -57,9 +63,9 @@ namespace UziTrainer.Page
                         Mouse.Click(x, y);
                     }
                 }
-                if (Scene.Exists(new Query("FactoryPage/OKRetire", new Rectangle(1144,655,25,25)), 2000, out Point coords)) {
+                if (scene.Exists(new Query("FactoryPage/OKRetire", new Rectangle(1144,655,25,25)), 2000, out Point coords)) {
                     Mouse.Click(coords);
-                    Scene.Wait(new Query("FactoryPage/FactoryPage", new Rectangle(56, 649, 40, 40)));
+                    scene.Wait(new Query("FactoryPage/FactoryPage", new Rectangle(56, 649, 40, 40)));
                     Mouse.Click(1182, 652);
                     Thread.Sleep(500);
                     Mouse.Click(744, 527);
@@ -68,7 +74,7 @@ namespace UziTrainer.Page
                 else
                 {
                     Mouse.Click(71, 75);
-                    Scene.Wait(Scene.FactoryQuery);
+                    scene.Wait(Scene.FactoryQuery);
                 }
             }
             else
@@ -77,7 +83,7 @@ namespace UziTrainer.Page
             }
         }
 
-        public static void DollRetirement()
+        public void DollRetirement()
         {
             /*
             IniRead, DoRetire, % A_LineFile %\..\..\config.ini, Options, Retirement
@@ -86,14 +92,14 @@ namespace UziTrainer.Page
                 return
             }
             */
-            Scene.Wait(Scene.FactoryQuery);
+            scene.Wait(Scene.FactoryQuery);
             Mouse.Click(98, 470);
             Retire2Stars();
             Retire3Stars();
-            Scene.Transition(Scene.FactoryQuery, Scene.HomeQuery, new Point(68, 78));
+            scene.Transition(Scene.FactoryQuery, Scene.HomeQuery, new Point(68, 78));
         }
 
-        public static bool ClickEnhanceableDoll()
+        public bool ClickEnhanceableDoll()
         {
             for(var j=0; j<2; j++)
             {
@@ -101,11 +107,11 @@ namespace UziTrainer.Page
                 for(var i=0; i<6; i++) {
                     int x = (14 * (i + 1)) + (i * DollSlotXSize);
                     var area = new Rectangle(x, y, DollSlotXSize, 90);
-                    if (!Scene.Exists(new Query("FactoryPage/InLogistics", area))) {
+                    if (!scene.Exists(new Query("FactoryPage/InLogistics", area))) {
                         if (true)
-                        //if (!Scene.Exists(new Query("FactoryPage/InTraining", area)))
+                        //if (!scene.Exists(new Query("FactoryPage/InTraining", area)))
                         {
-                            Scene.Transition(new Query("FactoryPage/Filter", new Rectangle(1175, 280, 25, 25)),
+                            scene.Transition(new Query("FactoryPage/Filter", new Rectangle(1175, 280, 25, 25)),
                                 new Query("FactoryPage/SelectFodder"), new Point(x + 80, y));
                             return true;
                         }
@@ -115,22 +121,22 @@ namespace UziTrainer.Page
             return false;
         }
 
-        private static bool SmartSelectEnhanceFodder()
+        private bool SmartSelectEnhanceFodder()
         {
             Point coords;
-            Scene.Click(new Query("FactoryPage/SmartSelect", new Rectangle(1115, 621, 150, 80)));
-            if (Scene.Exists(new Query("FactoryPage/OKRetire", new Rectangle(1131,629,50,50)), 2000, out coords)) {
+            scene.Click(new Query("FactoryPage/SmartSelect", new Rectangle(1115, 621, 150, 80)));
+            if (scene.Exists(new Query("FactoryPage/OKRetire", new Rectangle(1131,629,50,50)), 2000, out coords)) {
                 Mouse.Click(coords);
                 Thread.Sleep(500);
                 Mouse.Click(1182, 643);
                 Thread.Sleep(3500);
-                var success = Scene.Exists(new Query("FactoryPage/PowerUpSuccess", new Rectangle(579, 535, 30, 30)), 4000, out coords);
+                var success = scene.Exists(new Query("FactoryPage/PowerUpSuccess", new Rectangle(579, 535, 30, 30)), 4000, out coords);
                 if (success) {
                     Mouse.Click(coords);
                 }
                 else
                 {
-                    Scene.Exists(new Query("FactoryPage/NotEnoughDolls", new Rectangle(468, 510, 30, 30)), 1000, out coords);
+                    scene.Exists(new Query("FactoryPage/NotEnoughDolls", new Rectangle(468, 510, 30, 30)), 1000, out coords);
                     Mouse.Click(coords);
                     return false;
                 }
@@ -143,7 +149,7 @@ namespace UziTrainer.Page
             }
         }
 
-        public static void DollEnhancement()
+        public void DollEnhancement()
         {
             /*
             IniRead, DoEnhance, % A_LineFile %\..\..\config.ini, Options, Enhancement
@@ -152,15 +158,15 @@ namespace UziTrainer.Page
                 return
             }
             */
-            Scene.Wait(Scene.FactoryQuery);
+            scene.Wait(Scene.FactoryQuery);
             do
             {
                 Mouse.Click(98, 377);
-                Scene.Transition(new Query("FactoryPage/SelectCharacter", new Rectangle(231, 161, 170, 375)),
+                scene.Transition(new Query("FactoryPage/SelectCharacter", new Rectangle(231, 161, 170, 375)),
                     new Query("FactoryPage/Filter", new Rectangle(1175, 280, 25, 25)));
                 if (ClickEnhanceableDoll())
                 {
-                    Scene.Transition(Scene.FactoryQuery, new Query("FactoryPage/SmartSelect", new Rectangle(1115, 621, 150, 80)), new Point(536, 247));
+                    scene.Transition(Scene.FactoryQuery, new Query("FactoryPage/SmartSelect", new Rectangle(1115, 621, 150, 80)), new Point(536, 247));
                 }
             } while (SmartSelectEnhanceFodder());
             DollRetirement();

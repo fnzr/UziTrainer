@@ -14,15 +14,21 @@ namespace UziTrainer.Chapters
         protected static readonly Query Retreat = new Query("Combat/Retreat", new Rectangle(917, 646, 170, 70));
         protected static readonly Query CombatPause = new Query("Combat/Retreat", new Rectangle(917, 646, 170, 70));
 
-
-        protected static void WaitBattle()
+        protected Scene scene;
+        public Chapter(Scene scene)
         {
-            Scene.Wait(CombatPause);
-            Program.main.WriteLog("In Battle");
+            this.scene = scene;
+        }
+
+
+        protected void WaitBattle()
+        {
+            scene.Wait(CombatPause);
+            Program.WriteLog("In Battle");
             
             while (true)
             {
-                if (!Scene.Exists(CombatPause))
+                if (!scene.Exists(CombatPause))
                 {
                     break;
                 }
@@ -31,84 +37,84 @@ namespace UziTrainer.Chapters
             var LoadScreen = new Query("LoadScreen");
             while (true)
             {
-                if (Scene.Exists(LoadScreen, 300))
+                if (scene.Exists(LoadScreen, 300))
                 {
                     break;
                 }
                 Mouse.Click(630, 365, 100);
             }
-            Program.main.WriteLog("Finished Battle");
+            Program.WriteLog("Finished Battle");
         }
 
-        protected static void WaitExecution()
+        protected void WaitExecution()
         {
-            Program.main.WriteLog("Executing Plan");
+            Program.WriteLog("Executing Plan");
             Mouse.Click(ExecutePlan);
             Thread.Sleep(1000);
             while (true)
             {
-                if (Scene.Exists(new Query("Combat/MissionSuccess", new Rectangle(1196, 121, 50, 50), 1000)))
+                if (scene.Exists(new Query("Combat/MissionSuccess", new Rectangle(1196, 121, 50, 50), 1000)))
                 {
                     return;
                 }
-                if (Scene.Exists(new Query("Combat/MissionFailed", new Rectangle(1192, 125, 50, 50), 1000)))
+                if (scene.Exists(new Query("Combat/MissionFailed", new Rectangle(1192, 125, 50, 50), 1000)))
                 {
                     return;
                 }
-                if (Scene.Exists(new Query("Combat/Planning", new Rectangle(1, 567, 173, 100))))
+                if (scene.Exists(new Query("Combat/Planning", new Rectangle(1, 567, 173, 100))))
                 {
                     break;
                 }
-                if (Scene.Exists(new Query("Combat/EndTurn", new Rectangle(1097, 646, 150, 90))))
+                if (scene.Exists(new Query("Combat/EndTurn", new Rectangle(1097, 646, 150, 90))))
                 {
-                    Program.main.WriteLog("Executing Plan");
+                    Program.WriteLog("Executing Plan");
                 }
-                else if (Scene.Exists(CombatPause)){
+                else if (scene.Exists(CombatPause)){
                     WaitBattle();
                 }
             }
             Thread.Sleep(500);
         }
 
-        protected static void WaitTurn(string turn)
+        protected void WaitTurn(string turn)
         {
             Mouse.Click(EndRound);
-            Program.main.WriteLog("Waiting Turn " + turn);
+            Program.WriteLog("Waiting Turn " + turn);
             while (true)
             {
-                if (Scene.Exists(new Query("Combat/Turn" + turn)))
+                if (scene.Exists(new Query("Combat/Turn" + turn)))
                 {
                     break;
                 }
-                if (Scene.Exists(new Query("Combat/MissionSuccess", new Rectangle(1196, 121, 50, 50)), 1000))
+                if (scene.Exists(new Query("Combat/MissionSuccess", new Rectangle(1196, 121, 50, 50)), 1000))
                 {
                     return;
                 }
-                if (Scene.Exists(new Query("Combat/MissionFailed", new Rectangle(1192, 125, 50, 50)), 1000))
+                if (scene.Exists(new Query("Combat/MissionFailed", new Rectangle(1192, 125, 50, 50)), 1000))
                 {
                     return;
                 }
-                if (Scene.Exists(new Query("Combat/Terminate", new Rectangle(263, 45, 100, 70)), 1000))
+                if (scene.Exists(new Query("Combat/Terminate", new Rectangle(263, 45, 100, 70)), 1000))
                 {
-                    Program.main.WriteLog("SF moving");
+                    Program.WriteLog("SF moving");
                 }
-                if (Scene.Exists(CombatPause, 1000))
+                if (scene.Exists(CombatPause, 1000))
                 {
                     WaitBattle();
                 }
             }
-            Program.main.WriteLog("G&K turn started");
+            Program.WriteLog("G&K turn started");
             while (true)
             {
-                if (Scene.Exists(new Query("Combat/Planning"), 1000, out Point coordinates))
+                if (scene.Exists(new Query("Combat/Planning"), 1000, out Point coordinates))
                 {
                     Mouse.Click(coordinates);
-                    if (Scene.Exists(new Query("Combat/PlanningReady")))
+                    if (scene.Exists(new Query("Combat/PlanningReady")))
                     {
                         break;
                     }
                 }
-                if (Scene.Exists(new Query("Combat/MissionFailed", new Rectangle(1192, 125, 50, 50)), 1000))
+                if (scene.Exists(new Query("Combat/MissionFailed", new Rectangle(1192, 125, 50, 50)), 1000))
                 {
                     return;
                 }
