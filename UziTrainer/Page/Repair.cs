@@ -23,7 +23,7 @@ namespace UziTrainer.Page
             for (var i = 0; i < max; i++)
             {
                 var x = RepairSlotX + (i * RepairSlotXSize);
-                if (scene.Exists(new Query("RepairPage/AvailableSlot", new Rectangle(x, 350, 50, 50)), 100))
+                if (scene.Exists(new Query("RepairPage/AvailableSlot", new Rectangle(x, 325, 50, 50)), 500))
                 {
                     slots.Add(new Point(x, 320));
                 }
@@ -41,18 +41,27 @@ namespace UziTrainer.Page
             }
             Mouse.Click(slots[0]);
             scene.Wait(new Query("RepairPage/RepairOK"));
+            bool criticalExists = false;
             for (var i = 0; i < slots.Count; i++)
             {
                 var x = CriticalRepairX + (i * CriticalReapairXSize);
                 if (scene.Exists(new Query("RepairPage/CriticalIcon", new Rectangle(x, 160, 80, 80)), 500, out Point coords))
                 {
                     Mouse.Click(coords);
+                    criticalExists = true;
                 }
             }
-            scene.Click(new Query("RepairPage/RepairOK", new Rectangle(1178, 559, 50, 50)));
-            scene.Click(new Query("RepairPage/QuickRepairCheck", new Rectangle(297, 517, 30, 30)));
-            scene.Click(new Point(923, 536));
-            scene.Click(new Query("RepairPage/RepairComplete", new Rectangle(576, 533, 40, 40)));
+            if (criticalExists)
+            {
+                scene.Click(new Query("RepairPage/RepairOK", new Rectangle(1178, 559, 50, 50)));
+                scene.Click(new Query("RepairPage/QuickRepairCheck", new Rectangle(297, 517, 30, 30)));
+                scene.Click(new Point(923, 536));
+                scene.Click(new Query("RepairPage/RepairComplete", new Rectangle(576, 533, 40, 40)));
+            }
+            else
+            {
+                scene.Click(new Point(68, 86));
+            }
             scene.Transition(Scene.RepairQuery, Scene.HomeQuery, new Point(71, 71));
         }
     }

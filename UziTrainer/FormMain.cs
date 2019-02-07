@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Threading;
 using System.Windows.Forms;
+using UziTrainer.Page;
 
 namespace UziTrainer
 {
@@ -132,14 +133,17 @@ namespace UziTrainer
 
         private void debugMenuItem_Click(object sender, EventArgs e)
         {
-            var executionThread = new Thread(new ThreadStart(delegate ()
+            ExecutionThread = new Thread(new ThreadStart(delegate ()
             {
+                Scene scene = new Scene();
+                var repair = new Repair(scene);
+                repair.RepairCritical();
             //Mouse.DragUpToDown(700, 104, 734);
             //Factory.ClickEnhanceableDoll();
-                //var factory = new Factory();
-                //factory.DollEnhancement();
+            //var factory = new Factory();
+            //factory.DollEnhancement();
             }));
-            executionThread.Start();
+            ExecutionThread.Start();
         }
     }
 
