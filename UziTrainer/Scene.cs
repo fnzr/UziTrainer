@@ -38,8 +38,24 @@ namespace UziTrainer
 
         private bool CheckInterruptions()
         {
-
+            /*
+            Interruptible = false;
+            if (Exists(new Query("LogisticsReturned", new Rectangle(1174, 87, 30, 30)), 500))
+            {
+                Program.WriteLog("Logistics Returned");
+                Transition(new Query("LogisticsReturned", new Rectangle(1174, 87, 30, 30)),
+                    new Query("LogisticsConfirm"), new Point(754, 524));
+                Mouse.Click(741, 522);
+                return true;
+            }
+            else
+            {
+                //TODO AutoBattle
+            }
+            Interruptible = true;
+            */
             return false;
+        
         }
 
         public bool Exists(Query query, int timeout = 3000)

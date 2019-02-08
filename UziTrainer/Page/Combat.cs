@@ -28,7 +28,10 @@ namespace UziTrainer.Page
             if (!scene.Exists(chapterClickedQuery)) {
                 scene.Transition(new Query("CombatPage/Chapter" + parts[0] + "NotClicked", new Rectangle(193, 119, 218, 624)), chapterClickedQuery);
             }
-            if (Execute(mission))
+            scene.Interruptible = false;
+            var success = Execute(mission);
+            scene.Interruptible = true;
+            if (success)
             {
                 scene.Transition(new Query("CombatPage/Return"), Scene.HomeQuery, new Point(71, 79));
             }
@@ -36,7 +39,7 @@ namespace UziTrainer.Page
             {
                 scene.Transition(Scene.HomeQuery, Scene.CombatQuery, new Point(930, 500));
                 Setup(mission);
-            }
+            }            
         }
 
         public bool Execute(string mission)

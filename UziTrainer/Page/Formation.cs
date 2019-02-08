@@ -54,6 +54,7 @@ namespace UziTrainer.Scenes
 
         public void SetDragFormation()
         {
+            scene.Interruptible = false;
             var doll1 = Doll.Get(SwapDoll.Default.ExhaustedDoll);
             var doll2 = Doll.Get(SwapDoll.Default.LoadedDoll);
             ReplaceDoll(doll1, doll2);
@@ -63,6 +64,7 @@ namespace UziTrainer.Scenes
             SwapDoll.Default.LoadedDoll = doll1.Name;
             SwapDoll.Default.Save();
             Program.UpdateDollText();
+            scene.Interruptible = true;
         }
     }
 }

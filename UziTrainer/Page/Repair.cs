@@ -33,6 +33,7 @@ namespace UziTrainer.Page
 
         public void RepairCritical(int max = 6)
         {
+            scene.Interruptible = false;
             var slots = FindAvaliableSlots(max);
             if (slots.Count == 0)
             {
@@ -62,6 +63,7 @@ namespace UziTrainer.Page
             {
                 scene.Click(new Point(68, 86));
             }
+            scene.Interruptible = true;
             scene.Transition(Scene.RepairQuery, Scene.HomeQuery, new Point(71, 71));
         }
     }
