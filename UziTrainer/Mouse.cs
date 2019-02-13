@@ -59,19 +59,14 @@ namespace UziTrainer
             Thread.Sleep(sleep);
         }
 
-        public static void Click(int x, int y, int variance)
+        public static void Click(RPoint p)
         {
-            Click(x, y, variance, variance);
+            Click(p.X, p.Y, p.VarianceX, p.VarianceY);
         }
 
-        public static void Click(int x, int y)
+        public static void Click(Point coords)
         {
-            Click(x, y, Mouse.DEFAULT_VARIANCE);
-        }
-
-        public static void Click(Point p)
-        {
-            Click(p.X, p.Y);
+            Click(coords.X, coords.Y, 10, 10);
         }
 
         public static void DragUpToDown(int x, int y_start, int y_end)

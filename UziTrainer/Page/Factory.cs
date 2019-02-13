@@ -14,9 +14,9 @@ namespace UziTrainer.Page
         const int DollSlotY = 260;
         const int DollSlotXSize = 165;
         const int DollSlotYSize = 290;
-        Scene scene;
+        Screen scene;
 
-        public Factory(Scene scene)
+        public Factory(Screen scene)
         {
             this.scene = scene;
         }
@@ -38,7 +38,7 @@ namespace UziTrainer.Page
                 else
                 {
                     Mouse.Click(71, 75);
-                    scene.Wait(Scene.FactoryQuery);
+                    scene.Wait(Screen.FactoryQuery);
                 }
             }
             else
@@ -74,7 +74,7 @@ namespace UziTrainer.Page
                 else
                 {
                     Mouse.Click(71, 75);
-                    scene.Wait(Scene.FactoryQuery);
+                    scene.Wait(Screen.FactoryQuery);
                 }
             }
             else
@@ -92,11 +92,11 @@ namespace UziTrainer.Page
                 return
             }
             */
-            scene.Wait(Scene.FactoryQuery);
+            scene.Wait(Screen.FactoryQuery);
             Mouse.Click(98, 470);
             Retire2Stars();
             Retire3Stars();
-            scene.Transition(Scene.FactoryQuery, Scene.HomeQuery, new Point(68, 78));
+            scene.Transition(Screen.FactoryQuery, Screen.HomeQuery, new Point(68, 78));
         }
 
         public bool ClickEnhanceableDoll()
@@ -158,7 +158,7 @@ namespace UziTrainer.Page
                 return
             }
             */
-            scene.Wait(Scene.FactoryQuery);
+            scene.Wait(Screen.FactoryQuery);
             do
             {
                 Mouse.Click(98, 377);
@@ -166,7 +166,7 @@ namespace UziTrainer.Page
                     new Query("FactoryPage/Filter", new Rectangle(1175, 280, 25, 25)));
                 if (ClickEnhanceableDoll())
                 {
-                    scene.Transition(Scene.FactoryQuery, new Query("FactoryPage/SmartSelect", new Rectangle(1115, 621, 150, 80)), new Point(536, 247));
+                    scene.Transition(Screen.FactoryQuery, new Query("FactoryPage/SmartSelect", new Rectangle(1115, 621, 150, 80)), new Point(536, 247));
                 }
             } while (SmartSelectEnhanceFodder());
             DollRetirement();

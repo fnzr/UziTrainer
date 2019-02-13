@@ -14,8 +14,8 @@ namespace UziTrainer.Chapters
         protected static readonly Query Retreat = new Query("Combat/Retreat", new Rectangle(917, 646, 170, 70));
         protected static readonly Query CombatPause = new Query("Combat/Retreat", new Rectangle(917, 646, 170, 70));
 
-        protected Scene scene;
-        public Chapter(Scene scene)
+        protected Screen scene;
+        public Chapter(Screen scene)
         {
             this.scene = scene;
         }

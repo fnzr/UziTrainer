@@ -71,7 +71,7 @@ namespace UziTrainer
             ZipFile.ExtractToDirectory("./assets.zip", "./");
         }
 
-        public static void Run(Scene scene)
+        public static void Run(Screen scene)
         {            
             scene.Interruptible = true;
             scene.WaitHome();
@@ -79,7 +79,7 @@ namespace UziTrainer
             {
                 var repair = new Repair(scene);
                 Trace.WriteLine("Performing Repairs");
-                scene.Transition(Scene.HomeQuery, Scene.RepairQuery, new Point(938, 302));
+                scene.Transition(Screen.HomeQuery, Screen.RepairQuery, new Point(938, 302));
                 scene.Interruptible = false;
                 repair.RepairCritical();
                 scene.Interruptible = true;
@@ -87,13 +87,13 @@ namespace UziTrainer
             if (SwapDoll.Default.Active)
             {
                 Trace.WriteLine("Preparing formation");
-                scene.Transition(Scene.HomeQuery, Scene.FormationQuery, new Point(1161, 476));
+                scene.Transition(Screen.HomeQuery, Screen.FormationQuery, new Point(1161, 476));
                 scene.Interruptible = false;
                 var formation = new Formation(scene);
                 formation.SetDragFormation();
                 scene.Interruptible = true;
             }
-            scene.Transition(Scene.HomeQuery, Scene.CombatQuery, new Point(930, 500));
+            scene.Transition(Screen.HomeQuery, Screen.CombatQuery, new Point(930, 500));
             var combat = new Combat(scene);
             combat.Setup(Properties.Settings.Default.SelectedMission);
         }

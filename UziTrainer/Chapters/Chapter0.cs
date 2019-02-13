@@ -5,7 +5,7 @@ namespace UziTrainer.Chapters
 {
     class Chapter0 : Chapter
     {
-        public Chapter0(Scene scene) : base(scene)
+        public Chapter0(Screen scene) : base(scene)
         {
         }
 

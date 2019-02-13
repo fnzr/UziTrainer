@@ -7,9 +7,9 @@ namespace UziTrainer.Scenes
     {
         private static readonly int EchelonSlotX = 160;
         private static readonly int EchelonSlotXSize = 185;
-        Scene scene;
+        Screen scene;
 
-        public Formation(Scene scene)
+        public Formation(Screen scene)
         {
             this.scene = scene;
         }
@@ -26,7 +26,7 @@ namespace UziTrainer.Scenes
             scene.Click(new Query("FormationPage/Filter" + doll.Rarity, new Rectangle(527, 168, 550, 170)), 10, 3);
             scene.Click(new Query("FormationPage/Filter" + doll.Type, new Rectangle(527, 384, 550, 170)));
             scene.Click(new Query("FormationPage/FilterConfirm", new Rectangle(876, 706, 30, 30)));
-            scene.Transition(new Query("Dolls/" + doll.Name, .85f), Scene.FormationQuery);
+            scene.Transition(new Query("Dolls/" + doll.Name, .85f), Screen.FormationQuery);
         }
 
         public void AddDollToEchelon(Doll doll, int echelon, int slot)
@@ -59,7 +59,7 @@ namespace UziTrainer.Scenes
             var doll2 = Doll.Get(SwapDoll.Default.LoadedDoll);
             ReplaceDoll(doll1, doll2);
             AddDollToEchelon(doll1, 2, 1);
-            scene.Transition(Scene.FormationQuery, Scene.HomeQuery);
+            scene.Transition(Screen.FormationQuery, Screen.HomeQuery);
             SwapDoll.Default.ExhaustedDoll = doll2.Name;
             SwapDoll.Default.LoadedDoll = doll1.Name;
             SwapDoll.Default.Save();

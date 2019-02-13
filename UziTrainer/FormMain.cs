@@ -101,7 +101,7 @@ namespace UziTrainer
             UpdateSettings();
             ExecutionThread = new Thread(new ThreadStart(delegate ()
             {
-                var scene = new Scene();
+                var scene = new Screen();
                 while (true)
                 {
                     Program.Run(scene);
@@ -135,13 +135,16 @@ namespace UziTrainer
         {
             ExecutionThread = new Thread(new ThreadStart(delegate ()
             {
-                Scene scene = new Scene();
-                var repair = new Repair(scene);
-                repair.RepairCritical();
-            //Mouse.DragUpToDown(700, 104, 734);
-            //Factory.ClickEnhanceableDoll();
-            //var factory = new Factory();
-            //factory.DollEnhancement();
+                var machine = new UziMachine(State.Home);
+                machine.LeaveHome(State.Formation);
+                Console.WriteLine("[{1}] placed and [Status:] {0}", machine, machine.State);
+                //Scene scene = new Scene();
+                //var repair = new Repair(scene);
+                //repair.RepairCritical();
+                //Mouse.DragUpToDown(700, 104, 734);
+                //Factory.ClickEnhanceableDoll();
+                //var factory = new Factory();
+                //factory.DollEnhancement();
             }));
             ExecutionThread.Start();
         }

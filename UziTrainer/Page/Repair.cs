@@ -11,8 +11,8 @@ namespace UziTrainer.Page
         const int CriticalRepairX = 120;
         const int CriticalReapairXSize = 180;
 
-        Scene scene;
-        public Repair(Scene scene)
+        Screen scene;
+        public Repair(Screen scene)
         {
             this.scene = scene;
         }
@@ -64,7 +64,7 @@ namespace UziTrainer.Page
                 scene.Click(new Point(68, 86));
             }
             scene.Interruptible = true;
-            scene.Transition(Scene.RepairQuery, Scene.HomeQuery, new Point(71, 71));
+            scene.Transition(Screen.RepairQuery, Screen.HomeQuery, new Point(71, 71));
         }
     }
 }

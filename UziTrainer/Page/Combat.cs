@@ -5,8 +5,8 @@ namespace UziTrainer.Page
 {
     class Combat
     {
-        Scene scene;
-        public Combat(Scene scene)
+        Screen scene;
+        public Combat(Screen scene)
         {
             this.scene = scene;
         }
@@ -33,11 +33,11 @@ namespace UziTrainer.Page
             scene.Interruptible = true;
             if (success)
             {
-                scene.Transition(new Query("CombatPage/Return"), Scene.HomeQuery, new Point(71, 79));
+                scene.Transition(new Query("CombatPage/Return"), Screen.HomeQuery, new Point(71, 79));
             }
             else
             {
-                scene.Transition(Scene.HomeQuery, Scene.CombatQuery, new Point(930, 500));
+                scene.Transition(Screen.HomeQuery, Screen.CombatQuery, new Point(930, 500));
                 Setup(mission);
             }            
         }
