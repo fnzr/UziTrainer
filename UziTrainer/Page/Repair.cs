@@ -11,10 +11,8 @@ namespace UziTrainer.Page
         const int CriticalRepairX = 120;
         const int CriticalReapairXSize = 180;
 
-        Screen scene;
-        public Repair(Screen scene)
+        public Repair()
         {
-            this.scene = scene;
         }
 
         private List<Point> FindAvaliableSlots(int max = 6)
@@ -23,7 +21,7 @@ namespace UziTrainer.Page
             for (var i = 0; i < max; i++)
             {
                 var x = RepairSlotX + (i * RepairSlotXSize);
-                if (scene.Exists(new Query("RepairPage/AvailableSlot", new Rectangle(x, 325, 50, 50)), 500))
+                if (Screen.Exists(new Query("RepairPage/AvailableSlot", new Rectangle(x, 325, 50, 50)), 500))
                 {
                     slots.Add(new Point(x, 320));
                 }
@@ -33,7 +31,6 @@ namespace UziTrainer.Page
 
         public void RepairCritical(int max = 6)
         {
-            scene.Interruptible = false;
             var slots = FindAvaliableSlots(max);
             if (slots.Count == 0)
             {
@@ -41,12 +38,12 @@ namespace UziTrainer.Page
                 Program.Pause();
             }
             Mouse.Click(slots[0]);
-            scene.Wait(new Query("RepairPage/RepairOK"));
+            Screen.Wait(new Query("RepairPage/RepairOK"));
             bool criticalExists = false;
             for (var i = 0; i < slots.Count; i++)
             {
                 var x = CriticalRepairX + (i * CriticalReapairXSize);
-                if (scene.Exists(new Query("RepairPage/CriticalIcon", new Rectangle(x, 160, 80, 80)), 500, out Point coords))
+                if (Screen.Exists(new Query("RepairPage/CriticalIcon", new Rectangle(x, 160, 80, 80)), 500, out Point coords))
                 {
                     Mouse.Click(coords);
                     criticalExists = true;
@@ -54,17 +51,16 @@ namespace UziTrainer.Page
             }
             if (criticalExists)
             {
-                scene.Click(new Query("RepairPage/RepairOK", new Rectangle(1178, 559, 50, 50)));
-                scene.Click(new Query("RepairPage/QuickRepairCheck", new Rectangle(297, 517, 30, 30)));
-                scene.Click(new Point(923, 536));
-                scene.Click(new Query("RepairPage/RepairComplete", new Rectangle(576, 533, 40, 40)));
+                Screen.Click(new Query("RepairPage/RepairOK", new Rectangle(1178, 559, 50, 50)));
+                Screen.Click(new Query("RepairPage/QuickRepairCheck", new Rectangle(297, 517, 30, 30)));
+                Screen.Click(new Point(923, 536));
+                Screen.Click(new Query("RepairPage/RepairComplete", new Rectangle(576, 533, 40, 40)));
             }
             else
             {
-                scene.Click(new Point(68, 86));
+                Screen.Click(new Point(68, 86));
             }
-            scene.Interruptible = true;
-            scene.Transition(Screen.RepairQuery, Screen.HomeQuery, new Point(71, 71));
+            Screen.Transition(Screen.RepairQuery, Screen.HomeQuery, new RPoint(71, 71));
         }
     }
 }

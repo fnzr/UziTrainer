@@ -5,27 +5,27 @@ namespace UziTrainer.Chapters
 {
     class Chapter0 : Chapter
     {
-        public Chapter0(Screen scene) : base(scene)
+        public Chapter0() : base()
         {
         }
 
         public void Map0_2()
         {
             Mouse.Click(659, 386);
-            scene.Click(DeployEchelon);
+            Screen.Click(DeployEchelon);
             Thread.Sleep(500);
             Mouse.Click(262, 374);
-            scene.Click(DeployEchelon);
+            Screen.Click(DeployEchelon);
             Mouse.Click(StartOperationN);
             Thread.Sleep(2000);
-            scene.Transition(new Query("Missions/0_2/SanityCheck"), Resupply, new Point(263, 381));
-            scene.Click(Resupply);
+            Screen.Transition(new Query("Missions/0_2/SanityCheck"), Resupply, new RPoint(263, 381));
+            Screen.Click(Resupply);
             Thread.Sleep(500);
-            scene.Transition(new Query("Combat/Planning"), new Query("Combat/PlanningReady"));
+            Screen.Transition(new Query("Combat/Planning"), new Query("Combat/PlanningReady"));
             Mouse.Click(659, 386);
             Mouse.Click(501, 289);
             Mouse.DragUpToDown(700, 104, 734);
-            scene.ClickUntilFound(new Query("Missions/0_2/Plan2", new Rectangle(494, 621, 25, 25)), new Point(535, 591));
+            Screen.ClickUntilFound(new Query("Missions/0_2/Plan2", new Rectangle(494, 621, 25, 25)), new RPoint(535, 591));
             Mouse.Click(671, 387);
             Mouse.Click(523, 290);
             WaitExecution();

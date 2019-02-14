@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Threading;
 using System.Windows.Forms;
+using UziTrainer.Machine;
 using UziTrainer.Page;
 
 namespace UziTrainer
@@ -101,10 +102,9 @@ namespace UziTrainer
             UpdateSettings();
             ExecutionThread = new Thread(new ThreadStart(delegate ()
             {
-                var scene = new Screen();
                 while (true)
                 {
-                    Program.Run(scene);
+                    Program.Run();
                     BeginInvoke((Action)(() => labelCounter.Text = (++RunCounter).ToString()));
                 }
             }));
@@ -135,9 +135,13 @@ namespace UziTrainer
         {
             ExecutionThread = new Thread(new ThreadStart(delegate ()
             {
-                var machine = new UziMachine(State.Home);
-                machine.LeaveHome(State.Formation);
-                Console.WriteLine("[{1}] placed and [Status:] {0}", machine, machine.State);
+                var machine = new UziMachine();
+                machine.ReplaceDoll(Doll.Get("G11"), Doll.Get("M4 SOPMOD II"));
+                //machine.formation = new FormationMachine(FormationState.DollSelection);
+                //var formation = new FormationMachine(FormationState.DollSelection);
+                //formation.Fire(formation.SelectDollTrigger, Doll.Get("G11"));
+                //machine.LeaveHome(State.Formation);
+                //Console.WriteLine("[{1}] placed and [Status:] {0}", formation, formation.State);
                 //Scene scene = new Scene();
                 //var repair = new Repair(scene);
                 //repair.RepairCritical();

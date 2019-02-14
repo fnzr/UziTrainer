@@ -66,7 +66,12 @@ namespace UziTrainer
 
         public static void Click(Point coords)
         {
-            Click(coords.X, coords.Y, 10, 10);
+            Click(coords.X, coords.Y);
+        }
+
+        public static void Click(int x, int y)
+        {
+            Click(x, y, 10, 10);
         }
 
         public static void DragUpToDown(int x, int y_start, int y_end)

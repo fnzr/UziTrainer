@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Stateless;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -8,31 +9,54 @@ using System.Threading.Tasks;
 
 namespace UziTrainer.Machine
 {
-    partial class UziMachine
+    enum FormationState
     {
-        TriggerWithParameters<Doll> SelectDollTrigger = new TriggerWithParameters<Doll>(Trigger.SelectDoll);
-        TriggerWithParameters<Doll> FilterDollTrigger = new TriggerWithParameters<Doll>(Trigger.FilterDoll);
+        Initial,
+        Exited,
+        DollSelection,
+        FilterOpen,
+        Filtered
+    }
 
-        void ConfigureFormationMachine()
+    enum FormationTrigger
+    {
+        FormationLeave,
+        FilterDoll,
+        ExitDollSelectPage,
+        FilterActive,
+        ConfirmFilter,
+        ResetFilter,
+        SelectDoll
+    }
+
+    class FormationMachine : StateMachine<FormationState, FormationTrigger>
+    {
+
+        public TriggerWithParameters<Doll> SelectDollTrigger = new TriggerWithParameters<Doll>(FormationTrigger.SelectDoll);
+        public TriggerWithParameters<Doll> FilterDollTrigger = new TriggerWithParameters<Doll>(FormationTrigger.FilterDoll);
+
+        public FormationMachine(FormationState initialState) : base(initialState)
         {
-            Configure(State.Formation)
-                .OnEntry(() => Screen.Wait(Screen.FormationQuery))        
+            Configure(FormationState.Initial)
+                .OnEntry(() => Screen.Wait(Screen.FormationQuery))
                 .OnExit(() => Screen.ClickUntilGone(Screen.FormationQuery, new RPoint(67, 80, 20)))
-                .Permit(Trigger.FormationLeave, State.Home)
-                .PermitIf(SelectDollTrigger, State.DollSelectPage, SelectDoll);
+                .Permit(FormationTrigger.FormationLeave, FormationState.Exited)
+                .PermitIf(SelectDollTrigger, FormationState.DollSelection, SelectDoll);
 
-            Configure(State.DollSelectPage)
+            Configure(FormationState.DollSelection)
                 .OnEntry(() => Screen.Wait(new Query("FormationPage/Filter", new Rectangle(1106, 269, 110, 45))))
-                .Permit(Trigger.FilterDoll, State.FilterOpen);
+                .Permit(FormationTrigger.FilterDoll, destinationState: FormationState.FilterOpen)
+                .PermitIf(SelectDollTrigger, FormationState.Initial, SelectDoll)
+                .PermitIf(FormationTrigger.ExitDollSelectPage, FormationState.Initial, ExitSelectPage);
 
-            Configure(State.FilterOpen)
+            Configure(FormationState.FilterOpen)
                 .OnEntry(OpenFilter)
-                .Permit(Trigger.FilterActive, State.Filtered)
-                .Permit(Trigger.ConfirmFilter, State.DollSelectPage);
+                .Permit(FormationTrigger.FilterActive, FormationState.Filtered)
+                .Permit(FormationTrigger.ConfirmFilter, FormationState.DollSelection);
 
-            Configure(State.Filtered)
-                .Permit(Trigger.ResetFilter, State.DollSelectPage)
-                .Permit(Trigger.ConfirmFilter, State.DollSelectPage);
+            Configure(FormationState.Filtered)
+                .Permit(FormationTrigger.ResetFilter, FormationState.DollSelection)
+                .Permit(FormationTrigger.ConfirmFilter, FormationState.DollSelection);
         }
 
         void OpenFilter()
@@ -41,30 +65,26 @@ namespace UziTrainer.Machine
             Screen.ClickUntilFound(new Query("FormationPage/Reset", new Rectangle(596, 692, 30, 30)), new RPoint(p, 10, 30));
             if (Screen.Exists(new Query("FormationPage/FilterActive", new Rectangle(1164, 329, 35, 31))))
             {
-                Fire(Trigger.FilterActive);
+                Fire(FormationTrigger.FilterActive);
             }
         }
 
-        bool IsFiltered()
+        bool ExitSelectPage()
         {
-            if (Screen.Exists(new Query("FormationPage/FilterActive", new Rectangle(1164, 329, 35, 31))))
-            {
-                Screen.ClickUntilGone(new Query("FormationPage/Reset", new Rectangle(596, 692, 30, 30)));
-                Thread.Sleep(500);
-                Screen.Click(new Query("FormationPage/Filter", new Rectangle(1106, 269, 110, 45)));
-            }
+            Screen.Click(new RPoint(69, 79, 40, 20));
+            return true;
         }
 
         bool SelectDoll(Doll doll)
         {
-            if(Screen.Exists(new Query($"Doll/{doll.Name}"), 3000, out Point coords)){
+            if(Screen.Exists(new Query($"Dolls/{doll.Name}", .9f), 3000, out Point coords)){
                 Screen.Click(coords, 30);
                 return true;
             }
             return false;
         }
 
-        public void SelectFilters(Doll doll)
+        public void ApplyFilters(Doll doll)
         {
             Screen.Click(new Query("FormationPage/Filter" + doll.Rarity, new Rectangle(527, 168, 550, 170)), 10, 3);
             Screen.Click(new Query("FormationPage/Filter" + doll.Type, new Rectangle(527, 384, 550, 170)));

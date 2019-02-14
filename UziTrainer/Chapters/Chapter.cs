@@ -14,21 +14,19 @@ namespace UziTrainer.Chapters
         protected static readonly Query Retreat = new Query("Combat/Retreat", new Rectangle(917, 646, 170, 70));
         protected static readonly Query CombatPause = new Query("Combat/Retreat", new Rectangle(917, 646, 170, 70));
 
-        protected Screen scene;
-        public Chapter(Screen scene)
+        public Chapter()
         {
-            this.scene = scene;
         }
 
 
         protected void WaitBattle()
         {
-            scene.Wait(CombatPause);
+            Screen.Wait(CombatPause);
             Program.WriteLog("In Battle");
             
             while (true)
             {
-                if (!scene.Exists(CombatPause))
+                if (!Screen.Exists(CombatPause))
                 {
                     break;
                 }
@@ -37,11 +35,11 @@ namespace UziTrainer.Chapters
             var LoadScreen = new Query("LoadScreen");
             while (true)
             {
-                if (scene.Exists(LoadScreen, 300))
+                if (Screen.Exists(LoadScreen, 300))
                 {
                     break;
                 }
-                Mouse.Click(630, 365, 100);
+                Mouse.Click(630, 365, 100, 100);
             }
             Program.WriteLog("Finished Battle");
         }
@@ -53,23 +51,23 @@ namespace UziTrainer.Chapters
             Thread.Sleep(1000);
             while (true)
             {
-                if (scene.Exists(new Query("Combat/MissionSuccess", new Rectangle(1196, 121, 50, 50), 1000)))
+                if (Screen.Exists(new Query("Combat/MissionSuccess", new Rectangle(1196, 121, 50, 50), 1000)))
                 {
                     return;
                 }
-                if (scene.Exists(new Query("Combat/MissionFailed", new Rectangle(1192, 125, 50, 50), 1000)))
+                if (Screen.Exists(new Query("Combat/MissionFailed", new Rectangle(1192, 125, 50, 50), 1000)))
                 {
                     return;
                 }
-                if (scene.Exists(new Query("Combat/Planning", new Rectangle(1, 567, 173, 100))))
+                if (Screen.Exists(new Query("Combat/Planning", new Rectangle(1, 567, 173, 100))))
                 {
                     break;
                 }
-                if (scene.Exists(new Query("Combat/EndTurn", new Rectangle(1097, 646, 150, 90))))
+                if (Screen.Exists(new Query("Combat/EndTurn", new Rectangle(1097, 646, 150, 90))))
                 {
                     Program.WriteLog("Executing Plan");
                 }
-                else if (scene.Exists(CombatPause)){
+                else if (Screen.Exists(CombatPause)){
                     WaitBattle();
                 }
             }
@@ -82,23 +80,23 @@ namespace UziTrainer.Chapters
             Program.WriteLog("Waiting Turn " + turn);
             while (true)
             {
-                if (scene.Exists(new Query("Combat/Turn" + turn)))
+                if (Screen.Exists(new Query("Combat/Turn" + turn)))
                 {
                     break;
                 }
-                if (scene.Exists(new Query("Combat/MissionSuccess", new Rectangle(1196, 121, 50, 50)), 1000))
+                if (Screen.Exists(new Query("Combat/MissionSuccess", new Rectangle(1196, 121, 50, 50)), 1000))
                 {
                     return;
                 }
-                if (scene.Exists(new Query("Combat/MissionFailed", new Rectangle(1192, 125, 50, 50)), 1000))
+                if (Screen.Exists(new Query("Combat/MissionFailed", new Rectangle(1192, 125, 50, 50)), 1000))
                 {
                     return;
                 }
-                if (scene.Exists(new Query("Combat/Terminate", new Rectangle(263, 45, 100, 70)), 1000))
+                if (Screen.Exists(new Query("Combat/Terminate", new Rectangle(263, 45, 100, 70)), 1000))
                 {
                     Program.WriteLog("SF moving");
                 }
-                if (scene.Exists(CombatPause, 1000))
+                if (Screen.Exists(CombatPause, 1000))
                 {
                     WaitBattle();
                 }
@@ -106,15 +104,15 @@ namespace UziTrainer.Chapters
             Program.WriteLog("G&K turn started");
             while (true)
             {
-                if (scene.Exists(new Query("Combat/Planning"), 1000, out Point coordinates))
+                if (Screen.Exists(new Query("Combat/Planning"), 1000, out Point coordinates))
                 {
                     Mouse.Click(coordinates);
-                    if (scene.Exists(new Query("Combat/PlanningReady")))
+                    if (Screen.Exists(new Query("Combat/PlanningReady")))
                     {
                         break;
                     }
                 }
-                if (scene.Exists(new Query("Combat/MissionFailed", new Rectangle(1192, 125, 50, 50)), 1000))
+                if (Screen.Exists(new Query("Combat/MissionFailed", new Rectangle(1192, 125, 50, 50)), 1000))
                 {
                     return;
                 }

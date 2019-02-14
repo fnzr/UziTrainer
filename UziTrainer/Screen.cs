@@ -155,7 +155,7 @@ namespace UziTrainer
             } while (!Exists(query, 1000));
         }
 
-        public static void ClickUntilGone(Query query, RPoint? point)
+        public static void ClickUntilGone(Query query, RPoint point)
         {
             do
             {

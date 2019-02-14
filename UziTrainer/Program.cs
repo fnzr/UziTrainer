@@ -71,6 +71,12 @@ namespace UziTrainer
             ZipFile.ExtractToDirectory("./assets.zip", "./");
         }
 
+        public static void Run()
+        {
+
+        }
+
+        /*
         public static void Run(Screen scene)
         {            
             scene.Interruptible = true;
@@ -97,6 +103,7 @@ namespace UziTrainer
             var combat = new Combat(scene);
             combat.Setup(Properties.Settings.Default.SelectedMission);
         }
+        */
     }
 
 }

@@ -36,38 +36,48 @@ namespace UziTrainer.Machine
         ConfirmFilter,
         ResetTrigger,
         FilterActive,
-        ResetFilter
+        ResetFilter,
+        ExitDollSelectPage
     }
 
-    partial class UziMachine : StateMachine<State, Trigger>
+    partial class UziMachine
     {
-        
-        Screen screen = new Screen();
-        public Dictionary<State, Point> ExitHomeCoordinates = new Dictionary<State, Point>()
+        public FormationMachine Formation;
+        public UziMachine()
         {
-            {State.Formation, new Point(1161, 476)}
-        };
-        TriggerWithParameters<State> ExitHomeTrigger = new TriggerWithParameters<State>(Trigger.ExitHome);
-        public UziMachine(State initialState) : base(initialState)
-        {
-            Configure(State.Home)
-                .PermitDynamic(ExitHomeTrigger, _LeaveHome);
-            ConfigureFormationMachine();
+            Formation = new FormationMachine(FormationState.Initial);
         }
 
-        State _LeaveHome(State destination)
+        private void SelectDoll(Doll doll)
         {
-            var coords = ExitHomeCoordinates[destination];
-            do
+            Formation.Fire(FormationTrigger.FilterDoll);
+            if (Formation.IsInState(FormationState.Filtered))
             {
-                screen.Click(coords);
-            } while (screen.Exists(Screen.HomeQuery));
-            return destination;
+                Formation.Fire(FormationTrigger.ResetFilter);
+                Formation.Fire(FormationTrigger.FilterDoll);
+            }
+            Formation.ApplyFilters(doll);
+            Formation.Fire(FormationTrigger.ConfirmFilter);
+            Formation.Fire(Formation.SelectDollTrigger, doll);
         }
 
-        public void LeaveHome(State destination)
+        public void ReplaceDoll(Doll DollOut, Doll DollIn)
         {
-            Fire(ExitHomeTrigger, destination);
+            Formation.Fire(Formation.SelectDollTrigger, DollOut);
+            SelectDoll(DollIn);
+        }
+
+        public void SwapDolls()
+        {
+            var doll1 = Doll.Get(SwapDoll.Default.ExhaustedDoll);
+            var doll2 = Doll.Get(SwapDoll.Default.LoadedDoll);
+            Formation.Fire(Formation.SelectDollTrigger, doll1);
+            ReplaceDoll(doll1, doll2);
+            Screen.Transition(Screen.FormationQuery, Screen.HomeQuery);
+            SwapDoll.Default.ExhaustedDoll = doll2.Name;
+            SwapDoll.Default.LoadedDoll = doll1.Name;
+            SwapDoll.Default.Save();
+            Program.UpdateDollText();
         }
     }
 }
