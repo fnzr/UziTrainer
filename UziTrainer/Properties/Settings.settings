@@ -2,28 +2,7 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="UziTrainer.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="ScreenWindowTitle" Type="System.String" Scope="User">
-      <Value Profile="(Default)">ZR288</Value>
-    </Setting>
-    <Setting Name="ScreenWindowClass" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Qt5QWindowIcon</Value>
-    </Setting>
-    <Setting Name="MessageWindowTitle" Type="System.String" Scope="User">
-      <Value Profile="(Default)">ScreenBoardClassWindow</Value>
-    </Setting>
-    <Setting Name="MessageWindowClass" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Qt5QWindowIcon</Value>
-    </Setting>
-    <Setting Name="DebugSearchArea" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
-    </Setting>
-    <Setting Name="BaseBackground" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Default</Value>
-    </Setting>
     <Setting Name="AssetsHash" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
-    <Setting Name="SelectedMission" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
   </Settings>

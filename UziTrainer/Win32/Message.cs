@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace UziTrainer
+namespace UziTrainer.Win32
 {
 	/// <summary>
 	/// Summary description for Win32.

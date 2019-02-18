@@ -1,9 +1,7 @@
-﻿
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.IO;
 using System.Reflection;
-using System.Windows.Forms;
 
 namespace UziTrainer
 {
@@ -15,7 +13,8 @@ namespace UziTrainer
         private static JObject _rss;
         private static JObject rss
         {
-            get {
+            get
+            {
                 if (_rss == null)
                 {
                     var assembly = Assembly.GetExecutingAssembly();

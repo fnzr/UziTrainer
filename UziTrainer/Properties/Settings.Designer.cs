@@ -25,78 +25,6 @@ namespace UziTrainer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("ZR288")]
-        public string ScreenWindowTitle {
-            get {
-                return ((string)(this["ScreenWindowTitle"]));
-            }
-            set {
-                this["ScreenWindowTitle"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Qt5QWindowIcon")]
-        public string ScreenWindowClass {
-            get {
-                return ((string)(this["ScreenWindowClass"]));
-            }
-            set {
-                this["ScreenWindowClass"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("ScreenBoardClassWindow")]
-        public string MessageWindowTitle {
-            get {
-                return ((string)(this["MessageWindowTitle"]));
-            }
-            set {
-                this["MessageWindowTitle"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Qt5QWindowIcon")]
-        public string MessageWindowClass {
-            get {
-                return ((string)(this["MessageWindowClass"]));
-            }
-            set {
-                this["MessageWindowClass"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool DebugSearchArea {
-            get {
-                return ((bool)(this["DebugSearchArea"]));
-            }
-            set {
-                this["DebugSearchArea"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Default")]
-        public string BaseBackground {
-            get {
-                return ((string)(this["BaseBackground"]));
-            }
-            set {
-                this["BaseBackground"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string AssetsHash {
             get {
@@ -104,18 +32,6 @@ namespace UziTrainer.Properties {
             }
             set {
                 this["AssetsHash"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string SelectedMission {
-            get {
-                return ((string)(this["SelectedMission"]));
-            }
-            set {
-                this["SelectedMission"] = value;
             }
         }
     }

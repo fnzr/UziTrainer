@@ -1,57 +1,44 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
-using UziTrainer.Page;
 using UziTrainer.Scenes;
+using UziTrainer.Window;
+using Screen = UziTrainer.Window.Screen;
 
 namespace UziTrainer
-{    
+{
     static class Program
     {
-        public static ManualResetEvent TrainerThread = new ManualResetEvent(false);
-        //public static Thread ExecutionThread;
-        private static FormMain formMain;
+        public static AutoResetEvent DebugResetEvent = new AutoResetEvent(false);
+        static Screen screen;
+        static Form1 form;
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
         static void Main()
         {
-            Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
-            PrepareResources();
-            Window.Init();
-            formMain = new FormMain();
-
+            PrepareAssets();            
             Application.EnableVisualStyles();
-            Application.Run(formMain);
-            Application.Exit();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Run();
+            form = new Form1();
+            Application.Run(form);            
         }
 
-        public static void Pause()
+        public static void PrepareAssets()
         {
-            formMain.PauseExecution();
-        }
-
-        public static void WriteLog(string message)
-        {
-            formMain.WriteLog(message);
-        }
-
-        public static void UpdateDollText()
-        {
-            formMain.UpdateDollText();
-        }
-
-        public static void PrepareResources()
-        {
-            if(Directory.Exists("./assets"))
+            if (Directory.Exists("./assets"))
             {
-                using(var md5 = MD5.Create())
+                using (var md5 = MD5.Create())
                 {
                     using (var stream = File.OpenRead("./assets.zip"))
                     {
@@ -71,39 +58,24 @@ namespace UziTrainer
             ZipFile.ExtractToDirectory("./assets.zip", "./");
         }
 
-        public static void Run()
+        static void Run()
         {
-
+            screen = new Screen("ZR288");
+            screen.Exists(Home.FormationButton, 3000,true);
+            //var formation = new Formation(screen);
+            //formation.ReplaceDoll(Doll.Get("G11"), Doll.Get("M4 SOPMOD II"));
+            //screen.Wait(Formation.FilterClosedScene, true);
+            //screen.Click(Formation.FilterResetButton);
         }
 
-        /*
-        public static void Run(Screen scene)
-        {            
-            scene.Interruptible = true;
-            scene.WaitHome();
-            if (scene.Exists(new Query("CriticalRepair", new Rectangle(1007, 264, 25, 25))))
+        public static void ShowDebug(Sample sample, Point foundAt, float evaluation)
+        {
+            Task.Run(() =>
             {
-                var repair = new Repair(scene);
-                Trace.WriteLine("Performing Repairs");
-                scene.Transition(Screen.HomeQuery, Screen.RepairQuery, new Point(938, 302));
-                scene.Interruptible = false;
-                repair.RepairCritical();
-                scene.Interruptible = true;
-            }
-            if (SwapDoll.Default.Active)
-            {
-                Trace.WriteLine("Preparing formation");
-                scene.Transition(Screen.HomeQuery, Screen.FormationQuery, new Point(1161, 476));
-                scene.Interruptible = false;
-                var formation = new Formation(scene);
-                formation.SetDragFormation();
-                scene.Interruptible = true;
-            }
-            scene.Transition(Screen.HomeQuery, Screen.CombatQuery, new Point(930, 500));
-            var combat = new Combat(scene);
-            combat.Setup(Properties.Settings.Default.SelectedMission);
+                var form = new FormDebug(screen, sample, foundAt, evaluation);
+                form.Show();
+                Application.Run(form);
+            });
         }
-        */
     }
-
 }
