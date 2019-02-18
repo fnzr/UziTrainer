@@ -5,5 +5,11 @@
     <Setting Name="AssetsHash" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="DollExhausted" Type="System.String" Scope="User">
+      <Value Profile="(Default)">G11</Value>
+    </Setting>
+    <Setting Name="DollLoaded" Type="System.String" Scope="User">
+      <Value Profile="(Default)">M4 SOPMOD II</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

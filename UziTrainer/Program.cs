@@ -60,12 +60,11 @@ namespace UziTrainer
 
         static void Run()
         {
-            screen = new Screen("ZR288");
-            screen.Exists(Home.FormationButton, 3000,true);
-            //var formation = new Formation(screen);
-            //formation.ReplaceDoll(Doll.Get("G11"), Doll.Get("M4 SOPMOD II"));
-            //screen.Wait(Formation.FilterClosedScene, true);
-            //screen.Click(Formation.FilterResetButton);
+            screen = new Screen("NoxPlayer");
+            var formation = new Formation(screen);
+            Combat.ChapterButton.Name = "CombatPage/Chapter0";
+            Combat.ChapterClickedSample.Name = "CombatPage/Chapter0Clicked";
+            screen.Click(Combat.ChapterButton, true);
         }
 
         public static void ShowDebug(Sample sample, Point foundAt, float evaluation)

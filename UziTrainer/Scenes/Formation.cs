@@ -21,7 +21,14 @@ namespace UziTrainer.Scenes
         public static readonly Button FilterOptionButton = new Button("", new Rectangle(528, 169, 546, 422), 
             new Button("", new Rectangle(528, 169, 546, 412), null), .95f, FilterOptionArea);
         public static readonly Sample EchelonClickedScene = new Sample("", new Rectangle(7, 145, 130, 596));
-        public static readonly Button EchelonButton = new Button("", new Rectangle(7, 145, 130, 596), EchelonClickedScene);
+        public static readonly Button EchelonButton = new Button("", new Rectangle(7, 145, 130, 596), EchelonClickedScene, .95f, EchelonClickArea);
+
+        private static Rectangle EchelonClickArea(Point arg)
+        {            
+            int echelon = (arg.Y - 140) / 90;
+            int y = 140 + (90 * echelon);
+            return new Rectangle(1, y, 120, 75);
+        }
 
         private static Rectangle FilterOptionArea(Point arg)
         {
@@ -99,9 +106,9 @@ namespace UziTrainer.Scenes
             EchelonClickedScene.Name = $"FormationPage/Echelon{echelon.ToString()}Clicked";
             if (!screen.Exists(EchelonClickedScene))
             {
-                screen.Click(EchelonButton);
+                screen.Click(EchelonButton, true);
             }
-            var area = SlotArea(new Point(220 + (160 * slot), 290));
+            var area = SlotArea(new Point(220 + (160 * (slot - 1)), 290));
             var button = new Button("", area, FilterDollButton);
             screen.Click(button);
             SelectDoll(doll);
@@ -115,5 +122,15 @@ namespace UziTrainer.Scenes
             SelectDoll(dollIn);
         }
 
+        public void ReplaceCorpseDragger()
+        {
+            var dollOut = Doll.Get(Properties.Settings.Default.DollExhausted);
+            var dollIn = Doll.Get(Properties.Settings.Default.DollLoaded);
+            ReplaceDoll(dollOut, dollIn);
+            AddDollToEchelon(dollOut, 2, 1);
+            Properties.Settings.Default.DollExhausted = dollIn.Name;
+            Properties.Settings.Default.DollLoaded = dollOut.Name;
+            Properties.Settings.Default.Save();
+        }
     }
 }

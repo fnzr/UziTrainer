@@ -136,13 +136,18 @@ namespace UziTrainer.Window
                 }
                 if (debug)
                 {
-                    Program.ShowDebug(sample, foundAt, (float)maxValues[0]);
-                    Program.DebugResetEvent.WaitOne();
+                    CreateDebugForm(sample, foundAt, (float)maxValues[0]);
                 }
             }
             
             return foundAt;
         }
+
+        void CreateDebugForm(Sample sample, Point point, float evaluation)
+        {
+            Program.ShowDebug(sample, point, evaluation);
+            Program.DebugResetEvent.WaitOne();
+        } 
 
         public Rectangle ReferenceRectangle()
         {

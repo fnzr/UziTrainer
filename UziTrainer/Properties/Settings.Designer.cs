@@ -34,5 +34,29 @@ namespace UziTrainer.Properties {
                 this["AssetsHash"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("G11")]
+        public string DollExhausted {
+            get {
+                return ((string)(this["DollExhausted"]));
+            }
+            set {
+                this["DollExhausted"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("M4 SOPMOD II")]
+        public string DollLoaded {
+            get {
+                return ((string)(this["DollLoaded"]));
+            }
+            set {
+                this["DollLoaded"] = value;
+            }
+        }
     }
 }
