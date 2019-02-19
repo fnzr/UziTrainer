@@ -54,7 +54,7 @@ namespace UziTrainer.Win32
             Message.PostMessage(MessageHWND, Message.WM_MOUSEMOVE, 0x0001, lparam);
         }
 
-        void DragUpToDown(int x, int y_start, int y_end)
+        public void DragUpToDown(int x, int y_start, int y_end)
         {
             x = random.Next(x - 5, x + 5);
             y_start = random.Next(y_start - 5, y_start + 5);
@@ -72,7 +72,7 @@ namespace UziTrainer.Win32
         }
 
         //Finger on bottom of the screen, and drag up
-        void DragDownToUp(int x, int y_start, int y_end)
+        public void DragDownToUp(int x, int y_start, int y_end)
         {
             x = random.Next(x - 5, x + 5);
             y_start = random.Next(y_start - 5, y_start + 5);
@@ -90,7 +90,7 @@ namespace UziTrainer.Win32
         }
 
         //Finger on right of the screen, and drag left
-        void DragRightToLeft(int y, int x_start, int x_end)
+        public void DragRightToLeft(int y, int x_start, int x_end)
         {
             y = random.Next(y - 5, y + 5);
             x_start = random.Next(x_start - 5, x_start + 5);
@@ -108,7 +108,7 @@ namespace UziTrainer.Win32
         }
 
         //Finger on left of the screen, and drag right
-        void DragLeftToRight(int y, int x_start, int x_end)
+        public void DragLeftToRight(int y, int x_start, int x_end)
         {
             y = random.Next(y - 5, y + 5);
             x_start = random.Next(x_start - 5, x_start + 5);

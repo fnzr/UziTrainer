@@ -20,7 +20,7 @@ namespace UziTrainer.Scenes
         public static readonly Button NormalBattleButton = new Button("CombatPage/NormalBattle", new Rectangle(674, 580, 146, 63), Sample.Negative);
         public static readonly Button MissionButton = new Button("", new Rectangle(607, 265, 155, 447), NormalBattleButton, .95f, MissionArea);
 
-        public static readonly Button ReturnButton = new Button("CombatPage/Return", new Rectangle(11, 45, 117, 70), Home.LvSample);
+        public static readonly Button ReturnButton = new Button("CombatPage/Return", new Rectangle(11, 45, 117, 70), Sample.Negative);
         private Screen screen;
 
         private static Rectangle MissionArea(Point arg)
@@ -54,7 +54,7 @@ namespace UziTrainer.Scenes
 
             if (chapter > 5)
             {
-                //Mouse.DragDownToUp(264, 689, 247);
+                screen.mouse.DragDownToUp(264, 689, 247);
             }
             ChapterClickedSample.Name = $"CombatPage/Chapter{parts[0]}Clicked";
             if (!screen.Exists(ChapterClickedSample))

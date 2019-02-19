@@ -1,17 +1,21 @@
 ﻿using Emgu.CV;
 using Emgu.CV.Structure;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace UziTrainer.Window
 {
+    public enum EnumDrag
+    {
+        UpToDown,
+        DownToUp,
+        LeftToRight,
+        RightToLeft
+    }
+
     public class Screen
     {
         const string MessageWindowClass = "Qt5QWindowIcon";
@@ -22,7 +26,7 @@ namespace UziTrainer.Window
 
         readonly IntPtr WindowHWND;
         readonly IntPtr MessageHWND;
-        readonly Win32.Mouse mouse;
+        public readonly Win32.Mouse mouse;
 
         Image<Rgba, byte> _Image = new Image<Rgba, byte>(1, 1);
 
