@@ -8,14 +8,6 @@ using System.Threading;
 
 namespace UziTrainer.Window
 {
-    public enum EnumDrag
-    {
-        UpToDown,
-        DownToUp,
-        LeftToRight,
-        RightToLeft
-    }
-
     public class Screen
     {
         const string MessageWindowClass = "Qt5QWindowIcon";

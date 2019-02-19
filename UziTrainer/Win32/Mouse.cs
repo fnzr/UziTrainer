@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace UziTrainer.Win32
 {
-    class Mouse
+    public class Mouse
     {
         const int Step = 2;
         Random random = new Random();        
