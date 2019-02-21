@@ -19,6 +19,7 @@ namespace UziTrainer.Window
         readonly IntPtr WindowHWND;
         readonly IntPtr MessageHWND;
         public readonly Win32.Mouse mouse;
+        public static readonly Rectangle FullArea = new Rectangle(0, 0, 1284, 754);
 
         Image<Rgba, byte> _Image = new Image<Rgba, byte>(1, 1);
 
