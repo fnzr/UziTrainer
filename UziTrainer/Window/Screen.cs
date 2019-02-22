@@ -55,6 +55,14 @@ namespace UziTrainer.Window
             return true;
         }
 
+        public void Click(Rectangle area)
+        {
+            var x = area.X + random.Next(0, area.Width);
+            var y = area.Y + random.Next(0, area.Height);
+            mouse.Click(x, y);
+            Thread.Sleep(500);
+        }
+
         public void Click(Button button, bool debug = false)
         {
             while (true)
@@ -71,7 +79,7 @@ namespace UziTrainer.Window
                 }
                 var x = area.X + random.Next(0, area.Width);
                 var y = area.Y + random.Next(0, area.Height);
-                mouse.Click(x, y);                
+                mouse.Click(x, y);
                 if (button.Next == null)
                 {
                     break;

@@ -9,6 +9,7 @@ using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using UziTrainer.Chapters;
 using UziTrainer.Scenes;
 using UziTrainer.Window;
 using Screen = UziTrainer.Window.Screen;
@@ -60,10 +61,16 @@ namespace UziTrainer
 
         static void Run()
         {
-            screen = new Screen("ZR288");
-            var formation = new Formation(screen);
-            Combat.MissionButton.Name = "CombatPage/1_6";
-            screen.Click(Home.CombatButton, true);
+            screen = new Screen("NoxPlayer");
+            //var combat = new Combat(screen);
+            //combat.PrepareMission("0_2");
+            //var c0 = new Chapter0(screen, "0_2");
+            //c0.Map0_2();
+            screen.Wait(Chapter.EchelonFormationButton, true);
+            //screen.Wait(Chapter.DeployEchelonButton, true);
+            //var formation = new Formation(screen);
+            //Combat.MissionButton.Name = "CombatPage/1_6";
+            //screen.Click(Home.CombatButton, true);
         }
 
         public static void ShowDebug(Sample sample, Point foundAt, float evaluation)

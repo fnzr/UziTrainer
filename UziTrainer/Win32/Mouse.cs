@@ -9,7 +9,7 @@ namespace UziTrainer.Win32
 {
     public class Mouse
     {
-        const int Step = 2;
+        const int Step = 8;
         Random random = new Random();        
         readonly int WindowHWND;
         readonly int MessageHWND;
@@ -17,8 +17,7 @@ namespace UziTrainer.Win32
         public Mouse(int windowHWND, int messageHWND)
         {
             WindowHWND = windowHWND;
-            MessageHWND = messageHWND;
-                   
+            MessageHWND = messageHWND;                   
         }
 
         private static int GetLParam(int x, int y)

@@ -25,7 +25,7 @@ namespace UziTrainer.Window
             }}
         public Rectangle SearchArea { get; private set; }
         public float Threshold { get; private set; }
-        public Sample Next { get; private set; }
+        public Sample Next { get; set; }
 
         public Sample(string name, Rectangle searchArea, Sample next = null, float threshold = .95f)
         {

@@ -34,7 +34,7 @@ namespace UziTrainer.Scenes
         public static readonly Sample Turn0 = new Sample("Combat/Turn0", new Rectangle(416, 66, 71, 292));
         public static readonly Sample SanityCheck = new Sample("", Screen.FullArea);
 
-        public static readonly Sample LoadScreen = new Sample("LoadScreen", new Rectangle(350, 34, 210, 420));
+        public static readonly Sample LoadScreenSample = new Sample("LoadScreen", new Rectangle(350, 34, 210, 420));
 
         private Screen screen;
 
@@ -125,22 +125,17 @@ namespace UziTrainer.Scenes
                 return false;
             }
             */
-            screen.Wait(Turn0);
-            SanityCheck.Name = $"Missions/{mission}/SanityCheck";
-            if (!screen.Exists(SanityCheck, 1000))
-            {
-                screen.mouse.ZoomOut();
-            }
+            screen.Wait(Turn0);            
 
             var parts = mission.Split('_');
 
             var type = Type.GetType("UziTrainer.Chapters.Chapter" + parts[0]);
-            Object o = Activator.CreateInstance(type, new object[] { screen });
+            Object o = Activator.CreateInstance(type, new object[] { screen, mission });
             var method = type.GetMethod("Map" + mission);
             method.Invoke(o, null);
 
             var anyButton = new Button("", new Rectangle(400, 200, 300, 300), null);
-            while (!screen.Exists(LoadScreen, 500))
+            while (!screen.Exists(LoadScreenSample, 500))
             {
                 screen.Click(anyButton);
             }
