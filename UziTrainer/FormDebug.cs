@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -18,9 +19,10 @@ namespace UziTrainer
         Screen screen;
         Sample sample;
         Point FoundAt;
+        Rectangle ClickArea;
         Form AreaForm;
         Form ClickPoint;
-        Form ClickArea;
+        Form ClickAreaForm;
 
         public FormDebug(Screen screen, Sample sample, Point foundAt, float evaluation)
         {
@@ -38,9 +40,10 @@ namespace UziTrainer
             }
             else
             {
-                FoundAt = sample.RelativeTo(foundAt);
+                FoundAt = foundAt;
+                //FoundAt = sample.RelativeTo(foundAt);
                 labelFound.ForeColor = Color.Black;
-                labelFound.Text = foundAt.ToString();
+                labelFound.Text = String.Format("X:{0}, Y:{1}", sample.SearchArea.X + foundAt.X, sample.SearchArea.Y + foundAt.Y);
             }
         }
 
@@ -67,19 +70,22 @@ namespace UziTrainer
 
             if (FoundAt != Point.Empty)
             {
-                ClickPoint = CreateOverlayForm();
-                ClickPoint.BackColor = Color.Green;
-                ClickPoint.DesktopBounds = new Rectangle(reference.Left + (FoundAt.X - 10), reference.Top + (FoundAt.Y - 10), 20, 20);
-                ClickPoint.Show();
-
+                var pos = sample.AbsolutePosition(FoundAt);
                 if (sample is Button)
                 {
-                    var area = ((Button)sample).ClickArea(FoundAt);
-                    ClickArea = CreateOverlayForm();
-                    ClickArea.BackColor = Color.Blue;
-                    ClickArea.DesktopBounds = new Rectangle(reference.Left + area.Left, reference.Top + area.Top, area.Width, area.Height);
-                    ClickArea.Show();
+                    var area = ((Button)sample).ClickArea(pos);
+                    ClickAreaForm = CreateOverlayForm();
+                    ClickAreaForm.BackColor = Color.Red;
+                    ClickAreaForm.DesktopBounds = new Rectangle(new Point(area.X + reference.X, area.Y + reference.Y), area.Size);
+                    ClickAreaForm.Show();
                 }
+                else
+                {
+                    ClickPoint = CreateOverlayForm();
+                    ClickPoint.BackColor = Color.Blue;
+                    ClickPoint.DesktopBounds = new Rectangle(new Point(sample.SearchArea.X + reference.X, sample.SearchArea.Y + reference.Y), sample.SearchArea.Size);
+                    ClickPoint.Show();
+                }                
             }            
             base.Show();
         }
@@ -91,9 +97,9 @@ namespace UziTrainer
             {
                 ClickPoint.Close();                
             }
-            if (ClickArea != null)
+            if (ClickAreaForm != null)
             {
-                ClickArea.Close();
+                ClickAreaForm.Close();
             }
             base.Close();
             Program.DebugResetEvent.Set();

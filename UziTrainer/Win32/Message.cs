@@ -37,8 +37,7 @@ namespace UziTrainer.Win32
 		// with the one following the specified child window. This function does not perform a case-sensitive search.
 		[DllImport("User32.dll")]
 		public static extern int FindWindowEx(int hwndParent, int hwndChildAfter, string strClassName, string strWindowName);
-
-
+        
 		// The SendMessage function sends the specified message to a 
 		// window or windows. It calls the window procedure for the specified 
 		// window and does not return until the window procedure has processed the message. 

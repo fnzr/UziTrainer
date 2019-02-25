@@ -61,7 +61,7 @@ namespace UziTrainer.Window
             private set { }
         }
 
-        public Point RelativeTo(Point point)
+        public Point AbsolutePosition(Point point)
         {
             return new Point(SearchArea.X + point.X, SearchArea.Y + point.Y);
         }

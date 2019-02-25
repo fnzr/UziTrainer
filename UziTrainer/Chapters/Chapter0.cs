@@ -27,8 +27,12 @@ namespace UziTrainer.Chapters
             screen.Click(DeployEchelonButton);
 
             var heliport = new Button("", new Rectangle(new Point(201, 336), nodeSize), EchelonFormationButton);
-            screen.Click(heliport);
+            screen.Click(heliport, true);
             screen.Click(DeployEchelonButton);
+            if (true)
+            {
+                return;
+            }
             screen.Click(StartOperationButton);
             Thread.Sleep(2000);
 
@@ -37,7 +41,7 @@ namespace UziTrainer.Chapters
             screen.Click(ResupplyButton);
 
             screen.Click(PlanningOffButton);
-            Button CommandPost = new Button("", new Rectangle(new Point(589, 334), nodeSize), DeployEchelonButton);
+            Button CommandPost = new Button("", new Rectangle(new Point(589, 334), nodeSize), null);
             screen.Click(CommandPost);
             
             screen.Click(new Rectangle(new Point(471, 274), nodeSize));

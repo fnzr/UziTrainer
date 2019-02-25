@@ -22,7 +22,8 @@ namespace UziTrainer.Win32
 
         private static int GetLParam(int x, int y)
         {
-            return (x & 0xFFFF) | (y & 0xFFFF) << 16;
+            //return (x & 0xFFFF) | ((y & 0xFFFF) << 16);
+            return (y << 16) | (x & 0xFFFF);            
         }
 
         private void LButtonDown(int x, int y)
@@ -143,9 +144,8 @@ namespace UziTrainer.Win32
         public void Click(int x, int y)
         {
             LButtonDown(x, y);
+            Thread.Sleep(10);
             LButtonUp(x, y);
-            var sleep = random.Next(400, 800);
-            Thread.Sleep(sleep);
         }
     }
 }

@@ -37,7 +37,7 @@ namespace UziTrainer.Window
             mouse = new Win32.Mouse(hwnd, mhwnd);
         }
 
-        public bool Exists(Sample sample, int timeout=3000, bool debug = false)
+        public bool Exists(Sample sample, int timeout = 3000, bool debug = false)
         {
             Trace.WriteLine($"Searching for [{sample.Name}]");
             var stopwatch = Stopwatch.StartNew();
@@ -55,56 +55,40 @@ namespace UziTrainer.Window
             return true;
         }
 
-        public void Click(Rectangle area)
+        public void Click(Rectangle area, Sample next = null, int wait = 3000)
         {
-            var x = area.X + random.Next(0, area.Width);
-            var y = area.Y + random.Next(0, area.Height);
-            mouse.Click(x, y);
-            Thread.Sleep(500);
+            do
+            {
+                var x = area.X + random.Next(0, area.Width);
+                var y = area.Y + random.Next(0, area.Height);
+                mouse.Click(x, y);
+            } while (next != null && !Exists(next, wait));
+
+            var sleep = random.Next(400, 800);
+            Thread.Sleep(sleep);
         }
 
         public void Click(Button button, bool debug = false)
         {
-            Rectangle area;
-            if (button.Name == "")
-            {
-                area = button.SearchArea;
-            }
-            else
-            {
-                var foundAt = Wait(button, debug);
-                area = button.ClickArea(new Point(button.SearchArea.X + foundAt.X, button.SearchArea.Y + foundAt.Y));
-            }
+            var foundAt = Wait(button, debug);
+            var area = button.ClickArea(button.AbsolutePosition(foundAt));
             var x = area.X + random.Next(0, area.Width);
             var y = area.Y + random.Next(0, area.Height);
+            Trace.WriteLine($"{x} - {y}");
             mouse.Click(x, y);
             if (button.Next == null)
             {
                 return;
             }
-            while (true)
+            else if (button.Next == Sample.Negative)
             {
-                if (button.Next == Sample.Negative)
+                while (Exists(button))
                 {
-                    if (!Exists(button))
-                    {
-                        break;
-                    }                    
                 }
-                else if(Exists(button.Next, 1000))
-                {
-                    break;
-                }
-                if (button.Name == "")
-                {
-                    mouse.Click(x, y);
-                }
-                else if(Exists(button, 200))
-                {
-                    x = area.X + random.Next(0, area.Width);
-                    y = area.Y + random.Next(0, area.Height);
-                    mouse.Click(x, y);
-                }
+            }
+            else
+            {
+                Wait(button.Next);
             }
         }
 
@@ -129,12 +113,12 @@ namespace UziTrainer.Window
         Point Search(Sample sample, bool debug)
         {
             Thread.Sleep(300);
-            Point foundAt = Point.Empty;            
+            Point foundAt = Point.Empty;
             using (Image<Gray, float> result = CaptureScreen(sample.SearchArea).MatchTemplate(sample.Image, Emgu.CV.CvEnum.TemplateMatchingType.CcoeffNormed))
             {
                 double[] maxValues;
                 Point[] maxLocations;
-                result.MinMax(out _, out maxValues, out _, out maxLocations);                
+                result.MinMax(out _, out maxValues, out _, out maxLocations);
                 // You can try different values of the threshold. I guess somewhere between 0.75 and 0.95 would be good.
                 if (maxValues[0] >= sample.Threshold)
                 {
@@ -149,7 +133,7 @@ namespace UziTrainer.Window
                     CreateDebugForm(sample, foundAt, (float)maxValues[0]);
                 }
             }
-            
+
             return foundAt;
         }
 
@@ -157,7 +141,7 @@ namespace UziTrainer.Window
         {
             Program.ShowDebug(sample, point, evaluation);
             Program.DebugResetEvent.WaitOne();
-        } 
+        }
 
         public Rectangle ReferenceRectangle()
         {
@@ -176,15 +160,19 @@ namespace UziTrainer.Window
             Win32.Message.PrintWindow(WindowHWND, hdcBitmap, 0x1);
             gfxBmp.ReleaseHdc(hdcBitmap);
             _Image.Dispose();
-            _Image = new Image<Rgba, byte>(bitmap);
+            var image = new Image<Rgba, byte>(bitmap);
             gfxBmp.Dispose();
             try
             {
-                return _Image.Copy(searchArea);
+                var copy = image.Copy(searchArea);
+                image.Dispose();
+                _Image = copy;
+                return copy;
             }
             catch (OutOfMemoryException)
             {
-                Trace.TraceError("Provided area is out of bounds! Capturing entire image. Fix this. Provided area is: " + searchArea.ToString());
+                Trace.TraceError("Provided area is out of bounds! Capturing entire image. Fix this. Provided area is: " + searchArea.ToString());image.Dispose();
+                _Image = image;
                 return _Image;
             }
         }

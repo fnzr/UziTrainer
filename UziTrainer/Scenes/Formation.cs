@@ -27,13 +27,13 @@ namespace UziTrainer.Scenes
         {            
             int echelon = (arg.Y - 140) / 90;
             int y = 140 + (90 * echelon);
-            return new Rectangle(1, y, 120, 75);
+            return new Rectangle(10, y, 100, 60);
         }
 
         private static Rectangle FilterOptionArea(Point arg)
         {
             var filterXSize = 157;
-            var filterYSize = 67;
+            var filterYSize = 60;
             int y;
             int line;
             if (arg.Y > 365) // Filter Type
@@ -87,7 +87,7 @@ namespace UziTrainer.Scenes
             }
             FilterOptionButton.Name = "FormationPage/Filter" + doll.Rarity;
             FilterOptionButton.Next.Name = FilterOptionButton.Name + "Clicked";
-            screen.Click(FilterOptionButton);
+            screen.Click(FilterOptionButton, true);
             FilterOptionButton.Name = "FormationPage/Filter" + doll.Type;
             FilterOptionButton.Next.Name = FilterOptionButton.Name + "Clicked";
             screen.Click(FilterOptionButton);

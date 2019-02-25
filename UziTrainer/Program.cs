@@ -32,7 +32,8 @@ namespace UziTrainer
             Application.SetCompatibleTextRenderingDefault(false);
             //Run();
             form = new FormMain();
-            Application.Run(form);            
+            Application.Run(form);
+            
         }
 
         public static void PrepareAssets()
@@ -61,7 +62,16 @@ namespace UziTrainer
 
         public static void Run()
         {
-            screen = new Screen("ZR288");
+            screen = new Screen("NoxPlayer");
+            screen.mouse.Click(42, 279);
+            while (true) { }
+            return;
+            var formation = new Formation(screen);
+            var echelon = 2;
+            Formation.EchelonButton.Name = $"FormationPage/Echelon{echelon.ToString()}";
+            Formation.EchelonClickedScene.Name = $"FormationPage/Echelon{echelon.ToString()}Clicked";
+            screen.Click(Formation.EchelonButton, true);
+            //formation.ReplaceCorpseDragger();
             /*
             var repair = new Repair(screen);
             var formation = new Formation(screen);
@@ -84,8 +94,8 @@ namespace UziTrainer
             */
             //var combat = new Combat(screen);
             //combat.PrepareMission("0_2");
-            var c0 = new Chapter0(screen, "0_2");
-            c0.Map0_2();
+            //var c0 = new Chapter0(screen, "0_2");
+            //c0.Map0_2();
 
             //screen.Wait(Chapter.EchelonFormationButton, true);
             //screen.Wait(Chapter.DeployEchelonButton, true);

@@ -134,11 +134,7 @@ namespace UziTrainer.Scenes
             var method = type.GetMethod("Map" + mission);
             method.Invoke(o, null);
 
-            var anyButton = new Button("", new Rectangle(400, 200, 300, 300), null);
-            while (!screen.Exists(LoadScreenSample, 500))
-            {
-                screen.Click(anyButton);
-            }
+            screen.Click(new Rectangle(400, 200, 300, 300), LoadScreenSample, 400);
             return MissionResult.Finished;
         }
     }
