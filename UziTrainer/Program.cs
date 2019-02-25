@@ -20,7 +20,7 @@ namespace UziTrainer
     {
         public static AutoResetEvent DebugResetEvent = new AutoResetEvent(false);
         static Screen screen;
-        static Form1 form;
+        static FormMain form;
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -30,8 +30,8 @@ namespace UziTrainer
             PrepareAssets();            
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Run();
-            form = new Form1();
+            //Run();
+            form = new FormMain();
             Application.Run(form);            
         }
 
@@ -59,14 +59,35 @@ namespace UziTrainer
             ZipFile.ExtractToDirectory("./assets.zip", "./");
         }
 
-        static void Run()
+        public static void Run()
         {
-            screen = new Screen("NoxPlayer");
+            screen = new Screen("ZR288");
+            /*
+            var repair = new Repair(screen);
+            var formation = new Formation(screen);
+            var combat = new Combat(screen);
+
+            screen.Wait(Home.LvSample);
+            Thread.Sleep(2000);
+            if (screen.Exists(Home.CriticalDamaged))
+            {
+                screen.Click(Home.RepairButton);
+                repair.RepairCritical();
+            }
+            if (Properties.Settings.Default.IsCorpseDragging)
+            {
+                screen.Click(Home.FormationButton);
+                formation.ReplaceCorpseDragger();
+            }
+            screen.Click(Home.CombatButton);
+            combat.PrepareMission("0_2");
+            */
             //var combat = new Combat(screen);
             //combat.PrepareMission("0_2");
-            //var c0 = new Chapter0(screen, "0_2");
-            //c0.Map0_2();
-            screen.Wait(Chapter.EchelonFormationButton, true);
+            var c0 = new Chapter0(screen, "0_2");
+            c0.Map0_2();
+
+            //screen.Wait(Chapter.EchelonFormationButton, true);
             //screen.Wait(Chapter.DeployEchelonButton, true);
             //var formation = new Formation(screen);
             //Combat.MissionButton.Name = "CombatPage/1_6";

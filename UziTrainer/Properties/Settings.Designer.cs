@@ -58,5 +58,29 @@ namespace UziTrainer.Properties {
                 this["DollLoaded"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool IsCorpseDragging {
+            get {
+                return ((bool)(this["IsCorpseDragging"]));
+            }
+            set {
+                this["IsCorpseDragging"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0_2")]
+        public string SelectedMission {
+            get {
+                return ((string)(this["SelectedMission"]));
+            }
+            set {
+                this["SelectedMission"] = value;
+            }
+        }
     }
 }

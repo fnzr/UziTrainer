@@ -65,42 +65,47 @@ namespace UziTrainer.Window
 
         public void Click(Button button, bool debug = false)
         {
+            Rectangle area;
+            if (button.Name == "")
+            {
+                area = button.SearchArea;
+            }
+            else
+            {
+                var foundAt = Wait(button, debug);
+                area = button.ClickArea(new Point(button.SearchArea.X + foundAt.X, button.SearchArea.Y + foundAt.Y));
+            }
+            var x = area.X + random.Next(0, area.Width);
+            var y = area.Y + random.Next(0, area.Height);
+            mouse.Click(x, y);
+            if (button.Next == null)
+            {
+                return;
+            }
             while (true)
             {
-                Rectangle area;
-                if(button.Name == "")
-                {
-                    area = button.SearchArea;
-                }
-                else
-                {
-                    var foundAt = Wait(button, debug);
-                    area = button.ClickArea(new Point(button.SearchArea.X + foundAt.X, button.SearchArea.Y + foundAt.Y));
-                }
-                var x = area.X + random.Next(0, area.Width);
-                var y = area.Y + random.Next(0, area.Height);
-                mouse.Click(x, y);
-                if (button.Next == null)
-                {
-                    break;
-                }
                 if (button.Next == Sample.Negative)
                 {
                     if (!Exists(button))
                     {
                         break;
-                    }
-                    else
-                    {
-                        continue;
-                    }
+                    }                    
                 }
-                if (Exists(button.Next, 5000))
+                else if(Exists(button.Next, 1000))
                 {
                     break;
                 }
+                if (button.Name == "")
+                {
+                    mouse.Click(x, y);
+                }
+                else if(Exists(button, 200))
+                {
+                    x = area.X + random.Next(0, area.Width);
+                    y = area.Y + random.Next(0, area.Height);
+                    mouse.Click(x, y);
+                }
             }
-            Thread.Sleep(500);
         }
 
         public Point Wait(Sample sample, bool debug = false)

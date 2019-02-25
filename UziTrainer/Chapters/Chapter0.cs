@@ -26,16 +26,21 @@ namespace UziTrainer.Chapters
             screen.Click(new Button("", new Rectangle(new Point(589, 334), nodeSize), EchelonFormationButton));
             screen.Click(DeployEchelonButton);
 
-            screen.Click(new Button("", new Rectangle(new Point(201, 336), nodeSize), EchelonFormationButton));
+            var heliport = new Button("", new Rectangle(new Point(201, 336), nodeSize), EchelonFormationButton);
+            screen.Click(heliport);
             screen.Click(DeployEchelonButton);
             screen.Click(StartOperationButton);
             Thread.Sleep(2000);
+
+            heliport.Next = ResupplyButton;
+            screen.Click(heliport);
+            screen.Click(ResupplyButton);
 
             screen.Click(PlanningOffButton);
             Button CommandPost = new Button("", new Rectangle(new Point(589, 334), nodeSize), DeployEchelonButton);
             screen.Click(CommandPost);
             
-            screen.Click(new Rectangle(471, 274, 54, 45));
+            screen.Click(new Rectangle(new Point(471, 274), nodeSize));
             screen.mouse.DragUpToDown(700, 104, 734);
 
             var plan2 = new Sample(root + "Plan2", new Rectangle(479, 607, 45, 37));
@@ -45,6 +50,13 @@ namespace UziTrainer.Chapters
             screen.Click(new Rectangle(new Point(494, 275), nodeSize));
 
             WaitExecution();
+            WaitTurn("2");
+
+            screen.Click(new Rectangle(new Point(501, 279), nodeSize));
+            screen.Click(new Rectangle(new Point(786, 275), nodeSize));
+            screen.Click(new Rectangle(new Point(964, 299), nodeSize));            
+            WaitExecution();
+            screen.Click(EndTurnButton);
         }
     }
 }

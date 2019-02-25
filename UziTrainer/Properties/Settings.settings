@@ -11,5 +11,11 @@
     <Setting Name="DollLoaded" Type="System.String" Scope="User">
       <Value Profile="(Default)">M4 SOPMOD II</Value>
     </Setting>
+    <Setting Name="IsCorpseDragging" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="SelectedMission" Type="System.String" Scope="User">
+      <Value Profile="(Default)">0_2</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
