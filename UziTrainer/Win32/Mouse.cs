@@ -22,7 +22,7 @@ namespace UziTrainer.Win32
 
         private static int GetLParam(int x, int y)
         {
-            //return (x & 0xFFFF) | ((y & 0xFFFF) << 16);
+            y = y - 32; //default_title_barWindow offset
             return (y << 16) | (x & 0xFFFF);            
         }
 

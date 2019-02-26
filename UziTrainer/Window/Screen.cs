@@ -19,7 +19,7 @@ namespace UziTrainer.Window
         readonly IntPtr WindowHWND;
         readonly IntPtr MessageHWND;
         public readonly Win32.Mouse mouse;
-        public static readonly Rectangle FullArea = new Rectangle(0, 0, 1284, 754);
+        public static readonly Rectangle FullArea = new Rectangle(0, 0, 1284, 722);
 
         Image<Rgba, byte> _Image = new Image<Rgba, byte>(1, 1);
 
@@ -31,7 +31,6 @@ namespace UziTrainer.Window
                 throw new ArgumentException($"No HWND for window [{windowTitle}]");
             }
             var mhwnd = Win32.Message.FindWindowEx(hwnd, 0, MessageWindowClass, MessageWindowTitle);
-
             WindowHWND = new IntPtr(hwnd);
             MessageHWND = new IntPtr(mhwnd);
             mouse = new Win32.Mouse(hwnd, mhwnd);
@@ -153,28 +152,23 @@ namespace UziTrainer.Window
         Image<Rgba, byte> CaptureScreen(Rectangle searchArea)
         {
             var rc = ReferenceRectangle();
-            var bitmap = new Bitmap(rc.Width, rc.Height, PixelFormat.Format32bppArgb);
-            Graphics gfxBmp = Graphics.FromImage(bitmap);
+            var bmp = new Bitmap(rc.Width, rc.Height, PixelFormat.Format32bppArgb);
+            Graphics gfxBmp = Graphics.FromImage(bmp);            
             IntPtr hdcBitmap = gfxBmp.GetHdc();
 
-            Win32.Message.PrintWindow(WindowHWND, hdcBitmap, 0x1);
+            Win32.Message.PrintWindow(WindowHWND, hdcBitmap, 0x1);            
             gfxBmp.ReleaseHdc(hdcBitmap);
-            _Image.Dispose();
-            var image = new Image<Rgba, byte>(bitmap);
             gfxBmp.Dispose();
-            try
-            {
-                var copy = image.Copy(searchArea);
-                image.Dispose();
-                _Image = copy;
-                return copy;
-            }
-            catch (OutOfMemoryException)
-            {
-                Trace.TraceError("Provided area is out of bounds! Capturing entire image. Fix this. Provided area is: " + searchArea.ToString());image.Dispose();
-                _Image = image;
-                return _Image;
-            }
+
+            var bitmap = new Bitmap(searchArea.Width, searchArea.Height, PixelFormat.Format32bppArgb);
+            var g = Graphics.FromImage(bitmap);
+            var section = new Rectangle(searchArea.X, searchArea.Y, searchArea.Width, searchArea.Height);
+            g.DrawImage(bmp, 0, 0, section, GraphicsUnit.Pixel);
+
+            bmp.Dispose();            
+            _Image.Dispose();
+            _Image = new Image<Rgba, byte>(bitmap);
+            return _Image;
         }
     }
 }

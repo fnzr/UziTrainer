@@ -62,15 +62,14 @@ namespace UziTrainer
 
         public static void Run()
         {
-            screen = new Screen("NoxPlayer");
-            screen.mouse.Click(42, 279);
-            while (true) { }
-            return;
+            screen = new Screen("ZR288");
+            //screen.mouse.Click(42, 279);            
             var formation = new Formation(screen);
             var echelon = 2;
             Formation.EchelonButton.Name = $"FormationPage/Echelon{echelon.ToString()}";
             Formation.EchelonClickedScene.Name = $"FormationPage/Echelon{echelon.ToString()}Clicked";
-            screen.Click(Formation.EchelonButton, true);
+            screen.Click(Formation.EchelonButton);
+            while (true) { }
             //formation.ReplaceCorpseDragger();
             /*
             var repair = new Repair(screen);
