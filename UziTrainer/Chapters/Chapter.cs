@@ -13,11 +13,11 @@ namespace UziTrainer.Chapters
     class Chapter
     {
         
-        public static readonly Button ExecutePlanButton = new Button("", new Rectangle(1112, 657, 146, 64), null);
+        public static readonly Rectangle ExecutePlanButton = new Rectangle(1112, 657, 146, 64);
         public static readonly Button DeployEchelonButton = new Button("Combat/DeployOK", new Rectangle(1106, 653, 148, 53), Combat.SanityCheck);
         public static readonly Button PlanningOnButton = new Button("Combat/PlanningOn", new Rectangle(6, 607, 122, 30), Combat.SanityCheck);
         public static readonly Button PlanningOffButton = new Button("Combat/PlanningOff", new Rectangle(6, 607, 122, 30), null);
-        public static readonly Button StartOperationButton = new Button("", new Rectangle(1012, 651, 250, 80), Sample.Negative);
+        public static readonly Rectangle StartOperationButton = new Rectangle(1012, 651, 250, 80);
         public static readonly Button EndTurnButton = new Button("Combat/EndTurn", new Rectangle(1097, 646, 150, 90), Sample.Negative);
         public static readonly Button TerminateButton = new Button("Combat/Terminate", new Rectangle(263, 45, 100, 70), null);
         public static readonly Button EchelonFormationButton = new Button("Combat/EchelonFormation", new Rectangle(159, 636, 162, 36), null);
