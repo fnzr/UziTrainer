@@ -52,6 +52,7 @@
             this.buttonTogglePause.TabIndex = 0;
             this.buttonTogglePause.Text = "Pause";
             this.buttonTogglePause.UseVisualStyleBackColor = true;
+            this.buttonTogglePause.Click += new System.EventHandler(this.buttonTogglePause_Click);
             // 
             // buttonRun
             // 

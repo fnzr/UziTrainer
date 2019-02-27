@@ -73,7 +73,6 @@ namespace UziTrainer.Window
             var area = button.ClickArea(button.AbsolutePosition(foundAt));
             var x = area.X + random.Next(0, area.Width);
             var y = area.Y + random.Next(0, area.Height);
-            Trace.WriteLine($"{x} - {y}");
             mouse.Click(x, y);
             if (button.Next == null)
             {

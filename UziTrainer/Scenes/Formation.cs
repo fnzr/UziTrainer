@@ -10,8 +10,9 @@ namespace UziTrainer.Scenes
 {
     class Formation
     {
+        public static readonly Rectangle ReturnToBase = new Rectangle(13, 48, 110, 69);
         public static readonly Sample FormationScene = new Sample("FormationPage/FormationPage", new Rectangle(1188, 145, 40, 35));
-        public static readonly Sample FilterActiveScene = new Sample("FormationPage/FilterActive", new Rectangle(1105, 280, 105, 80));
+        public static readonly Sample FilterActiveSample = new Sample("FormationPage/FilterActive", new Rectangle(1105, 280, 105, 80));
         public static readonly Button FilterResetButton = new Button("FormationPage/Reset", new Rectangle(540, 694, 233, 36), Sample.Negative);
         public static readonly Button FilterDollButton = new Button("FormationPage/Filter", new Rectangle(1105, 280, 105, 65), FilterResetButton);
         public static readonly Button DollFormationButton = new Button("", new Rectangle(150, 186, 902, 339), FilterDollButton, .9f, SlotArea);        
@@ -33,13 +34,13 @@ namespace UziTrainer.Scenes
         private static Rectangle FilterOptionArea(Point arg)
         {
             var filterXSize = 157;
-            var filterYSize = 60;
+            var filterYSize = 90;
             int y;
             int line;
             if (arg.Y > 365) // Filter Type
             {
                 line = (arg.Y - 395 - 5) / filterYSize;
-                y = 400 + (filterYSize * line);
+                y = 395 + (filterYSize * line - 1);
             }
             else // Filter Rarity
             {
@@ -48,7 +49,7 @@ namespace UziTrainer.Scenes
             }            
             var column = (arg.X - 543 - 10) / filterXSize;
             var x = 537 + (column * filterXSize) + ((column + 1) * 15);
-            return new Rectangle(new Point(x, y), new Size(147, 45));
+            return new Rectangle(new Point(x, y), new Size(147, 55));
         }
 
         private static Rectangle SelectDollArea(Point arg)
@@ -80,14 +81,14 @@ namespace UziTrainer.Scenes
         public void SelectDoll(Doll doll)
         {
             screen.Click(FilterDollButton);
-            if (screen.Exists(FilterActiveScene))
+            if (screen.Exists(FilterActiveSample, 1000))
             {
                 screen.Click(FilterResetButton);
                 screen.Click(FilterDollButton);
             }
             FilterOptionButton.Name = "FormationPage/Filter" + doll.Rarity;
             FilterOptionButton.Next.Name = FilterOptionButton.Name + "Clicked";
-            screen.Click(FilterOptionButton, true);
+            screen.Click(FilterOptionButton);
             FilterOptionButton.Name = "FormationPage/Filter" + doll.Type;
             FilterOptionButton.Next.Name = FilterOptionButton.Name + "Clicked";
             screen.Click(FilterOptionButton);
@@ -106,11 +107,10 @@ namespace UziTrainer.Scenes
             EchelonClickedScene.Name = $"FormationPage/Echelon{echelon.ToString()}Clicked";
             if (!screen.Exists(EchelonClickedScene))
             {
-                screen.Click(EchelonButton, true);
+                screen.Click(EchelonButton);
             }
             var area = SlotArea(new Point(220 + (160 * (slot - 1)), 290));
-            var button = new Button("", area, FilterDollButton);
-            screen.Click(button);
+            screen.Click(area, FilterDollButton);
             SelectDoll(doll);
         }
 

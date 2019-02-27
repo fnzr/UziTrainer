@@ -9,9 +9,11 @@ using UziTrainer.Window;
 namespace UziTrainer.Scenes
 {
 
-    enum MissionResult
+    public enum MissionResult
     {
         Finished,
+        RetirementRequired,
+        EnhancementRequired
     }
 
     class Combat
@@ -76,15 +78,6 @@ namespace UziTrainer.Scenes
             {
                 ChapterButton.Name = $"CombatPage/Chapter{parts[0]}";
                 screen.Click(ChapterButton);
-            }
-            MissionResult result = MissionResult.Finished;
-            while (result == MissionResult.Finished)
-            {
-                result = ExecuteMission(mission);
-                switch (result) {
-                    case MissionResult.Finished:
-                        break;
-                }
             }
         }
 

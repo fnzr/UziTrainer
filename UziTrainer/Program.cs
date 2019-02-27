@@ -62,10 +62,17 @@ namespace UziTrainer
 
         public static void Run()
         {
+            int counter = 1;
+            while (true)
+            {
+                Trace.WriteLine(counter);
+                counter++;
+                Thread.Sleep(500);
+            }
             screen = new Screen("ZR288");
             //screen.mouse.Click(42, 279);            
             //formation.ReplaceCorpseDragger();
-            /*
+            
             var repair = new Repair(screen);
             var formation = new Formation(screen);
             var combat = new Combat(screen);
@@ -81,14 +88,33 @@ namespace UziTrainer
             {
                 screen.Click(Home.FormationButton);
                 formation.ReplaceCorpseDragger();
+                screen.Click(Formation.ReturnToBase, Home.LvSample);
             }
             screen.Click(Home.CombatButton);
             combat.PrepareMission("0_2");
-            */
+            while (true)
+            {
+                var missionResult = combat.ExecuteMission("0_2");
+                if (missionResult == MissionResult.EnhancementRequired)
+                {
+                    break;
+                }
+                if (missionResult == MissionResult.RetirementRequired)
+                {
+                    break;
+                }
+                if (Properties.Settings.Default.IsCorpseDragging)
+                {
+                    screen.Click(Combat.ReturnButton);
+                    break;
+                }
+            }
+            
+            
             //var combat = new Combat(screen);
             //combat.PrepareMission("0_2");
-            var c0 = new Chapter0(screen, "0_2");
-            c0.Map0_2();
+            //var c0 = new Chapter0(screen, "0_2");
+            //c0.Map0_2();
 
             //screen.Wait(Chapter.EchelonFormationButton, true);
             //screen.Wait(Chapter.DeployEchelonButton, true);

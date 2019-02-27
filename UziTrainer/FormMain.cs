@@ -20,7 +20,15 @@ namespace UziTrainer
             checkBoxSwapActive.Checked = Properties.Settings.Default.IsCorpseDragging;
             comboMaps.SelectedIndex = Array.IndexOf(maps, Properties.Settings.Default.SelectedMission);
             comboMaps.SelectedIndexChanged += selectedIndexChanged;
+
             Trace.Listeners.Add(new FormMainTraceListener(this));
+
+            FormClosing += FormMain_FormClosing;
+        }
+
+        private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            ExecutionThread.Abort();
         }
 
         private void selectedIndexChanged(object sender, EventArgs e)
@@ -122,12 +130,6 @@ namespace UziTrainer
                 ExecutionThread.Suspend();
             }
         }
-
-        public new void Close()
-        {
-            ExecutionThread.Abort();
-            base.Close();
-        }
     }
 
     class FormMainTraceListener : TraceListener
@@ -136,6 +138,7 @@ namespace UziTrainer
 
         public FormMainTraceListener(FormMain form)
         {
+            Name = "FormMainTraceListener";
             this.form = form;
         }
 
