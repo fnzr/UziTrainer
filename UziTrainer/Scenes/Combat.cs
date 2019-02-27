@@ -100,6 +100,7 @@ namespace UziTrainer.Scenes
             MissionButton.Name = "CombatPage/" + mission;
             screen.Click(MissionButton);
             screen.Click(NormalBattleButton);
+            screen.Interruptible = false;
             /*
             if (screen.Exists())
             if (Screen.Exists(new Query("CombatPage/DollEnhancementPopup", new Rectangle(779, 508, 30, 30)), 1000, out coords))
@@ -127,6 +128,7 @@ namespace UziTrainer.Scenes
             var method = type.GetMethod("Map" + mission);
             method.Invoke(o, null);
 
+            screen.Interruptible = true;
             screen.Click(new Rectangle(400, 200, 300, 300), LoadScreenSample, 400);
             return MissionResult.Finished;
         }

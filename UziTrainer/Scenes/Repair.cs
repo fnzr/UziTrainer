@@ -10,6 +10,7 @@ namespace UziTrainer.Scenes
 {
     class Repair
     {
+        public static readonly Rectangle ReturnToBase = new Rectangle(13, 48, 110, 69);
         public static readonly Sample RepairScene = new Sample("RepairPage/RepairPage", new Rectangle(195, 73, 25, 25));
         private Screen screen;
 
@@ -20,7 +21,7 @@ namespace UziTrainer.Scenes
 
         internal void RepairCritical()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
     }
 }

@@ -20,6 +20,7 @@ namespace UziTrainer.Window
         readonly IntPtr MessageHWND;
         public readonly Win32.Mouse mouse;
         public static readonly Rectangle FullArea = new Rectangle(0, 0, 1284, 722);
+        public bool Interruptible = false;
 
         Image<Rgba, byte> _Image = new Image<Rgba, byte>(1, 1);
 
@@ -103,6 +104,10 @@ namespace UziTrainer.Window
                     Trace.WriteLine($"Not found [{sample.Name}] in 120s. Stopping.");
                     //TODO pause
                 }
+                if (Interruptible && WasInterrupted())
+                {
+                    stopwatch.Reset();
+                }
             }
             Trace.WriteLine($"Found [{sample.Name}]");
             return found;
@@ -146,6 +151,11 @@ namespace UziTrainer.Window
             Win32.RECT rc;
             Win32.Message.GetWindowRect(WindowHWND, out rc);
             return rc;
+        }
+
+        bool WasInterrupted()
+        {
+            return false
         }
 
         Image<Rgba, byte> CaptureScreen(Rectangle searchArea)

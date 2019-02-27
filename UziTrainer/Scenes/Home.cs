@@ -11,5 +11,6 @@ namespace UziTrainer.Scenes
         public static readonly Button CombatButton = new Button("HomePage/Combat", new Rectangle(835, 460, 185, 76), Combat.CombatScene);
         public static readonly Button RepairButton = new Button("HomePage/Combat", new Rectangle(832, 273, 183, 61), Repair.RepairScene);
         public static readonly Sample CriticalDamaged = new Sample("CriticalRepair", new Rectangle(1007, 264, 25, 25));
+        
     }
 }

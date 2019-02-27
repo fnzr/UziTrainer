@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 using UziTrainer.Window;
 
 namespace UziTrainer.Scenes
@@ -15,17 +10,17 @@ namespace UziTrainer.Scenes
         public static readonly Sample FilterActiveSample = new Sample("FormationPage/FilterActive", new Rectangle(1105, 280, 105, 80));
         public static readonly Button FilterResetButton = new Button("FormationPage/Reset", new Rectangle(540, 694, 233, 36), Sample.Negative);
         public static readonly Button FilterDollButton = new Button("FormationPage/Filter", new Rectangle(1105, 280, 105, 65), FilterResetButton);
-        public static readonly Button DollFormationButton = new Button("", new Rectangle(150, 186, 902, 339), FilterDollButton, .9f, SlotArea);        
-        
+        public static readonly Button DollFormationButton = new Button("", new Rectangle(150, 186, 902, 339), FilterDollButton, .9f, SlotArea);
+
         public static readonly Button FilterConfirmButton = new Button("FormationPage/FilterConfirm", new Rectangle(815, 693, 233, 36), Sample.Negative);
         public static readonly Button DollSelectButton = new Button("", new Rectangle(5, 136, 1075, 606), FormationScene, .85f, SelectDollArea);
-        public static readonly Button FilterOptionButton = new Button("", new Rectangle(528, 169, 546, 422), 
+        public static readonly Button FilterOptionButton = new Button("", new Rectangle(528, 169, 546, 422),
             new Button("", new Rectangle(528, 169, 546, 412), null), .95f, FilterOptionArea);
         public static readonly Sample EchelonClickedScene = new Sample("", new Rectangle(7, 145, 130, 596));
         public static readonly Button EchelonButton = new Button("", new Rectangle(7, 145, 130, 596), EchelonClickedScene, .95f, EchelonClickArea);
 
         private static Rectangle EchelonClickArea(Point arg)
-        {            
+        {
             int echelon = (arg.Y - 140) / 90;
             int y = 140 + (90 * echelon);
             return new Rectangle(10, y, 100, 60);
@@ -46,7 +41,7 @@ namespace UziTrainer.Scenes
             {
                 line = (arg.Y - 180 - 5) / filterYSize;
                 y = 185 + (filterYSize * line - 1);
-            }            
+            }
             var column = (arg.X - 543 - 10) / filterXSize;
             var x = 537 + (column * filterXSize) + ((column + 1) * 15);
             return new Rectangle(new Point(x, y), new Size(147, 55));
@@ -56,10 +51,10 @@ namespace UziTrainer.Scenes
         {
             var slotXSize = 160;
             int line = arg.Y / 440;
-            var y = 170 + (line  * 320);
+            var y = 170 + (line * 320);
             int column = (arg.X - 20) / slotXSize;
 
-            var x = 20 + (column  * slotXSize) + (column * 20);
+            var x = 20 + (column * slotXSize) + (column * 20);
             return new Rectangle(new Point(x, y), new Size(140, 190));
         }
 
