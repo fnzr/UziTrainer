@@ -25,7 +25,7 @@ namespace UziTrainer.Scenes
         public static readonly Sample ChapterClickedSample = new Sample("", new Rectangle(225, 146, 155, 588));
         public static readonly Button ChapterButton = new Button("", new Rectangle(225, 146, 130, 596), ChapterClickedSample, .95f, ChapterClickedArea);
 
-        public static readonly Button DollEnhancementButton = new Button("CombatPage/DollEnhancementPopup", new Rectangle(674, 580, 146, 63), Sample.Negative);
+        public static readonly Button DollEnhancementButton = new Button("CombatPage/DollEnhancementPopup", new Rectangle(718, 503, 162, 51), Sample.Negative);
         public static readonly Button EquipmentEnhancementButton = new Button("CombatPage/EquipEnhancementPopup", new Rectangle(674, 580, 146, 63), Sample.Negative);
 
         public static readonly Button NormalBattleButton = new Button("CombatPage/NormalBattle", new Rectangle(674, 580, 146, 63), Sample.Negative);
@@ -101,6 +101,12 @@ namespace UziTrainer.Scenes
             screen.Click(MissionButton);
             screen.Click(NormalBattleButton);
             screen.Interruptible = false;
+
+            if(screen.Exists(DollEnhancementButton, 1000))
+            {
+                screen.Click(DollEnhancementButton);
+                return MissionResult.EnhancementRequired;
+            }
             /*
             if (screen.Exists())
             if (Screen.Exists(new Query("CombatPage/DollEnhancementPopup", new Rectangle(779, 508, 30, 30)), 1000, out coords))

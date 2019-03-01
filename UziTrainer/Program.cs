@@ -62,14 +62,14 @@ namespace UziTrainer
 
         public static void Run()
         {
-            screen = new Screen("ZR288");
+            screen = new Screen("ZR288");            
             //screen.mouse.Click(42, 279);
             //formation.ReplaceCorpseDragger();
             
             var repair = new Repair(screen);
             var formation = new Formation(screen);
             var combat = new Combat(screen);
-
+            bool forcedEnhancement = false;
             screen.Interruptible = true;
             screen.Wait(Home.LvSample);
             Thread.Sleep(2000);
@@ -82,8 +82,9 @@ namespace UziTrainer
                 screen.Click(Repair.ReturnToBase, Home.LvSample);
                 
             }
-            if (Properties.Settings.Default.IsCorpseDragging)
-            {                
+            if (Properties.Settings.Default.IsCorpseDragging && !forcedEnhancement)
+            {
+                forcedEnhancement = false;
                 screen.Click(Home.FormationButton);
                 screen.Interruptible = false;
                 formation.ReplaceCorpseDragger();
@@ -97,6 +98,7 @@ namespace UziTrainer
                 var missionResult = combat.ExecuteMission("0_2");
                 if (missionResult == MissionResult.EnhancementRequired)
                 {
+                    forcedEnhancement = true;
                     break;
                 }
                 if (missionResult == MissionResult.RetirementRequired)

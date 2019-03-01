@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Threading;
+using UziTrainer.Scenes;
 
 namespace UziTrainer.Window
 {
@@ -20,7 +21,7 @@ namespace UziTrainer.Window
         readonly IntPtr MessageHWND;
         public readonly Win32.Mouse mouse;
         public static readonly Rectangle FullArea = new Rectangle(0, 0, 1284, 722);
-        public bool Interruptible = false;
+        public bool Interruptible = true;
 
         Image<Rgba, byte> _Image = new Image<Rgba, byte>(1, 1);
 
@@ -34,7 +35,7 @@ namespace UziTrainer.Window
             var mhwnd = Win32.Message.FindWindowEx(hwnd, 0, MessageWindowClass, MessageWindowTitle);
             WindowHWND = new IntPtr(hwnd);
             MessageHWND = new IntPtr(mhwnd);
-            mouse = new Win32.Mouse(hwnd, mhwnd);
+            mouse = new Win32.Mouse(hwnd, mhwnd);            
         }
 
         public bool Exists(Sample sample, int timeout = 3000, bool debug = false)
@@ -104,10 +105,6 @@ namespace UziTrainer.Window
                     Trace.WriteLine($"Not found [{sample.Name}] in 120s. Stopping.");
                     //TODO pause
                 }
-                if (Interruptible && WasInterrupted())
-                {
-                    stopwatch.Reset();
-                }
             }
             Trace.WriteLine($"Found [{sample.Name}]");
             return found;
@@ -115,7 +112,10 @@ namespace UziTrainer.Window
 
         Point Search(Sample sample, bool debug)
         {
-            Thread.Sleep(300);
+            if (Interruptible)
+            {
+                SolveInterruptions();
+            }
             Point foundAt = Point.Empty;
             using (Image<Gray, float> result = CaptureScreen(sample.SearchArea).MatchTemplate(sample.Image, Emgu.CV.CvEnum.TemplateMatchingType.CcoeffNormed))
             {
@@ -153,9 +153,16 @@ namespace UziTrainer.Window
             return rc;
         }
 
-        bool WasInterrupted()
+        void SolveInterruptions()
         {
-            return false
+            Interruptible = false;
+            if (Exists(Home.LogisticsReturned, 0))
+            {
+                Click(new Rectangle(1049, 580, 50, 50));
+                Click(Home.LogisticsRepeatButton);
+                Thread.Sleep(500);
+            }
+            Interruptible = true;
         }
 
         Image<Rgba, byte> CaptureScreen(Rectangle searchArea)
