@@ -23,7 +23,7 @@ namespace UziTrainer.Window
                     _Image = null;
                 }
             }}
-        public Rectangle SearchArea { get; private set; }
+        public Rectangle SearchArea { get; set; }
         public float Threshold { get; private set; }
         public Sample Next { get; set; }
 

@@ -18,6 +18,7 @@ namespace UziTrainer.Scenes
 
     class Combat
     {
+        public static readonly Rectangle ReturnToBase = new Rectangle(11, 45, 117, 70);
         public static readonly Sample CombatScene = new Sample("CombatPage/CombatPage", new Rectangle(375, 63, 191, 58));
         public static readonly Sample CombatMissionClicked = new Sample("CombatPage/CombatMissionClicked", new Rectangle(15, 149, 163, 68));
         public static readonly Button CombatMissionButton = new Button("CombatPage/CombatMission", new Rectangle(15, 149, 163, 68), CombatMissionClicked);
@@ -29,9 +30,7 @@ namespace UziTrainer.Scenes
         public static readonly Button EquipmentEnhancementButton = new Button("CombatPage/EquipEnhancementPopup", new Rectangle(674, 580, 146, 63), Sample.Negative);
 
         public static readonly Button NormalBattleButton = new Button("CombatPage/NormalBattle", new Rectangle(674, 580, 146, 63), Sample.Negative);
-        public static readonly Button MissionButton = new Button("", new Rectangle(607, 265, 155, 447), NormalBattleButton, .95f, MissionArea);
-
-        public static readonly Button ReturnButton = new Button("CombatPage/Return", new Rectangle(11, 45, 117, 70), Sample.Negative);
+        public static readonly Button MissionButton = new Button("", new Rectangle(607, 265, 155, 447), NormalBattleButton, .95f, MissionArea);        
 
         public static readonly Sample Turn0 = new Sample("Combat/Turn0", new Rectangle(416, 66, 71, 292));
         public static readonly Sample SanityCheck = new Sample("", Screen.FullArea);
@@ -60,7 +59,7 @@ namespace UziTrainer.Scenes
         }
 
         public void PrepareMission(string mission)
-        {
+        {            
             if (!screen.Exists(CombatMissionClicked, 2000))
             {
                 screen.Click(CombatMissionButton);
@@ -100,7 +99,6 @@ namespace UziTrainer.Scenes
             MissionButton.Name = "CombatPage/" + mission;
             screen.Click(MissionButton);
             screen.Click(NormalBattleButton);
-            screen.Interruptible = false;
 
             if(screen.Exists(DollEnhancementButton, 1000))
             {
@@ -125,8 +123,8 @@ namespace UziTrainer.Scenes
                 return false;
             }
             */
+            screen.Interruptible = false;
             screen.Wait(Turn0);            
-
             var parts = mission.Split('_');
 
             var type = Type.GetType("UziTrainer.Chapters.Chapter" + parts[0]);

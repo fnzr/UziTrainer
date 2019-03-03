@@ -24,6 +24,7 @@ namespace UziTrainer.Window
         public bool Interruptible = true;
 
         Image<Rgba, byte> _Image = new Image<Rgba, byte>(1, 1);
+        Image<Rgba, byte> _ImageLimited = new Image<Rgba, byte>(1, 1);
 
         public Screen(string windowTitle)
         {
@@ -37,7 +38,7 @@ namespace UziTrainer.Window
             MessageHWND = new IntPtr(mhwnd);
             mouse = new Win32.Mouse(hwnd, mhwnd);            
         }
-
+        
         public bool Exists(Sample sample, int timeout = 3000, bool debug = false)
         {
             Trace.WriteLine($"Searching for [{sample.Name}]");
@@ -76,21 +77,38 @@ namespace UziTrainer.Window
             var x = area.X + random.Next(0, area.Width);
             var y = area.Y + random.Next(0, area.Height);
             mouse.Click(x, y);
-            if (button.Next == null)
+            do
             {
-                return;
-            }
-            else if (button.Next == Sample.Negative)
-            {
-                while (Exists(button))
+                if (button.Next == null)
                 {
+                    break;
                 }
-            }
-            else
-            {
-                Wait(button.Next);
-            }
+                else if (button.Next == Sample.Negative)
+                {
+                    if (!Exists(button, 1000))
+                    {
+                        break;
+                    }
+                }
+                else
+                {
+                    if (Exists(button.Next))
+                    {
+                        break;
+                    }
+                }
+                if (Exists(button, 500))
+                {
+                    foundAt = Wait(button);
+                    area = button.ClickArea(button.AbsolutePosition(foundAt));
+                    x = area.X + random.Next(0, area.Width);
+                    y = area.Y + random.Next(0, area.Height);
+                    mouse.Click(x, y);
+                }
+            } while (true);
         }
+
+        
 
         public Point Wait(Sample sample, bool debug = false)
         {
@@ -111,19 +129,31 @@ namespace UziTrainer.Window
         }
 
         Point Search(Sample sample, bool debug)
-        {
+        {            
+            Point foundAt = Point.Empty;
+            var capture = CaptureScreen();
             if (Interruptible)
             {
-                SolveInterruptions();
-            }
-            Point foundAt = Point.Empty;
-            using (Image<Gray, float> result = CaptureScreen(sample.SearchArea).MatchTemplate(sample.Image, Emgu.CV.CvEnum.TemplateMatchingType.CcoeffNormed))
+                var copy = LimitSearchArea(capture, Home.LogisticsReturned.SearchArea);
+                if (GetPoint(Home.LogisticsReturned.Image, copy, Home.LogisticsReturned.Threshold) != Point.Empty)
+                {
+                    SolveInterruptions();
+                    capture = CaptureScreen();
+                }
+            }            
+            return GetPoint(sample.Image, LimitSearchArea(capture, sample.SearchArea), sample.Threshold, sample, debug);
+        }
+
+        Point GetPoint(Image<Rgba, byte> needle, Image<Rgba, byte> haystack, float threshold, Sample sample = null, bool debug = false)
+        {
+            Point foundAt;
+            using (Image<Gray, float> result = haystack.MatchTemplate(needle, Emgu.CV.CvEnum.TemplateMatchingType.CcoeffNormed))
             {
                 double[] maxValues;
                 Point[] maxLocations;
                 result.MinMax(out _, out maxValues, out _, out maxLocations);
                 // You can try different values of the threshold. I guess somewhere between 0.75 and 0.95 would be good.
-                if (maxValues[0] >= sample.Threshold)
+                if (maxValues[0] >= threshold)
                 {
                     foundAt = maxLocations[0];
                 }
@@ -136,7 +166,6 @@ namespace UziTrainer.Window
                     CreateDebugForm(sample, foundAt, (float)maxValues[0]);
                 }
             }
-
             return foundAt;
         }
 
@@ -156,35 +185,33 @@ namespace UziTrainer.Window
         void SolveInterruptions()
         {
             Interruptible = false;
-            if (Exists(Home.LogisticsReturned, 0))
-            {
-                Click(new Rectangle(1049, 580, 50, 50));
-                Click(Home.LogisticsRepeatButton);
-                Thread.Sleep(500);
-            }
+            Click(new Rectangle(1049, 580, 50, 50), Home.LogisticsRepeatButton);
+            Thread.Sleep(2000);
+            Click(Home.LogisticsRepeatButton);
+            Thread.Sleep(1000);
             Interruptible = true;
         }
 
-        Image<Rgba, byte> CaptureScreen(Rectangle searchArea)
+        Image<Rgba, byte> CaptureScreen()
         {
             var rc = ReferenceRectangle();
-            var bmp = new Bitmap(rc.Width, rc.Height, PixelFormat.Format32bppArgb);
-            Graphics gfxBmp = Graphics.FromImage(bmp);            
+            var bitmap = new Bitmap(rc.Width, rc.Height, PixelFormat.Format32bppArgb);
+            Graphics gfxBmp = Graphics.FromImage(bitmap);            
             IntPtr hdcBitmap = gfxBmp.GetHdc();
 
-            Win32.Message.PrintWindow(WindowHWND, hdcBitmap, 0x1);            
+            Win32.Message.PrintWindow(WindowHWND, hdcBitmap, 0x1);
             gfxBmp.ReleaseHdc(hdcBitmap);
-            gfxBmp.Dispose();
-
-            var bitmap = new Bitmap(searchArea.Width, searchArea.Height, PixelFormat.Format32bppArgb);
-            var g = Graphics.FromImage(bitmap);
-            var section = new Rectangle(searchArea.X, searchArea.Y, searchArea.Width, searchArea.Height);
-            g.DrawImage(bmp, 0, 0, section, GraphicsUnit.Pixel);
-
-            bmp.Dispose();            
             _Image.Dispose();
             _Image = new Image<Rgba, byte>(bitmap);
+            gfxBmp.Dispose();
             return _Image;
+        }
+
+        Image<Rgba, byte> LimitSearchArea(Image<Rgba, byte> image, Rectangle area)
+        {
+            _ImageLimited.Dispose();
+            _ImageLimited = image.Copy(area);            
+            return _ImageLimited;
         }
     }
 }

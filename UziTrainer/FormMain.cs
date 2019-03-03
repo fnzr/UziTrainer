@@ -18,6 +18,7 @@ namespace UziTrainer
             UpdateDollText();
             comboMaps.Items.AddRange(maps);
             checkBoxSwapActive.Checked = Properties.Settings.Default.IsCorpseDragging;
+            checkBoxSwapActive.CheckedChanged += CheckBoxSwapActive_CheckedChanged;
             comboMaps.SelectedIndex = Array.IndexOf(maps, Properties.Settings.Default.SelectedMission);
             comboMaps.SelectedIndexChanged += selectedIndexChanged;
 
@@ -25,10 +26,20 @@ namespace UziTrainer
 
             FormClosing += FormMain_FormClosing;
         }
-
+        
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-            ExecutionThread.Abort();
+            if (ExecutionThread != null) // deal with suspended thread
+            {
+                try
+                {
+                    ExecutionThread.Abort();
+                }
+                catch (ThreadStateException)
+                {
+                    ExecutionThread.Resume();
+                }
+            }
         }
 
         private void selectedIndexChanged(object sender, EventArgs e)
@@ -37,7 +48,7 @@ namespace UziTrainer
             Properties.Settings.Default.Save();
         }
 
-        private void checkBoxSwapActive_CheckedChanged(object sender, EventArgs e)
+        private void CheckBoxSwapActive_CheckedChanged(object sender, EventArgs e)
         {
             Properties.Settings.Default.IsCorpseDragging = checkBoxSwapActive.Checked;
             Properties.Settings.Default.Save();
@@ -103,16 +114,17 @@ namespace UziTrainer
             ExecutionThread.Suspend();
         }
 
+        public void IncreaseCounter()
+        {
+            BeginInvoke((Action)(() => labelCounter.Text = (++RunCounter).ToString()));
+        }
+
         private void buttonRun_Click(object sender, EventArgs e)
         {
             UpdateSettings();
             ExecutionThread = new Thread(new ThreadStart(delegate ()
             {
-                while (true)
-                {
-                    Program.Run();
-                    BeginInvoke((Action)(() => labelCounter.Text = (++RunCounter).ToString()));
-                }
+                Program.Run();
             }));
             ExecutionThread.Start();
         }
@@ -129,6 +141,11 @@ namespace UziTrainer
                 buttonTogglePause.Text = "Resume";
                 ExecutionThread.Suspend();
             }
+        }
+
+        private void buttonTest_Click(object sender, EventArgs e)
+        {
+            Program.RunTest();
         }
     }
 

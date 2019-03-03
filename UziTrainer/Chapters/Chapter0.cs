@@ -23,10 +23,10 @@ namespace UziTrainer.Chapters
         {
             Size nodeSize = new Size(50, 35);
 
-            screen.Click(new Rectangle(new Point(589, 334), nodeSize), EchelonFormationButton);
+            screen.Click(new Rectangle(new Point(621, 360), nodeSize), EchelonFormationButton);
             screen.Click(DeployEchelonButton);
 
-            var heliport = new Rectangle(new Point(201, 336), nodeSize);
+            var heliport = new Rectangle(new Point(225, 350), nodeSize);
             screen.Click(heliport);
             screen.Click(DeployEchelonButton);
             
@@ -38,9 +38,9 @@ namespace UziTrainer.Chapters
             screen.Click(ResupplyButton);
 
             screen.Click(PlanningOffButton);
-            screen.Click(new Rectangle(new Point(589, 334), nodeSize));
+            screen.Click(new Rectangle(new Point(621, 360), nodeSize));
             
-            screen.Click(new Rectangle(new Point(471, 274), nodeSize));
+            screen.Click(new Rectangle(new Point(471, 278), nodeSize));
             screen.mouse.DragUpToDown(700, 104, 734);
 
             var plan2 = new Sample(root + "Plan2", new Rectangle(479, 607, 45, 37));

@@ -36,6 +36,11 @@ namespace UziTrainer
             
         }
 
+        public static void Pause()
+        {
+            form.PauseExecution();
+        }
+
         public static void PrepareAssets()
         {
             if (Directory.Exists("./assets"))
@@ -60,67 +65,76 @@ namespace UziTrainer
             ZipFile.ExtractToDirectory("./assets.zip", "./");
         }
 
+        public static void RunTest()
+        {
+            screen = new Screen("ZR288");
+            screen.Interruptible = false;
+            var r = new Factory(screen);
+            //r.RepairCritical();
+            //f.SelectEnhaceable();
+            r.DollEnhancement();
+        }
+
         public static void Run()
         {
-            screen = new Screen("ZR288");            
+            screen = new Screen("ZR288");
             //screen.mouse.Click(42, 279);
             //formation.ReplaceCorpseDragger();
             
             var repair = new Repair(screen);
             var formation = new Formation(screen);
             var combat = new Combat(screen);
+            var factory = new Factory(screen);
+
             bool forcedEnhancement = false;
-            screen.Interruptible = true;
-            screen.Wait(Home.LvSample);
-            Thread.Sleep(2000);
-            if (screen.Exists(Home.CriticalDamaged))
-            {
-                screen.Click(Home.RepairButton);
-                screen.Interruptible = false;
-                repair.RepairCritical();
-                screen.Interruptible = true;
-                screen.Click(Repair.ReturnToBase, Home.LvSample);
-                
-            }
-            if (Properties.Settings.Default.IsCorpseDragging && !forcedEnhancement)
-            {
-                forcedEnhancement = false;
-                screen.Click(Home.FormationButton);
-                screen.Interruptible = false;
-                formation.ReplaceCorpseDragger();
-                screen.Interruptible = true;
-                screen.Click(Formation.ReturnToBase, Home.LvSample);
-            }
-            screen.Click(Home.CombatButton);
-            combat.PrepareMission("0_2");
             while (true)
             {
-                var missionResult = combat.ExecuteMission("0_2");
-                if (missionResult == MissionResult.EnhancementRequired)
+                screen.Interruptible = true;
+                screen.Wait(Home.LvSample);
+                Thread.Sleep(2000);
+                if (screen.Exists(Home.CriticalDamaged))
                 {
-                    forcedEnhancement = true;
-                    break;
-                }
-                if (missionResult == MissionResult.RetirementRequired)
-                {
-                    break;
-                }
-                if (Properties.Settings.Default.IsCorpseDragging)
-                {
-                    screen.Click(Combat.ReturnButton);
-                    break;
-                }
-            }
-            //var combat = new Combat(screen);
-            //combat.PrepareMission("0_2");
-            //var c0 = new Chapter0(screen, "0_2");
-            //c0.Map0_2();
+                    screen.Click(Home.RepairButton);
+                    screen.Interruptible = false;
+                    repair.RepairCritical();
+                    screen.Interruptible = true;
+                    screen.Click(Repair.ReturnToBase, Home.LvSample);
 
-            //screen.Wait(Chapter.EchelonFormationButton, true);
-            //screen.Wait(Chapter.DeployEchelonButton, true);
-            //var formation = new Formation(screen);
-            //Combat.MissionButton.Name = "CombatPage/1_6";
-            //screen.Click(Home.CombatButton, true);
+                }
+                if (Properties.Settings.Default.IsCorpseDragging && !forcedEnhancement)
+                {                    
+                    screen.Click(Home.FormationButton);
+                    screen.Interruptible = false;
+                    formation.ReplaceCorpseDragger();
+                    screen.Interruptible = true;
+                    screen.Click(Formation.ReturnToBase, Home.LvSample);
+                }
+                screen.Click(Home.CombatButton);
+                combat.PrepareMission("0_2");
+                while (true)
+                {
+                    var missionResult = combat.ExecuteMission("0_2");
+                    if (missionResult == MissionResult.EnhancementRequired)
+                    {
+                        forcedEnhancement = true;
+                        Thread.Sleep(5000);
+                        factory.DollEnhancement();
+                        screen.Click(Factory.ReturnButton);
+                        break;
+                    }
+                    if (missionResult == MissionResult.RetirementRequired)
+                    {
+                        break;
+                    }
+                    if (Properties.Settings.Default.IsCorpseDragging)
+                    {
+                        forcedEnhancement = false;
+                        screen.Click(Combat.ReturnToBase, Home.LvSample);
+                        break;
+                    }
+                }
+                form.IncreaseCounter();
+            }
         }
 
         public static void ShowDebug(Sample sample, Point foundAt, float evaluation)

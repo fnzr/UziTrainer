@@ -73,6 +73,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scenes\Combat.cs" />
+    <Compile Include="Scenes\Factory.cs" />
     <Compile Include="Scenes\Formation.cs" />
     <Compile Include="Scenes\Home.cs" />
     <Compile Include="Scenes\Repair.cs" />

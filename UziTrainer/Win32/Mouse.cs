@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace UziTrainer.Win32
 {
@@ -65,7 +61,7 @@ namespace UziTrainer.Win32
             {
                 y = y + Step;
                 MouseMove(x, y);
-                Thread.Sleep(5);
+                Thread.Sleep(10);
             }
             LButtonUp(x, y_end);
             Thread.Sleep(300);
@@ -83,7 +79,7 @@ namespace UziTrainer.Win32
             {
                 y = y - Step;
                 MouseMove(x, y);
-                Thread.Sleep(5);
+                Thread.Sleep(10);
             }
             LButtonUp(x, y_end);
             Thread.Sleep(300);
@@ -101,7 +97,7 @@ namespace UziTrainer.Win32
             {
                 x = x - Step;
                 MouseMove(x, y);
-                Thread.Sleep(5);
+                Thread.Sleep(10);
             }
             LButtonUp(x_end, y);
             Thread.Sleep(300);
@@ -119,7 +115,7 @@ namespace UziTrainer.Win32
             {
                 x = x + Step;
                 MouseMove(x, y);
-                Thread.Sleep(5);
+                Thread.Sleep(10);
             }
             LButtonUp(x_end, y);
             Thread.Sleep(300);
@@ -132,7 +128,7 @@ namespace UziTrainer.Win32
             MiddleButtonUp(700, 400);
             for (var i = 0; i < repeatCount; i++)
             {
-                DragRightToLeft(300, 1250, 850);
+                DragRightToLeft(300, 1250, 800);
                 Thread.Sleep(50);
             }
             MiddleButtonDown(700, 400);
