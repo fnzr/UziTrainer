@@ -43,7 +43,7 @@ namespace UziTrainer.Chapters
             screen.Click(new Rectangle(new Point(471, 278), nodeSize));
             screen.mouse.DragUpToDown(700, 104, 734);
 
-            var plan2 = new Sample(root + "Plan2", new Rectangle(479, 607, 45, 37));
+            var plan2 = new Sample(root + "Plan2", new Rectangle(479, 607, 45, 37), null, .90f);
             screen.Click(new Rectangle(new Point(495, 562), nodeSize), plan2);
             
             screen.Click(new Rectangle(new Point(645, 369), nodeSize));

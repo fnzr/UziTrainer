@@ -67,17 +67,20 @@ namespace UziTrainer
 
         public static void RunTest()
         {
-            screen = new Screen("ZR288");
+            screen = new Screen("NoxPlayer");
             screen.Interruptible = false;
-            var r = new Factory(screen);
+            Size nodeSize = new Size(50, 35);
+            var plan2 = new UziTrainer.Window.Button("Missions/0_2/Plan2", new Rectangle(479, 607, 45, 37), null);
+            screen.Click(plan2, true);
+            //var r = new Factory(screen);
             //r.RepairCritical();
             //f.SelectEnhaceable();
-            r.DollEnhancement();
+            //r.DollEnhancement();
         }
 
         public static void Run()
         {
-            screen = new Screen("ZR288");
+            screen = new Screen("NoxPlayer");
             //screen.mouse.Click(42, 279);
             //formation.ReplaceCorpseDragger();
             
