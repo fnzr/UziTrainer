@@ -19,6 +19,7 @@ namespace UziTrainer.Window
 
         readonly IntPtr WindowHWND;
         readonly IntPtr MessageHWND;
+        bool resetTimer;
         public readonly Win32.Mouse mouse;
         public static readonly Rectangle FullArea = new Rectangle(0, 0, 1284, 722);
         public bool Interruptible = true;
@@ -47,6 +48,11 @@ namespace UziTrainer.Window
             while ((found = Search(sample, debug)) == Point.Empty)
             {
                 Thread.Sleep(500);
+                if (resetTimer)
+                {
+                    stopwatch = Stopwatch.StartNew();
+                    resetTimer = false;
+                }
                 if (stopwatch.ElapsedMilliseconds > timeout)
                 {
                     Trace.WriteLine($"Not found [{sample.Name}]");
@@ -97,6 +103,7 @@ namespace UziTrainer.Window
                         break;
                     }
                 }
+                Thread.Sleep(1000);
                 if (Exists(button, 500))
                 {
                     foundAt = Wait(button);
@@ -138,6 +145,7 @@ namespace UziTrainer.Window
                 if (GetPoint(Home.LogisticsReturned.Image, copy, Home.LogisticsReturned.Threshold) != Point.Empty)
                 {
                     SolveInterruptions();
+                    resetTimer = true;
                     capture = CaptureScreen();
                 }
             }            

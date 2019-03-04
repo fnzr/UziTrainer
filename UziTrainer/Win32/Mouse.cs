@@ -142,6 +142,8 @@ namespace UziTrainer.Win32
             LButtonDown(x, y);
             Thread.Sleep(10);
             LButtonUp(x, y);
+            var sleep = random.Next(300, 800);
+            Thread.Sleep(sleep);
         }
     }
 }
