@@ -69,12 +69,13 @@ namespace UziTrainer
         {
             screen = new Screen(Properties.Settings.Default.NoxTitle);
             screen.Interruptible = false;
-
+            var c = new Factory(screen);
+            c.DollRetirement();
             //Combat.SanityCheck.Name = "Missions/4_6/SanityCheck";
             //MessageBox.Show(screen.Exists(Combat.SanityCheck).ToString());
             //return;
-            var c = new Chapter5(screen, "5_6");
-            c.Map5_6();
+            //var c = new Chapter5(screen, "5_6");
+            //c.Map5_6();
             //Size nodeSize = new Size(50, 35);
             //var plan2 = new UziTrainer.Window.Button("Missions/0_2/Plan2", new Rectangle(479, 607, 45, 37), null);
             //screen.Click(plan2, true);

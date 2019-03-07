@@ -12,6 +12,9 @@ namespace UziTrainer.Scenes
         public static readonly Sample DollEnhancementClicked = new Sample("FactoryPage/DollEnhancementClicked", new Rectangle(9, 349, 152, 55));
         public static readonly Button DollEnhancementButton = new Button("FactoryPage/DollEnhancement", new Rectangle(9, 349, 152, 55), DollEnhancementClicked);
 
+        public static readonly Sample DollRetirementClicked = new Sample("FactoryPage/DollRetirementClicked", new Rectangle(13, 438, 145, 61));
+        public static readonly Button DollRetirementButton = new Button("FactoryPage/DollRetirement", new Rectangle(13, 438, 145, 61), DollRetirementClicked);
+
         public static readonly Button FilterConfirmButton = new Button("FormationPage/FilterConfirm", new Rectangle(815, 693, 233, 36), Sample.Negative);
         public static readonly Button FilterResetButton = new Button("FormationPage/Reset", new Rectangle(540, 694, 233, 36), Sample.Negative);
         public static readonly Button FilterButton = new Button("FormationPage/Filter", new Rectangle(1105, 280, 105, 65), FilterResetButton);
@@ -65,22 +68,7 @@ namespace UziTrainer.Scenes
             screen.Click(SmartSelect);            
             if (screen.Exists(SmartSelectOK))
             {                
-                screen.Click(SmartSelectOK);
-                Thread.Sleep(500);
-                screen.Click(new Rectangle(1106, 622, 130, 44));
-                Thread.Sleep(3500);
-                if (screen.Exists(PowerUpSuccess))
-                {
-                    screen.Click(PowerUpSuccess);
-                }
-                else
-                {
-                    if (screen.Exists(NotEnoughDolls))
-                    {
-                        screen.Click(NotEnoughDolls);
-                    }
-                    return false;
-                }
+                screen.Click(SmartSelectOK);                
                 return true;
             }
             else
@@ -107,7 +95,54 @@ namespace UziTrainer.Scenes
                     break;
                 }
                 screen.Click(new Rectangle(465, 208, 136, 70), FilterButton);
-            } while (SmartSelectFodder());
+
+                if (!SmartSelectFodder())
+                {
+                    break;
+                };
+                Thread.Sleep(500);
+                screen.Click(new Rectangle(1106, 622, 130, 44));
+                Thread.Sleep(3500);
+                if (screen.Exists(PowerUpSuccess))
+                {
+                    screen.Click(PowerUpSuccess);
+                }
+                else
+                {
+                    if (screen.Exists(NotEnoughDolls))
+                    {
+                        screen.Click(NotEnoughDolls);
+                    }
+                    break;
+                }
+            } while (true);
+            DollRetirement();
+        }
+
+        public void DollRetirement()
+        {
+            screen.Wait(FactoryScene);
+            if (!screen.Exists(DollRetirementClicked))
+            {
+                screen.Click(DollRetirementButton);
+                Thread.Sleep(500);
+            }
+            SmartSelectOK.Next = DollRetirementClicked;
+
+            screen.Click(new Rectangle(286, 201, 129, 52), FilterButton);
+            SmartSelectFodder();
+
+            screen.Click(new Rectangle(1100, 631, 132, 42));
+            Thread.Sleep(3000);
+            /** TODO retire 3 stars
+            screen.Click(new Rectangle(286, 201, 129, 52), FilterButton);
+            screen.Click(FilterButton);
+
+            Formation.FilterOptionButton.Name = "FormationPage/Filter3";
+            Formation.FilterOptionButton.Next.Name = "FormationPage/Filter3Clicked";
+            screen.Click(Formation.FilterOptionButton);
+            screen.Click(Formation.FilterConfirmButton);
+            **/
         }
     }
 }

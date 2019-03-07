@@ -15,10 +15,13 @@ namespace UziTrainer
         public FormSchedule()
         {
             InitializeComponent();
-            foreach(string value in Properties.Settings.Default.Schedule)
+            if (Properties.Settings.Default.Schedule != null)
             {
-                dataGridView.Rows.Add(value);
-            }            
+                foreach (string value in Properties.Settings.Default.Schedule)
+                {
+                    dataGridView.Rows.Add(value);
+                }
+            }
         }
 
         private void buttonSave_Click(object sender, EventArgs e)
