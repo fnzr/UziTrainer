@@ -25,7 +25,7 @@ namespace UziTrainer.Chapters
 
         public static readonly Sample MissionSuccessSample = new Sample("Combat/MissionSuccess", new Rectangle(1196, 121, 50, 50));
         public static readonly Sample MissionFailedSample = new Sample("Combat/MissionFailed", new Rectangle(1196, 121, 50, 50));
-        public static readonly Sample CombatPauseSample = new Sample("Combat/Retreat", new Rectangle(917, 646, 170, 70));
+        public static readonly Sample CombatPauseSample = new Sample("Combat/Pause", new Rectangle(917, 646, 170, 70));
         public static readonly Sample TurnSample = new Sample("", Screen.FullArea);
 
         static Chapter()
@@ -34,15 +34,17 @@ namespace UziTrainer.Chapters
         }
 
         protected Screen screen;
+        protected string root;
 
         public Chapter(Screen screen, string mission)
         {
             this.screen = screen;
-            Combat.SanityCheck.Name = $"Missions/{mission}/SanityCheck";
-            if (!screen.Exists(Combat.SanityCheck, 1000))
+            root = $"Missions/{mission}/";
+            Combat.SanityCheck.Name = $"{root}SanityCheck";
+            while(!screen.Exists(Combat.SanityCheck, 1000))
             {
                 screen.mouse.ZoomOut();
-            }
+            }            
         }
 
         protected void WaitBattle()
@@ -102,26 +104,26 @@ namespace UziTrainer.Chapters
             TurnSample.Name = "Combat/Turn" + turn;
             while (true)
             {
+                if (screen.Exists(CombatPauseSample, 200))
+                {
+                    WaitBattle();
+                }
                 if (screen.Exists(TurnSample))
                 {
                     break;
                 }
-                if (screen.Exists(MissionSuccessSample, 1000))
+                if (screen.Exists(MissionSuccessSample, 200))
                 {
                     return;
                 }
-                if (screen.Exists(MissionFailedSample, 1000))
+                if (screen.Exists(MissionFailedSample, 200))
                 {
                     return;
                 }
-                if (screen.Exists(TerminateButton, 1000))
+                if (screen.Exists(TerminateButton, 200))
                 {
                     //SF moving
-                }
-                if (screen.Exists(CombatPauseSample, 1000))
-                {
-                    WaitBattle();
-                }
+                }                
             }
             // G&K turn started
             PlanningOffButton.Next = null;

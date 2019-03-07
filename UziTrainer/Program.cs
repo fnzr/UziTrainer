@@ -67,20 +67,26 @@ namespace UziTrainer
 
         public static void RunTest()
         {
-            screen = new Screen("NoxPlayer");
+            screen = new Screen(Properties.Settings.Default.NoxTitle);
             screen.Interruptible = false;
-            Size nodeSize = new Size(50, 35);
-            var plan2 = new UziTrainer.Window.Button("Missions/0_2/Plan2", new Rectangle(479, 607, 45, 37), null);
-            screen.Click(plan2, true);
+
+            //Combat.SanityCheck.Name = "Missions/4_6/SanityCheck";
+            //MessageBox.Show(screen.Exists(Combat.SanityCheck).ToString());
+            //return;
+            var c = new Chapter5(screen, "5_6");
+            c.Map5_6();
+            //Size nodeSize = new Size(50, 35);
+            //var plan2 = new UziTrainer.Window.Button("Missions/0_2/Plan2", new Rectangle(479, 607, 45, 37), null);
+            //screen.Click(plan2, true);
             //var r = new Factory(screen);
             //r.RepairCritical();
             //f.SelectEnhaceable();
             //r.DollEnhancement();
         }
 
-        public static void Run()
+        public static void Run(string mission, int count)
         {
-            screen = new Screen("NoxPlayer");
+            screen = new Screen(Properties.Settings.Default.NoxTitle);
             //screen.mouse.Click(42, 279);
             //formation.ReplaceCorpseDragger();
             
@@ -90,7 +96,7 @@ namespace UziTrainer
             var factory = new Factory(screen);
 
             bool forcedEnhancement = false;
-            while (true)
+            for (int i=0; i!=count; i++)
             {
                 screen.Interruptible = true;
                 screen.Wait(Home.LvSample);
@@ -112,15 +118,15 @@ namespace UziTrainer
                     screen.Interruptible = true;
                     screen.Click(Formation.ReturnToBase, Home.LvSample);
                 }
-                screen.Click(Home.CombatButton);
-                combat.PrepareMission("0_2");
+                screen.Click(Home.CombatButton);                
                 while (true)
                 {
-                    var missionResult = combat.ExecuteMission("0_2");
+                    combat.PrepareMission(mission);
+                    var missionResult = combat.ExecuteMission(mission);
                     if (missionResult == MissionResult.EnhancementRequired)
                     {
                         forcedEnhancement = true;
-                        Thread.Sleep(5000);
+                        Thread.Sleep(4000);
                         factory.DollEnhancement();
                         screen.Click(Factory.ReturnButton);
                         break;
@@ -129,7 +135,7 @@ namespace UziTrainer
                     {
                         break;
                     }
-                    if (Properties.Settings.Default.IsCorpseDragging)
+                    if (Properties.Settings.Default.IsCorpseDragging || missionResult == MissionResult.Finished)
                     {
                         forcedEnhancement = false;
                         screen.Click(Combat.ReturnToBase, Home.LvSample);

@@ -23,7 +23,7 @@ namespace UziTrainer.Scenes
         const int RepairSlotXSize = 180;
 
         const int CriticalRepairX = 120;
-        const int CriticalReapairXSize = 180;
+        const int CriticalRepairXSize = 180;
 
         public Repair(Screen screen)
         {
@@ -59,11 +59,11 @@ namespace UziTrainer.Scenes
             var CriticalIcon = new Button("RepairPage/CriticalIcon", Rectangle.Empty, null); //TODO
             for (var i = 0; i < slots.Count; i++)
             {
-                var x = CriticalRepairX + (i * CriticalReapairXSize);
+                var x = CriticalRepairX + (i * CriticalRepairXSize);
                 CriticalIcon.SearchArea = new Rectangle(x, 160, 80, 80);
                 if (screen.Exists(CriticalIcon, 0))
                 {
-                    screen.Click(CriticalIcon.SearchArea);
+                    screen.Click(new Rectangle(x, 160, 10, 10));
                     criticalExists = true;
                 }
             }

@@ -9,25 +9,38 @@ namespace UziTrainer
     {
         private Thread ExecutionThread;
         private int RunCounter = 0;
-        private static readonly string[] maps = {
-                "0_2", "1_1N"
+        private static readonly string[] Maps = {
+                "0_2", "1_6", "1_1N", "2_6", "3_6", "4_6", "5_6", "6_6",
         };
         public FormMain()
         {
             InitializeComponent();
             UpdateDollText();
-            comboMaps.Items.AddRange(maps);
+            comboMaps.Items.AddRange(Maps);
             checkBoxSwapActive.Checked = Properties.Settings.Default.IsCorpseDragging;
             checkBoxSwapActive.CheckedChanged += CheckBoxSwapActive_CheckedChanged;
-            comboMaps.SelectedIndex = Array.IndexOf(maps, Properties.Settings.Default.SelectedMission);
+            comboMaps.SelectedIndex = Array.IndexOf(Maps, Properties.Settings.Default.SelectedMission);
             comboMaps.SelectedIndexChanged += selectedIndexChanged;
 
+            textNoxTitle.Text = Properties.Settings.Default.NoxTitle;
+            textNoxTitle.LostFocus += TextNoxTitle_LostFocus;
             Trace.Listeners.Add(new FormMainTraceListener(this));
 
             FormClosing += FormMain_FormClosing;
         }
-        
+
+        private void TextNoxTitle_LostFocus(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.NoxTitle = textNoxTitle.Text;
+            Properties.Settings.Default.Save();
+        }
+
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            TerminateExecutionThread();
+        }
+
+        void TerminateExecutionThread()
         {
             if (ExecutionThread != null) // deal with suspended thread
             {
@@ -44,7 +57,7 @@ namespace UziTrainer
 
         private void selectedIndexChanged(object sender, EventArgs e)
         {
-            Properties.Settings.Default.SelectedMission = maps[comboMaps.SelectedIndex];
+            Properties.Settings.Default.SelectedMission = Maps[comboMaps.SelectedIndex];
             Properties.Settings.Default.Save();
         }
 
@@ -122,9 +135,10 @@ namespace UziTrainer
         private void buttonRun_Click(object sender, EventArgs e)
         {
             UpdateSettings();
+            var map = Maps[comboMaps.SelectedIndex];
             ExecutionThread = new Thread(new ThreadStart(delegate ()
             {
-                Program.Run();
+                Program.Run(map, -1);
             }));
             ExecutionThread.Start();
         }
@@ -146,6 +160,25 @@ namespace UziTrainer
         private void buttonTest_Click(object sender, EventArgs e)
         {
             Program.RunTest();
+        }
+
+        private void setScheduleMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = new FormSchedule();
+            form.Show();
+        }
+
+        private void buttonSchedule_Click(object sender, EventArgs e)
+        {
+            TerminateExecutionThread();
+            ExecutionThread = new Thread(new ThreadStart(delegate ()
+            {
+                foreach(string mission in Properties.Settings.Default.Schedule)
+                {
+                    Program.Run(mission, 1);
+                }
+            }));
+            ExecutionThread.Start();
         }
     }
 

@@ -82,5 +82,28 @@ namespace UziTrainer.Properties {
                 this["SelectedMission"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("NoxPlayer")]
+        public string NoxTitle {
+            get {
+                return ((string)(this["NoxTitle"]));
+            }
+            set {
+                this["NoxTitle"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Collections.Specialized.StringCollection Schedule {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["Schedule"]));
+            }
+            set {
+                this["Schedule"] = value;
+            }
+        }
     }
 }

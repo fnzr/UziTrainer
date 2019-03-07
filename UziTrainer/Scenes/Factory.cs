@@ -46,10 +46,10 @@ namespace UziTrainer.Scenes
                 {
                     int x = (14 * (i + 1)) + (i * DollSlotXSize);
                     InLogistics.SearchArea = new Rectangle(x, y, DollSlotXSize, 90);
+                    InTraining.SearchArea = InLogistics.SearchArea;
                     if (!screen.Exists(InLogistics, 0))
                     {
-                        if (true)
-                        //if (!Screen.Exists(new Query(, area)))
+                        if (!screen.Exists(InTraining, 0))
                         {
                             screen.Click(new Rectangle(x + 80, y, 10, 10), DollEnhancementClicked);
                             return true;

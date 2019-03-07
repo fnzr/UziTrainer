@@ -43,11 +43,17 @@
             this.label5 = new System.Windows.Forms.Label();
             this.labelCounter = new System.Windows.Forms.Label();
             this.buttonTest = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.textNoxTitle = new System.Windows.Forms.TextBox();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.setScheduleMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.buttonSchedule = new System.Windows.Forms.Button();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // buttonTogglePause
             // 
-            this.buttonTogglePause.Location = new System.Drawing.Point(176, 34);
+            this.buttonTogglePause.Location = new System.Drawing.Point(172, 24);
             this.buttonTogglePause.Name = "buttonTogglePause";
             this.buttonTogglePause.Size = new System.Drawing.Size(75, 23);
             this.buttonTogglePause.TabIndex = 0;
@@ -57,7 +63,7 @@
             // 
             // buttonRun
             // 
-            this.buttonRun.Location = new System.Drawing.Point(257, 34);
+            this.buttonRun.Location = new System.Drawing.Point(255, 53);
             this.buttonRun.Name = "buttonRun";
             this.buttonRun.Size = new System.Drawing.Size(75, 23);
             this.buttonRun.TabIndex = 1;
@@ -67,7 +73,7 @@
             // 
             // buttonLogistics
             // 
-            this.buttonLogistics.Location = new System.Drawing.Point(257, 63);
+            this.buttonLogistics.Location = new System.Drawing.Point(255, 109);
             this.buttonLogistics.Name = "buttonLogistics";
             this.buttonLogistics.Size = new System.Drawing.Size(75, 23);
             this.buttonLogistics.TabIndex = 2;
@@ -77,7 +83,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 34);
+            this.label1.Location = new System.Drawing.Point(11, 58);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(28, 13);
             this.label1.TabIndex = 3;
@@ -86,7 +92,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 96);
+            this.label2.Location = new System.Drawing.Point(10, 115);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(78, 13);
             this.label2.TabIndex = 4;
@@ -95,7 +101,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 122);
+            this.label3.Location = new System.Drawing.Point(10, 141);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(64, 13);
             this.label3.TabIndex = 5;
@@ -104,7 +110,7 @@
             // labelLog
             // 
             this.labelLog.AutoSize = true;
-            this.labelLog.Location = new System.Drawing.Point(12, 156);
+            this.labelLog.Location = new System.Drawing.Point(10, 175);
             this.labelLog.Name = "labelLog";
             this.labelLog.Size = new System.Drawing.Size(35, 13);
             this.labelLog.TabIndex = 6;
@@ -113,7 +119,7 @@
             // checkBoxSwapActive
             // 
             this.checkBoxSwapActive.AutoSize = true;
-            this.checkBoxSwapActive.Location = new System.Drawing.Point(15, 63);
+            this.checkBoxSwapActive.Location = new System.Drawing.Point(13, 82);
             this.checkBoxSwapActive.Name = "checkBoxSwapActive";
             this.checkBoxSwapActive.Size = new System.Drawing.Size(111, 17);
             this.checkBoxSwapActive.TabIndex = 7;
@@ -122,21 +128,21 @@
             // 
             // textExhausted
             // 
-            this.textExhausted.Location = new System.Drawing.Point(92, 93);
+            this.textExhausted.Location = new System.Drawing.Point(90, 112);
             this.textExhausted.Name = "textExhausted";
             this.textExhausted.Size = new System.Drawing.Size(100, 20);
             this.textExhausted.TabIndex = 8;
             // 
             // textLoaded
             // 
-            this.textLoaded.Location = new System.Drawing.Point(92, 119);
+            this.textLoaded.Location = new System.Drawing.Point(90, 138);
             this.textLoaded.Name = "textLoaded";
             this.textLoaded.Size = new System.Drawing.Size(100, 20);
             this.textLoaded.TabIndex = 9;
             // 
             // buttonSwap
             // 
-            this.buttonSwap.Location = new System.Drawing.Point(133, 63);
+            this.buttonSwap.Location = new System.Drawing.Point(131, 82);
             this.buttonSwap.Name = "buttonSwap";
             this.buttonSwap.Size = new System.Drawing.Size(59, 23);
             this.buttonSwap.TabIndex = 10;
@@ -147,7 +153,7 @@
             // comboMaps
             // 
             this.comboMaps.FormattingEnabled = true;
-            this.comboMaps.Location = new System.Drawing.Point(49, 31);
+            this.comboMaps.Location = new System.Drawing.Point(70, 55);
             this.comboMaps.Name = "comboMaps";
             this.comboMaps.Size = new System.Drawing.Size(77, 21);
             this.comboMaps.TabIndex = 11;
@@ -155,7 +161,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(254, 119);
+            this.label5.Location = new System.Drawing.Point(252, 145);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(35, 13);
             this.label5.TabIndex = 12;
@@ -164,7 +170,7 @@
             // labelCounter
             // 
             this.labelCounter.AutoSize = true;
-            this.labelCounter.Location = new System.Drawing.Point(286, 119);
+            this.labelCounter.Location = new System.Drawing.Point(284, 145);
             this.labelCounter.Name = "labelCounter";
             this.labelCounter.Size = new System.Drawing.Size(13, 13);
             this.labelCounter.TabIndex = 13;
@@ -172,7 +178,7 @@
             // 
             // buttonTest
             // 
-            this.buttonTest.Location = new System.Drawing.Point(176, 5);
+            this.buttonTest.Location = new System.Drawing.Point(255, 24);
             this.buttonTest.Name = "buttonTest";
             this.buttonTest.Size = new System.Drawing.Size(75, 23);
             this.buttonTest.TabIndex = 14;
@@ -180,11 +186,57 @@
             this.buttonTest.UseVisualStyleBackColor = true;
             this.buttonTest.Click += new System.EventHandler(this.buttonTest_Click);
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(11, 34);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(49, 13);
+            this.label4.TabIndex = 15;
+            this.label4.Text = "Nox Title";
+            // 
+            // textNoxTitle
+            // 
+            this.textNoxTitle.Location = new System.Drawing.Point(70, 31);
+            this.textNoxTitle.Name = "textNoxTitle";
+            this.textNoxTitle.Size = new System.Drawing.Size(77, 20);
+            this.textNoxTitle.TabIndex = 16;
+            // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.setScheduleMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(342, 24);
+            this.menuStrip1.TabIndex = 17;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // setScheduleMenuItem
+            // 
+            this.setScheduleMenuItem.Name = "setScheduleMenuItem";
+            this.setScheduleMenuItem.Size = new System.Drawing.Size(86, 20);
+            this.setScheduleMenuItem.Text = "Set Schedule";
+            this.setScheduleMenuItem.Click += new System.EventHandler(this.setScheduleMenuItem_Click);
+            // 
+            // buttonSchedule
+            // 
+            this.buttonSchedule.Location = new System.Drawing.Point(255, 82);
+            this.buttonSchedule.Name = "buttonSchedule";
+            this.buttonSchedule.Size = new System.Drawing.Size(75, 23);
+            this.buttonSchedule.TabIndex = 18;
+            this.buttonSchedule.Text = "Schedule";
+            this.buttonSchedule.UseVisualStyleBackColor = true;
+            this.buttonSchedule.Click += new System.EventHandler(this.buttonSchedule_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(342, 194);
+            this.ClientSize = new System.Drawing.Size(342, 217);
+            this.Controls.Add(this.buttonSchedule);
+            this.Controls.Add(this.textNoxTitle);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.buttonTest);
             this.Controls.Add(this.labelCounter);
             this.Controls.Add(this.label5);
@@ -200,8 +252,12 @@
             this.Controls.Add(this.buttonLogistics);
             this.Controls.Add(this.buttonRun);
             this.Controls.Add(this.buttonTogglePause);
+            this.Controls.Add(this.menuStrip1);
+            this.MainMenuStrip = this.menuStrip1;
             this.Name = "FormMain";
             this.Text = "Form1";
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -224,6 +280,11 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label labelCounter;
         private System.Windows.Forms.Button buttonTest;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox textNoxTitle;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem setScheduleMenuItem;
+        private System.Windows.Forms.Button buttonSchedule;
     }
 }
 

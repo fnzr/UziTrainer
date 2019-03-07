@@ -12,11 +12,8 @@ namespace UziTrainer.Chapters
 {
     class Chapter0 : Chapter
     {
-
-        private readonly string root;
         public Chapter0(Screen screen, string mission) : base(screen, mission)
         {
-            root = $"Missions/{mission}/";
         }
 
         public void Map0_2()

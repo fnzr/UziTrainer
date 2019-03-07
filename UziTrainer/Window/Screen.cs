@@ -47,7 +47,7 @@ namespace UziTrainer.Window
             Point found;
             while ((found = Search(sample, debug)) == Point.Empty)
             {
-                Thread.Sleep(500);
+                Thread.Sleep(100);
                 if (resetTimer)
                 {
                     stopwatch = Stopwatch.StartNew();
@@ -124,7 +124,7 @@ namespace UziTrainer.Window
             Point found;
             while ((found = Search(sample, debug)) == Point.Empty)
             {
-                Thread.Sleep(500);
+                Thread.Sleep(100);
                 if (stopwatch.ElapsedMilliseconds > 120000)
                 {
                     Trace.WriteLine($"Not found [{sample.Name}] in 120s. Stopping.");
@@ -193,10 +193,23 @@ namespace UziTrainer.Window
         void SolveInterruptions()
         {
             Interruptible = false;
-            Click(new Rectangle(1049, 580, 50, 50), Home.LogisticsRepeatButton);
+            bool found;
+            var stopwatch = Stopwatch.StartNew();
+            do
+            {
+                Click(new Rectangle(1049, 580, 50, 50));
+                found = Exists(Home.LogisticsRepeatButton);
+                if (stopwatch.ElapsedMilliseconds > 5000)
+                {
+                    break;
+                }
+                Thread.Sleep(500);
+            } while (!found);
+            if (found)
+            {
+                Click(Home.LogisticsRepeatButton);
+            }
             Thread.Sleep(2000);
-            Click(Home.LogisticsRepeatButton);
-            Thread.Sleep(1000);
             Interruptible = true;
         }
 

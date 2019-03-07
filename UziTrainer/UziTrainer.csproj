@@ -57,6 +57,11 @@
   <ItemGroup>
     <Compile Include="Chapters\Chapter.cs" />
     <Compile Include="Chapters\Chapter0.cs" />
+    <Compile Include="Chapters\Chapter1.cs" />
+    <Compile Include="Chapters\Chapter2.cs" />
+    <Compile Include="Chapters\Chapter3.cs" />
+    <Compile Include="Chapters\Chapter4.cs" />
+    <Compile Include="Chapters\Chapter5.cs" />
     <Compile Include="Doll.cs" />
     <Compile Include="FormMain.cs">
       <SubType>Form</SubType>
@@ -69,6 +74,12 @@
     </Compile>
     <Compile Include="FormDebug.Designer.cs">
       <DependentUpon>FormDebug.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormSchedule.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSchedule.Designer.cs">
+      <DependentUpon>FormSchedule.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -89,6 +100,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormDebug.resx">
       <DependentUpon>FormDebug.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSchedule.resx">
+      <DependentUpon>FormSchedule.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
