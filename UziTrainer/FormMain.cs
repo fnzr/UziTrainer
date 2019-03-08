@@ -20,19 +20,10 @@ namespace UziTrainer
             checkBoxSwapActive.Checked = Properties.Settings.Default.IsCorpseDragging;
             checkBoxSwapActive.CheckedChanged += CheckBoxSwapActive_CheckedChanged;
             comboMaps.SelectedIndex = Array.IndexOf(Maps, Properties.Settings.Default.SelectedMission);
-            comboMaps.SelectedIndexChanged += selectedIndexChanged;
-
-            textNoxTitle.Text = Properties.Settings.Default.NoxTitle;
-            textNoxTitle.LostFocus += TextNoxTitle_LostFocus;
+            comboMaps.SelectedIndexChanged += selectedIndexChanged;            
             Trace.Listeners.Add(new FormMainTraceListener(this));
 
             FormClosing += FormMain_FormClosing;
-        }
-
-        private void TextNoxTitle_LostFocus(object sender, EventArgs e)
-        {
-            Properties.Settings.Default.NoxTitle = textNoxTitle.Text;
-            Properties.Settings.Default.Save();
         }
 
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
@@ -157,19 +148,15 @@ namespace UziTrainer
             }
         }
 
-        private void buttonTest_Click(object sender, EventArgs e)
-        {
-            Program.RunTest();
-        }
-
         private void setScheduleMenuItem_Click(object sender, EventArgs e)
         {
-            var form = new FormSchedule();
+            var form = new FormConfig();
             form.Show();
         }
 
         private void buttonSchedule_Click(object sender, EventArgs e)
         {
+            checkBoxSwapActive.Checked = false;
             TerminateExecutionThread();
             ExecutionThread = new Thread(new ThreadStart(delegate ()
             {
@@ -179,6 +166,23 @@ namespace UziTrainer
                 }
             }));
             ExecutionThread.Start();
+        }
+
+        private void testToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Program.RunTest();
+        }
+
+        private void buttonLogistics_Click(object sender, EventArgs e)
+        {
+            TerminateExecutionThread();
+            ExecutionThread = new Thread(new ThreadStart(delegate ()
+            {
+                foreach (string mission in Properties.Settings.Default.Schedule)
+                {
+                    Program.LogisticsCheck();
+                }
+            }));
         }
     }
 

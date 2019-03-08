@@ -10,11 +10,13 @@ using System.Windows.Forms;
 
 namespace UziTrainer
 {
-    public partial class FormSchedule : Form
+    public partial class FormConfig : Form
     {
-        public FormSchedule()
+        public FormConfig()
         {
             InitializeComponent();
+            textNoxTitle.Text = Properties.Settings.Default.NoxTitle;
+            textNoxTitle.LostFocus += TextNoxTitle_LostFocus;
             if (Properties.Settings.Default.Schedule != null)
             {
                 foreach (string value in Properties.Settings.Default.Schedule)
@@ -22,6 +24,12 @@ namespace UziTrainer
                     dataGridView.Rows.Add(value);
                 }
             }
+        }
+
+        private void TextNoxTitle_LostFocus(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.NoxTitle = textNoxTitle.Text;
+            Properties.Settings.Default.Save();
         }
 
         private void buttonSave_Click(object sender, EventArgs e)

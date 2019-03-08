@@ -190,7 +190,7 @@ namespace UziTrainer.Window
             return rc;
         }
 
-        void SolveInterruptions()
+        public void SolveInterruptions()
         {
             Interruptible = false;
             bool found;

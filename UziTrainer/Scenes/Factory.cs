@@ -54,8 +54,8 @@ namespace UziTrainer.Scenes
                     {
                         if (!screen.Exists(InTraining, 0))
                         {
-                            screen.Click(new Rectangle(x + 80, y, 10, 10), DollEnhancementClicked);
-                            return true;
+                            screen.Click(new Rectangle(x + 80, y, 10, 10));                            
+                            return screen.Exists(DollEnhancementClicked, 2000);
                         }
                     }
                 }
@@ -92,6 +92,7 @@ namespace UziTrainer.Scenes
                 screen.Click(new Rectangle(242, 184, 141, 273), FilterButton);
                 if (!SelectEnhaceable())
                 {
+                    screen.Click(new Rectangle(15, 55, 100, 45), DollEnhancementClicked);
                     break;
                 }
                 screen.Click(new Rectangle(465, 208, 136, 70), FilterButton);

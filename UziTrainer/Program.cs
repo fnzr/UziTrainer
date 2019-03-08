@@ -88,8 +88,6 @@ namespace UziTrainer
         public static void Run(string mission, int count)
         {
             screen = new Screen(Properties.Settings.Default.NoxTitle);
-            //screen.mouse.Click(42, 279);
-            //formation.ReplaceCorpseDragger();
             
             var repair = new Repair(screen);
             var formation = new Formation(screen);
@@ -155,6 +153,32 @@ namespace UziTrainer
                 form.Show();
                 Application.Run(form);
             });
+        }
+
+        internal static void LogisticsCheck()
+        {
+            screen = new Screen(Properties.Settings.Default.NoxTitle);
+            screen.Interruptible = true;
+            var random = new Random();
+            var refresh = random.Next(15000, 30000);
+            var stopwatch = Stopwatch.StartNew();
+            while (true)
+            {
+                if (stopwatch.ElapsedMilliseconds > refresh)
+                {
+                    screen.Click(Home.FormationButton);
+                    Thread.Sleep(850);
+                    screen.Click(Formation.ReturnToBase);
+
+                    stopwatch = Stopwatch.StartNew();
+                    refresh = random.Next(15000, 30000);
+                }
+                if (screen.Exists(Home.LogisticsReturned, 1000))
+                {
+                    screen.SolveInterruptions();
+                }
+                Thread.Sleep(5000);
+            }
         }
     }
 }
