@@ -20,7 +20,7 @@ namespace UziTrainer
     {
         public static AutoResetEvent DebugResetEvent = new AutoResetEvent(false);
         static Screen screen;
-        static FormMain form;
+        public static FormMain form;
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -68,9 +68,17 @@ namespace UziTrainer
         public static void RunTest()
         {
             screen = new Screen(Properties.Settings.Default.NoxTitle);
-            screen.Interruptible = false;
-            var c = new Factory(screen);
-            c.DollRetirement();
+            //Formation.DollSelectButton.Name = "Dolls/G11";
+            //screen.Exists(Formation.DollSelectButton);
+            //var c = new Chapter6(screen, "6_3N");
+            //c.Map6_3N();
+            //var f = new Factory(screen);
+            //f.DollEnhancement();
+            //screen.mouse.Click(703, 224);
+            Trace.WriteLine("Done");
+            //screen.Interruptible = false;
+            //var c = new Factory(screen);
+            //c.DollRetirement();
             //Combat.SanityCheck.Name = "Missions/4_6/SanityCheck";
             //MessageBox.Show(screen.Exists(Combat.SanityCheck).ToString());
             //return;
@@ -160,7 +168,7 @@ namespace UziTrainer
             screen = new Screen(Properties.Settings.Default.NoxTitle);
             screen.Interruptible = true;
             var random = new Random();
-            var refresh = random.Next(15000, 30000);
+            var refresh = random.Next(900000, 1800000);
             var stopwatch = Stopwatch.StartNew();
             while (true)
             {
@@ -171,7 +179,7 @@ namespace UziTrainer
                     screen.Click(Formation.ReturnToBase);
 
                     stopwatch = Stopwatch.StartNew();
-                    refresh = random.Next(15000, 30000);
+                    refresh = random.Next(900000, 1800000);
                 }
                 if (screen.Exists(Home.LogisticsReturned, 1000))
                 {

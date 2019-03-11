@@ -32,11 +32,14 @@ namespace UziTrainer.Chapters
             screen.Click(StartOperationButton);
             Thread.Sleep(2000);
 
+            screen.mouse.DragUpToDown(773, 107, 715);
+
             screen.Click(heliport);
             screen.Click(heliport, ResupplyButton);
             screen.Click(ResupplyButton);
 
             screen.Click(PlanningOffButton);
+            screen.Click(heliport);
             screen.Click(new Rectangle(new Point(843, 181), nodeSize));
             screen.Click(new Rectangle(new Point(673, 234), nodeSize));
             screen.Click(new Rectangle(new Point(464, 201), nodeSize));

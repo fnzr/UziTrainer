@@ -42,21 +42,20 @@ namespace UziTrainer.Scenes
         {
             Sample InTraining = new Sample("FactoryPage/InTraining", Rectangle.Empty);
             Sample InLogistics = new Sample("FactoryPage/InLogistics", Rectangle.Empty);
+            Sample Zas = new Sample("Dolls/Zas", Rectangle.Empty);
             for (var j = 0; j < 2; j++)
             {
-                var y = 265 + (j * DollSlotYSize) + (20 * j);
+                var y = 145 + (j * DollSlotYSize) + (20 * j);
                 for (var i = 0; i < 6; i++)
                 {
                     int x = (14 * (i + 1)) + (i * DollSlotXSize);
-                    InLogistics.SearchArea = new Rectangle(x, y, DollSlotXSize, 90);
+                    InLogistics.SearchArea = new Rectangle(x, y, DollSlotXSize, 225);
                     InTraining.SearchArea = InLogistics.SearchArea;
-                    if (!screen.Exists(InLogistics, 0))
+                    Zas.SearchArea = InLogistics.SearchArea;
+                    if (!screen.Exists(InLogistics, 0) && !screen.Exists(InTraining, 0) && !screen.Exists(Zas, 0))
                     {
-                        if (!screen.Exists(InTraining, 0))
-                        {
-                            screen.Click(new Rectangle(x + 80, y, 10, 10));                            
-                            return screen.Exists(DollEnhancementClicked, 2000);
-                        }
+                        screen.Click(new Rectangle(x + 80, y, 10, 10));
+                        return screen.Exists(DollEnhancementClicked, 2000);
                     }
                 }
             }

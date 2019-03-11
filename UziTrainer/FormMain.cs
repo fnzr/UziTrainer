@@ -10,7 +10,7 @@ namespace UziTrainer
         private Thread ExecutionThread;
         private int RunCounter = 0;
         private static readonly string[] Maps = {
-                "0_2", "1_6", "1_1N", "2_6", "3_6", "4_6", "5_6", "6_6",
+                "0_2", "1_6", "1_1N", "2_6", "3_6", "4_6", "5_6", "6_3N", "6_6",
         };
         public FormMain()
         {
@@ -49,6 +49,10 @@ namespace UziTrainer
         private void selectedIndexChanged(object sender, EventArgs e)
         {
             Properties.Settings.Default.SelectedMission = Maps[comboMaps.SelectedIndex];
+            if (Maps[comboMaps.SelectedIndex] == "6_3N")
+            {
+                checkBoxSwapActive.Checked = false;
+            }
             Properties.Settings.Default.Save();
         }
 
@@ -170,7 +174,15 @@ namespace UziTrainer
 
         private void testToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Program.RunTest();
+            TerminateExecutionThread();
+            ExecutionThread = new Thread(new ThreadStart(delegate ()
+            {
+                foreach (string mission in Properties.Settings.Default.Schedule)
+                {
+                    Program.RunTest();
+                }
+            }));
+            ExecutionThread.Start();
         }
 
         private void buttonLogistics_Click(object sender, EventArgs e)
@@ -183,6 +195,7 @@ namespace UziTrainer
                     Program.LogisticsCheck();
                 }
             }));
+            ExecutionThread.Start();
         }
     }
 

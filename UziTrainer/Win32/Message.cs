@@ -23,7 +23,6 @@ namespace UziTrainer.Win32
         public const int WM_RBUTTONDBLCLK = 0x206;
         public const int WM_KEYDOWN = 0x100;
         public const int WM_KEYUP = 0x101;
-
         public const uint SW_RESTORE = 0x09;
 
         // The FindWindow function retrieves a handle to the top-level window whose class name

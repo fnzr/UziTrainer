@@ -75,20 +75,33 @@ namespace UziTrainer.Scenes
 
         public void SelectDoll(Doll doll)
         {
+            DollSelectButton.Name = "Dolls/" + doll.Name;
+            if (screen.Exists(DollSelectButton, 1000))
+            {
+                screen.Click(DollSelectButton);
+                return;
+            }
+            var filterType = new Button("FormationPage/Filter" + doll.Type, new Rectangle(528, 169, 546, 422),
+            new Button($"FormationPage/Filter{doll.Type}Clicked", new Rectangle(528, 169, 546, 412), null), .95f, FilterOptionArea);
+            var filterRarity = new Button("FormationPage/Filter" + doll.Rarity, new Rectangle(528, 169, 546, 422),
+            new Button($"FormationPage/Filter{doll.Rarity}Clicked", new Rectangle(528, 169, 546, 412), null), .95f, FilterOptionArea);
             screen.Click(FilterDollButton);
             if (screen.Exists(FilterActiveSample, 1000))
             {
-                screen.Click(FilterResetButton);
-                screen.Click(FilterDollButton);
+                if (!(screen.Exists(filterType.Next, 0) && screen.Exists(filterRarity.Next)))
+                {
+                    screen.Click(FilterResetButton);
+                    screen.Click(FilterDollButton);
+                    screen.Click(filterRarity);
+                    screen.Click(filterType);
+                }
             }
-            FilterOptionButton.Name = "FormationPage/Filter" + doll.Rarity;
-            FilterOptionButton.Next.Name = FilterOptionButton.Name + "Clicked";
-            screen.Click(FilterOptionButton);
-            FilterOptionButton.Name = "FormationPage/Filter" + doll.Type;
-            FilterOptionButton.Next.Name = FilterOptionButton.Name + "Clicked";
-            screen.Click(FilterOptionButton);
+            else
+            {
+                screen.Click(filterRarity);
+                screen.Click(filterType);
+            }
             screen.Click(FilterConfirmButton);
-            DollSelectButton.Name = "Dolls/" + doll.Name;
             screen.Click(DollSelectButton);
         }
 
@@ -112,7 +125,14 @@ namespace UziTrainer.Scenes
         public void ReplaceDoll(Doll dollOut, Doll dollIn)
         {
             screen.Wait(FormationScene);
-            DollFormationButton.Name = "Dolls/" + dollOut.Name;
+            if (dollOut.Name.StartsWith("Zas"))
+            {
+                DollFormationButton.Name = "Dolls/Zas";
+            }
+            else
+            {
+                DollFormationButton.Name = "Dolls/" + dollOut.Name;
+            }
             screen.Click(DollFormationButton);
             SelectDoll(dollIn);
         }

@@ -62,6 +62,7 @@
     <Compile Include="Chapters\Chapter3.cs" />
     <Compile Include="Chapters\Chapter4.cs" />
     <Compile Include="Chapters\Chapter5.cs" />
+    <Compile Include="Chapters\Chapter6.cs" />
     <Compile Include="Doll.cs" />
     <Compile Include="FormMain.cs">
       <SubType>Form</SubType>
@@ -117,7 +118,10 @@
       <Link>assets.zip</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <EmbeddedResource Include="dolls.json" />
+    <EmbeddedResource Include="..\dolls.json">
+      <Link>dolls.json</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using UziTrainer.Window;
 
@@ -66,8 +67,7 @@ namespace UziTrainer.Scenes
             }
             var parts = mission.Split('_');
             int chapter = Convert.ToInt32(parts[0]);
-            int map = Convert.ToInt32(parts[1]);
-
+            Thread.Sleep(1000);
             if (chapter > 5)
             {
                 screen.mouse.DragDownToUp(264, 689, 247);
@@ -82,7 +82,7 @@ namespace UziTrainer.Scenes
 
         public MissionResult ExecuteMission(string mission)
         {
-            var missionTypeButton = new Button("", new Rectangle(408, 153, 500, 90), null);
+            var missionTypeButton = new Rectangle(408, 153, 500, 90);
             if (mission.IndexOf('E') != -1)
             {
                 screen.Click(missionTypeButton);
@@ -92,7 +92,7 @@ namespace UziTrainer.Scenes
                 screen.Click(missionTypeButton);
                 screen.Click(missionTypeButton);
             }
-            if (Convert.ToInt32(mission.Split('_')[1]) > 4)
+            if (Convert.ToInt32(mission.Split('_')[1][0]) > 4)
             {
                 screen.mouse.DragDownToUp(764, 665, 300);
             }

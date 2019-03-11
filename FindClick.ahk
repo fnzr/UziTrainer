@@ -1598,5 +1598,5 @@ FindClick(ImageFile="", Options="", ByRef FoundX="", ByRef FoundY="") ; updated 
     Return FindClick(">GuiEvent<")
 }
 
-FindClick()
+FindClick(">>out.png", "*50x50")
 ExitApp
