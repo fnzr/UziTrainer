@@ -49,7 +49,10 @@ namespace UziTrainer.Chapters
             WaitExecution();
             WaitTurn("2");
 
-            screen.Click(new Rectangle(new Point(501, 279), nodeSize));
+            var echelonPosition = new Rectangle(new Point(501, 279), nodeSize);
+            UseFairy(echelonPosition);
+
+            screen.Click(echelonPosition);
             screen.Click(new Rectangle(new Point(786, 275), nodeSize));
             screen.Click(new Rectangle(new Point(964, 299), nodeSize));            
             WaitExecution();

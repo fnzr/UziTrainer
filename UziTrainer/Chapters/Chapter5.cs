@@ -18,11 +18,12 @@ namespace UziTrainer.Chapters
 
         public void Map5_6()
         {
-            var nodeSize = new Size(24, 23);
+            var nodeSize = new Size(20, 20);
 
             screen.Click(new Rectangle(new Point(1024, 550), nodeSize), EchelonFormationButton);
             screen.Click(new Rectangle(10, 308, 94, 51));
             screen.Click(DeployEchelonButton);
+
             screen.mouse.DragUpToDown(773, 107, 715);
             Combat.SanityCheck.Name = $"{root}SanityCheck2";
 
@@ -30,9 +31,7 @@ namespace UziTrainer.Chapters
             screen.Click(heliport, EchelonFormationButton);
             screen.Click(DeployEchelonButton);
             screen.Click(StartOperationButton);
-            Thread.Sleep(2000);
-
-            screen.mouse.DragUpToDown(773, 107, 715);
+            Thread.Sleep(4000);
 
             screen.Click(heliport);
             screen.Click(heliport, ResupplyButton);

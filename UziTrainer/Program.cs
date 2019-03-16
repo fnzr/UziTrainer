@@ -21,6 +21,8 @@ namespace UziTrainer
         public static AutoResetEvent DebugResetEvent = new AutoResetEvent(false);
         static Screen screen;
         public static FormMain form;
+        public static FormDebug formDebug;
+        public static int RunCounter = 0;
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -30,10 +32,26 @@ namespace UziTrainer
             PrepareAssets();            
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            //Run();
             form = new FormMain();
             Application.Run(form);
-            
+        }
+
+        public static void IncreaseCounter()
+        {
+            RunCounter += 1;
+            form.SetCounter(RunCounter);
+        }
+
+        public static void DecreaseCounter()
+        {
+            RunCounter -= 1;
+            form.SetCounter(RunCounter);
+        }
+
+        public static void ResetCounter()
+        {
+            RunCounter = 0;
+            form.SetCounter(RunCounter);
         }
 
         public static void Pause()
@@ -68,6 +86,12 @@ namespace UziTrainer
         public static void RunTest()
         {
             screen = new Screen(Properties.Settings.Default.NoxTitle);
+            //screen.mouse.Click(608, 334);
+            screen.mouse.ZoomOutTest();
+            //var f = new Factory(screen);
+            //f.SelectEnhaceable();            
+            //Formation.DollSelectButton.Name = "Dolls/G11";
+            //screen.Exists(Formation.DollSelectButton, 0, true);
             //Formation.DollSelectButton.Name = "Dolls/G11";
             //screen.Exists(Formation.DollSelectButton);
             //var c = new Chapter6(screen, "6_3N");
@@ -76,25 +100,11 @@ namespace UziTrainer
             //f.DollEnhancement();
             //screen.mouse.Click(703, 224);
             Trace.WriteLine("Done");
-            //screen.Interruptible = false;
-            //var c = new Factory(screen);
-            //c.DollRetirement();
-            //Combat.SanityCheck.Name = "Missions/4_6/SanityCheck";
-            //MessageBox.Show(screen.Exists(Combat.SanityCheck).ToString());
-            //return;
-            //var c = new Chapter5(screen, "5_6");
-            //c.Map5_6();
-            //Size nodeSize = new Size(50, 35);
-            //var plan2 = new UziTrainer.Window.Button("Missions/0_2/Plan2", new Rectangle(479, 607, 45, 37), null);
-            //screen.Click(plan2, true);
-            //var r = new Factory(screen);
-            //r.RepairCritical();
-            //f.SelectEnhaceable();
-            //r.DollEnhancement();
         }
 
         public static void Run(string mission, int count)
         {
+            ResetCounter();
             screen = new Screen(Properties.Settings.Default.NoxTitle);
             
             var repair = new Repair(screen);
@@ -149,7 +159,7 @@ namespace UziTrainer
                         break;
                     }
                 }
-                form.IncreaseCounter();
+                IncreaseCounter();
             }
         }
 
@@ -157,14 +167,20 @@ namespace UziTrainer
         {
             Task.Run(() =>
             {
-                var form = new FormDebug(screen, sample, foundAt, evaluation);
-                form.Show();
-                Application.Run(form);
+                if (formDebug != null && !formDebug.IsDisposed)
+                {
+                    formDebug.Close();
+                    formDebug.Dispose();
+                }
+                formDebug = new FormDebug(screen, sample, foundAt, evaluation);
+                formDebug.Show();
+                Application.Run(formDebug);
             });
         }
 
         internal static void LogisticsCheck()
         {
+            ResetCounter();
             screen = new Screen(Properties.Settings.Default.NoxTitle);
             screen.Interruptible = true;
             var random = new Random();

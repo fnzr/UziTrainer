@@ -32,7 +32,7 @@ namespace UziTrainer.Chapters
                 {
                     screen.Click(heliport, EchelonFormationButton);
                     screen.Click(EchelonFormationButton);
-                    formation.ReplaceCorpseDragger();
+                    formation.ReplaceZas();
                     screen.Click(Formation.ReturnToBase);
                     Thread.Sleep(5000);
                 }
@@ -41,10 +41,10 @@ namespace UziTrainer.Chapters
                 screen.Click(StartOperationButton);
                 if (screen.Exists(equipEnhancementPopup))
                 {
-                    Program.Pause();
+                    Program.Pause();                    
                 }
                 Thread.Sleep(1000);
-
+                UseFairy(heliport);
                 screen.Click(PlanningOffButton);
                 screen.Click(heliport);
                 screen.Click(new Rectangle(new Point(641, 293), nodeSize));
@@ -85,7 +85,7 @@ namespace UziTrainer.Chapters
                 Thread.Sleep(1500);
                 screen.Click(TerminateButton);
                 screen.Click(new Rectangle(422, 502, 122, 38));
-                Program.form.IncreaseCounter();
+                Program.IncreaseCounter();
             }
             
         }

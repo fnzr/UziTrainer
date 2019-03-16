@@ -81,18 +81,22 @@ namespace UziTrainer.Scenes
         }
 
         public MissionResult ExecuteMission(string mission)
-        {
+        {            
             var missionTypeButton = new Rectangle(408, 153, 500, 90);
-            if (mission.IndexOf('E') != -1)
+            var parts = mission.Split('_');
+            var episode = parts[1];
+            if (parts[1].IndexOf('E') != -1)
             {
                 screen.Click(missionTypeButton);
+                episode = episode.Substring(0, episode.Length - 1);
             }
-            else if (mission.IndexOf('N') != -1)
+            else if (parts[1].IndexOf('N') != -1)
             {
                 screen.Click(missionTypeButton);
                 screen.Click(missionTypeButton);
+                episode = episode.Substring(0, episode.Length - 1);
             }
-            if (Convert.ToInt32(mission.Split('_')[1][0]) > 4)
+            if (Convert.ToInt32(episode) > 4)
             {
                 screen.mouse.DragDownToUp(764, 665, 300);
             }
@@ -125,7 +129,6 @@ namespace UziTrainer.Scenes
             */
             screen.Interruptible = false;
             screen.Wait(Turn0);            
-            var parts = mission.Split('_');
 
             var type = Type.GetType("UziTrainer.Chapters.Chapter" + parts[0]);
             Object o = Activator.CreateInstance(type, new object[] { screen, mission });

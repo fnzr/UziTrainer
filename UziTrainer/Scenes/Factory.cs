@@ -42,7 +42,7 @@ namespace UziTrainer.Scenes
         {
             Sample InTraining = new Sample("FactoryPage/InTraining", Rectangle.Empty);
             Sample InLogistics = new Sample("FactoryPage/InLogistics", Rectangle.Empty);
-            Sample Zas = new Sample("Dolls/Zas", Rectangle.Empty);
+            Sample Zas = new Sample("Dolls/Zas", Rectangle.Empty, null, .8f);
             for (var j = 0; j < 2; j++)
             {
                 var y = 145 + (j * DollSlotYSize) + (20 * j);

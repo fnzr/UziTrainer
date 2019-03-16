@@ -32,6 +32,16 @@ namespace UziTrainer.Win32
             Message.PostMessage(MessageHWND, Message.WM_LBUTTONUP, 0x0000, GetLParam(x, y));
         }
 
+        private void RButtonDown(int x, int y)
+        {
+            Message.PostMessage(MessageHWND, Message.WM_RBUTTONDOWN, 0x0002, GetLParam(x, y));
+        }
+
+        private void RButtonUp(int x, int y)
+        {
+            Message.PostMessage(MessageHWND, Message.WM_RBUTTONUP, 0x0000, GetLParam(x, y));
+        }
+
         private void MiddleButtonDown(int x, int y)
         {
             var lparam = GetLParam(x, y);
@@ -129,12 +139,30 @@ namespace UziTrainer.Win32
             for (var i = 0; i < repeatCount; i++)
             {
                 DragRightToLeft(300, 1250, 800);
-                Thread.Sleep(50);
+                Thread.Sleep(300);
             }
             MiddleButtonDown(700, 400);
             Thread.Sleep(10);
             MiddleButtonUp(700, 400);
             Thread.Sleep(10);
+        }
+
+        public void ZoomOutTest()
+        {
+            RButtonDown(900, 240);
+            RButtonUp(900, 240);
+            /*
+            int x = 1194, y = 457;
+            LButtonDown(1194, 457);
+            for(int i=0; i < 15; i++)
+            {
+                MouseMove(x, y);
+                Thread.Sleep(20);
+                x -= 2;
+                y += 2;
+            }
+            LButtonUp(1194, 457);
+            */
         }
 
         public void Click(int x, int y)

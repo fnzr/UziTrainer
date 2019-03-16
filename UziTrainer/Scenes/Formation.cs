@@ -43,19 +43,19 @@ namespace UziTrainer.Scenes
                 y = 185 + (filterYSize * line - 1);
             }
             var column = (arg.X - 543 - 10) / filterXSize;
-            var x = 537 + (column * filterXSize) + ((column + 1) * 15);
-            return new Rectangle(new Point(x, y), new Size(147, 55));
+            var x = 547 + (column * filterXSize) + ((column + 1) * 15);
+            return new Rectangle(new Point(x, y), new Size(137, 55));
         }
 
         private static Rectangle SelectDollArea(Point arg)
         {
-            var slotXSize = 160;
+            var slotXSize = 165;
             int line = arg.Y / 440;
             var y = 170 + (line * 320);
             int column = (arg.X - 20) / slotXSize;
 
             var x = 20 + (column * slotXSize) + (column * 20);
-            return new Rectangle(new Point(x, y), new Size(140, 190));
+            return new Rectangle(new Point(x, y), new Size(140, 150));
         }
 
         private static Rectangle SlotArea(Point foundAt)
@@ -146,6 +146,14 @@ namespace UziTrainer.Scenes
             Properties.Settings.Default.DollExhausted = dollIn.Name;
             Properties.Settings.Default.DollLoaded = dollOut.Name;
             Properties.Settings.Default.Save();
+        }
+
+        public void ReplaceZas()
+        {
+            var dollOut = Doll.Get("Zas1");
+            var dollIn = Doll.Get("Zas2Leader");
+            ReplaceDoll(dollOut, dollIn);
+            AddDollToEchelon(dollOut, 2, 1);
         }
     }
 }

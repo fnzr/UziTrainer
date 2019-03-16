@@ -15,8 +15,8 @@ namespace UziTrainer.Chapters
         
         public static readonly Rectangle ExecutePlanButton = new Rectangle(1112, 657, 146, 64);
         public static readonly Button DeployEchelonButton = new Button("Combat/DeployOK", new Rectangle(1106, 653, 148, 53), Combat.SanityCheck);
-        public static readonly Button PlanningOnButton = new Button("Combat/PlanningOn", new Rectangle(6, 607, 122, 30), Combat.SanityCheck);
-        public static readonly Button PlanningOffButton = new Button("Combat/PlanningOff", new Rectangle(6, 607, 122, 30), null);
+        public static readonly Button PlanningOnButton = new Button("Combat/PlanningOn", new Rectangle(6, 607, 122, 30), null);
+        public static readonly Button PlanningOffButton = new Button("Combat/PlanningOff", new Rectangle(6, 607, 122, 30), PlanningOnButton);
         public static readonly Rectangle StartOperationButton = new Rectangle(1012, 651, 250, 80);
         public static readonly Button EndTurnButton = new Button("Combat/EndTurn", new Rectangle(1097, 646, 150, 90), Sample.Negative);
         public static readonly Button TerminateButton = new Button("Combat/Terminate", new Rectangle(263, 45, 100, 70), null);
@@ -27,6 +27,9 @@ namespace UziTrainer.Chapters
         public static readonly Sample MissionFailedSample = new Sample("Combat/MissionFailed", new Rectangle(1196, 121, 50, 50));
         public static readonly Sample CombatPauseSample = new Sample("Combat/Pause", new Rectangle(917, 646, 170, 70));
         public static readonly Sample TurnSample = new Sample("", Screen.FullArea);
+
+        public static readonly Sample FairyCancelSample = new Sample("Combat/FairyCancel", new Rectangle(1178, 430, 72, 19));
+        public static readonly Button FairyActivateButton = new Button("Combat/FairyActivate", new Rectangle(1178, 430, 72, 19), FairyCancelSample);
 
         static Chapter()
         {
@@ -44,7 +47,8 @@ namespace UziTrainer.Chapters
             while(!screen.Exists(Combat.SanityCheck, 1000))
             {
                 screen.mouse.ZoomOut();
-            }            
+            }
+            PlanningOnButton.Next = PlanningOffButton;
         }
 
         protected void WaitBattle()
@@ -60,11 +64,11 @@ namespace UziTrainer.Chapters
             }            
             while (true)
             {
+                screen.Click(new Rectangle(790, 380, 50, 50));
                 if (screen.Exists(Combat.LoadScreenSample, 300))
                 {
                     break;
-                }
-                screen.Click(new Rectangle(790, 380, 50, 50));
+                }                
             }
         }
 
@@ -74,23 +78,23 @@ namespace UziTrainer.Chapters
             Thread.Sleep(1000);
             while (true)
             {
-                if (screen.Exists(MissionSuccessSample, 1000))
+                if (screen.Exists(MissionSuccessSample, 300))
                 {
                     return;
                 }
-                if (screen.Exists(MissionFailedSample, 1000))
+                if (screen.Exists(MissionFailedSample, 300))
                 {
                     return;
                 }
-                if (screen.Exists(PlanningOffButton))
+                if (screen.Exists(PlanningOffButton, 300))
                 {
                     break;
                 }
-                if (screen.Exists(EndTurnButton))
+                if (screen.Exists(EndTurnButton, 300))
                 {
                     //Program.WriteLog("Executing Plan");
                 }
-                else if (screen.Exists(CombatPauseSample))
+                if (screen.Exists(CombatPauseSample, 300))
                 {
                     WaitBattle();
                 }
@@ -102,28 +106,23 @@ namespace UziTrainer.Chapters
         {
             screen.Click(EndTurnButton);
             TurnSample.Name = "Combat/Turn" + turn;
+            var samples = new Sample[] { CombatPauseSample, TurnSample, MissionSuccessSample, MissionFailedSample, TerminateButton };
             while (true)
             {
-                if (screen.Exists(CombatPauseSample, 200))
+                var found = screen.ExistsAny(samples);
+                if (found == 0)
                 {
                     WaitBattle();
                 }
-                if (screen.Exists(TurnSample))
+                if (found == 2 || found == 3)
+                {
+                    return;
+                }
+                if (found == 1)
                 {
                     break;
                 }
-                if (screen.Exists(MissionSuccessSample, 200))
-                {
-                    return;
-                }
-                if (screen.Exists(MissionFailedSample, 200))
-                {
-                    return;
-                }
-                if (screen.Exists(TerminateButton, 200))
-                {
-                    //SF moving
-                }                
+                Thread.Sleep(100);
             }
             // G&K turn started
             PlanningOffButton.Next = null;
@@ -144,6 +143,27 @@ namespace UziTrainer.Chapters
                 Thread.Sleep(1000);
             }
             PlanningOffButton.Next = PlanningOnButton;
+        }
+
+        public void UseFairy(Rectangle echelonPosition)
+        {
+            if ((Properties.Settings.Default.FairyInterval != -1) && (Program.RunCounter % Properties.Settings.Default.FairyInterval == 0))
+            {
+                bool planningOn = false;
+                if (screen.Exists(PlanningOnButton))
+                {
+                    planningOn = true;
+                    screen.Click(PlanningOnButton);
+                }                
+                screen.Click(echelonPosition, FairyActivateButton);
+                screen.Click(FairyActivateButton);
+                screen.Click(echelonPosition);
+                Thread.Sleep(1000);
+                if (planningOn)
+                {
+                    screen.Click(PlanningOffButton);
+                }
+            }
         }
     }
 }

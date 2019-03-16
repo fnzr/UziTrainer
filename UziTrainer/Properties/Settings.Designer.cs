@@ -105,5 +105,17 @@ namespace UziTrainer.Properties {
                 this["Schedule"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("-1")]
+        public int FairyInterval {
+            get {
+                return ((int)(this["FairyInterval"]));
+            }
+            set {
+                this["FairyInterval"] = value;
+            }
+        }
     }
 }

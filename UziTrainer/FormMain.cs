@@ -8,7 +8,6 @@ namespace UziTrainer
     public partial class FormMain : Form
     {
         private Thread ExecutionThread;
-        private int RunCounter = 0;
         private static readonly string[] Maps = {
                 "0_2", "1_6", "1_1N", "2_6", "3_6", "4_6", "5_6", "6_3N", "6_6",
         };
@@ -20,10 +19,18 @@ namespace UziTrainer
             checkBoxSwapActive.Checked = Properties.Settings.Default.IsCorpseDragging;
             checkBoxSwapActive.CheckedChanged += CheckBoxSwapActive_CheckedChanged;
             comboMaps.SelectedIndex = Array.IndexOf(Maps, Properties.Settings.Default.SelectedMission);
-            comboMaps.SelectedIndexChanged += selectedIndexChanged;            
+            comboMaps.SelectedIndexChanged += selectedIndexChanged;
+            textFairyInterval.Text = Properties.Settings.Default.FairyInterval.ToString();
+            textFairyInterval.LostFocus += TextFairyInterval_LostFocus;
             Trace.Listeners.Add(new FormMainTraceListener(this));
 
             FormClosing += FormMain_FormClosing;
+        }
+
+        private void TextFairyInterval_LostFocus(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.FairyInterval = Convert.ToInt32(textFairyInterval.Text);
+            Properties.Settings.Default.Save();
         }
 
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
@@ -122,15 +129,16 @@ namespace UziTrainer
             ExecutionThread.Suspend();
         }
 
-        public void IncreaseCounter()
+        public void SetCounter(int value)
         {
-            BeginInvoke((Action)(() => labelCounter.Text = (++RunCounter).ToString()));
+            BeginInvoke((Action)(() => labelCounter.Text = (value).ToString()));
         }
 
         private void buttonRun_Click(object sender, EventArgs e)
         {
             UpdateSettings();
             var map = Maps[comboMaps.SelectedIndex];
+            TerminateExecutionThread();
             ExecutionThread = new Thread(new ThreadStart(delegate ()
             {
                 Program.Run(map, -1);
@@ -177,10 +185,7 @@ namespace UziTrainer
             TerminateExecutionThread();
             ExecutionThread = new Thread(new ThreadStart(delegate ()
             {
-                foreach (string mission in Properties.Settings.Default.Schedule)
-                {
-                    Program.RunTest();
-                }
+                Program.RunTest();
             }));
             ExecutionThread.Start();
         }

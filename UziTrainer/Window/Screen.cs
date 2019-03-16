@@ -29,6 +29,7 @@ namespace UziTrainer.Window
 
         public Screen(string windowTitle)
         {
+            
             var hwnd = Win32.Message.FindWindow(ScreenWindowClass, windowTitle);
             if (hwnd <= 0)
             {
@@ -37,7 +38,29 @@ namespace UziTrainer.Window
             var mhwnd = Win32.Message.FindWindowEx(hwnd, 0, MessageWindowClass, MessageWindowTitle);
             WindowHWND = new IntPtr(hwnd);
             MessageHWND = new IntPtr(mhwnd);
-            mouse = new Win32.Mouse(hwnd, mhwnd);            
+            mouse = new Win32.Mouse(hwnd, mhwnd);
+            /*
+            var hwnd = Win32.Message.FindWindow("QWidget", "Leapdroid (v1.8.0.0)");
+            var mhwnd = Win32.Message.FindWindowEx(hwnd, 0, "QWidget", "EmulatorQtWindow");
+            WindowHWND = new IntPtr(hwnd);
+            MessageHWND = new IntPtr(mhwnd);
+            mouse = new Win32.Mouse(hwnd, mhwnd);
+            */
+        }
+
+        public int ExistsAny(Sample[] samples, bool debug = false)
+        {
+            var capture = CaptureScreen();
+            for(int i=0; i<samples.Length; i++)
+            {
+                var sample = samples[i];
+                var point = GetPoint(sample.Image, LimitSearchArea(capture, sample.SearchArea), sample.Threshold, sample, debug);
+                if (point != Point.Empty)
+                {
+                    return i;
+                }
+            }            
+            return -1;
         }
         
         public bool Exists(Sample sample, int timeout = 3000, bool debug = false)
