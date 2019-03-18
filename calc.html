@@ -1,0 +1,18 @@
+<html>
+<body>
+    <input type="text" id="value">
+    <input type="text" id="out">
+    <button type="button" onclick="btnClick()">Get Rect</button>
+    <script>
+        var btnClick = function(){
+            var re = /([0-9]*), ([0-9]*)[ \t]([0-9]*), ([0-9]*)/g;
+            var g = re.exec(document.getElementById("value").value)
+            console.log(g)
+            var h = g[3] - g[1]
+            var w = g[4] - g[2]
+            document.getElementById("out").value = g[1] + ", " + g[2] + ", " + h + ", " + w
+            document.getElementById("value").value = ""
+        }
+    </script>
+</body>
+</html>

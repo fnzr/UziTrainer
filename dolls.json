@@ -18,5 +18,9 @@
   "Zas2Leader": {
     "rarity": 5,
     "type": "ar"
+  },
+  "G36": {
+    "rarity": 4,
+    "type": "ar"
   }
 }

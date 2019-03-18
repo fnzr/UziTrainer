@@ -18,37 +18,41 @@ namespace UziTrainer.Chapters
 
         public void Map6_3N()
         {
-            var nodeSize = new Size(35, 38);
+            var nodeSize = new Size(27, 25);
 
-            var heliport = new Rectangle(new Point(374, 258), nodeSize);
-            var heliport2 = new Rectangle(new Point(750, 365), nodeSize);
+            var heliport = new Rectangle(new Point(365, 222), nodeSize);
+            var heliport2 = new Rectangle(new Point(565, 330), nodeSize);
 
             var formation = new Formation(screen);
-            var equipEnhancementPopup = new Sample("CombatPage/EquipEnhancementPopup", new Rectangle(722, 506, 157, 43));
+            var equipEnhancementPopup = new Sample("CombatPage/EquipEnhancementPopup", new Rectangle(610, 501, 136, 43));
 
             for (int i = 0; ; i++)
-            {
+            {                
                 if (i % 2 == 0)
                 {
                     screen.Click(heliport, EchelonFormationButton);
                     screen.Click(EchelonFormationButton);
                     formation.ReplaceZas();
-                    screen.Click(Formation.ReturnToBase);
+                    screen.Click(Formation.ReturnToBase, StartOperationButton, 5000);
                     Thread.Sleep(5000);
                 }
                 screen.Click(heliport, EchelonFormationButton);
                 screen.Click(DeployEchelonButton);
+                
                 screen.Click(StartOperationButton);
+                
                 if (screen.Exists(equipEnhancementPopup))
                 {
                     Program.Pause();                    
                 }
+                
                 Thread.Sleep(1000);
                 UseFairy(heliport);
+                
                 screen.Click(PlanningOffButton);
                 screen.Click(heliport);
-                screen.Click(new Rectangle(new Point(641, 293), nodeSize));
-                screen.Click(new Rectangle(new Point(846, 284), nodeSize));
+                screen.Click(new Rectangle(new Point(629, 258), nodeSize));
+                screen.Click(new Rectangle(new Point(832, 249), nodeSize));
                 WaitExecution();
                 WaitTurn("2");
 
@@ -59,17 +63,19 @@ namespace UziTrainer.Chapters
                 if (i % 2 == 0)
                 {
                     Thread.Sleep(1000);
-                    screen.Click(new Rectangle(new Point(846, 284), nodeSize));
+                    screen.Click(new Rectangle(new Point(657, 252), nodeSize));
                     screen.Click(heliport2);
                     Thread.Sleep(500);
-                    screen.Click(new Rectangle(619, 376, 115, 33));
+                    screen.Click(new Rectangle(450, 339, 105, 32)); //Switch
                     Thread.Sleep(3000);
-                    screen.Click(heliport2);
+                    /*
+                    screen.Click(heliport2, ResupplyButton);
                     Thread.Sleep(1500);
-                    screen.Click(new Rectangle(931, 659, 126, 38));
+                    screen.Click(new Rectangle(783, 630, 124, 42)); // Retreat
                     Thread.Sleep(500);
-                    screen.Click(new Rectangle(678, 504, 174, 45));
-                    Thread.Sleep(1500);
+                    screen.Click(new Rectangle(573, 502, 107, 38)); // Confirm
+                    Thread.Sleep(1000);
+                    */
                 }
                 else
                 {
@@ -77,14 +83,14 @@ namespace UziTrainer.Chapters
                     screen.Click(heliport2, ResupplyButton);
                     screen.Click(ResupplyButton);
                 }
-                screen.Click(heliport2);
-                Thread.Sleep(1000);
-                screen.Click(new Rectangle(931, 659, 126, 38));
-                Thread.Sleep(500);
-                screen.Click(new Rectangle(678, 504, 174, 45));
+                screen.Click(heliport2, ResupplyButton);
                 Thread.Sleep(1500);
+                screen.Click(new Rectangle(783, 630, 124, 42)); // Retreat
+                Thread.Sleep(500);
+                screen.Click(new Rectangle(573, 502, 107, 38)); // Confirm
+                Thread.Sleep(1000);
                 screen.Click(TerminateButton);
-                screen.Click(new Rectangle(422, 502, 122, 38));
+                screen.Click(RestartButton);
                 Program.IncreaseCounter();
             }
             

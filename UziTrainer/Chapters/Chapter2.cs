@@ -17,9 +17,7 @@ namespace UziTrainer.Chapters
 
         public void Map2_6()
         {
-            var nodeSize = new Size(25, 22);
-
-            var commandPost = new Rectangle(new Point(265, 367), nodeSize);
+            var commandPost = new Rectangle(220, 395, 41, 40);
             screen.Click(commandPost, EchelonFormationButton);
             screen.Click(DeployEchelonButton);
 
@@ -30,17 +28,18 @@ namespace UziTrainer.Chapters
             screen.Click(commandPost, ResupplyButton);
             screen.Click(ResupplyButton);
             Thread.Sleep(500);
-
+            
             screen.Click(PlanningOffButton);
-            screen.mouse.DragUpToDown(660, 150, 700);            
-            screen.Click(new Rectangle(new Point(236, 386), nodeSize));
-            screen.Click(new Rectangle(new Point(359, 248), nodeSize));
-            WaitExecution();
-            WaitTurn("2");
+            screen.mouse.DragUpToDown(522, 192, 530);
 
-            screen.Click(new Rectangle(new Point(361, 247), nodeSize));
-            screen.Click(new Rectangle(new Point(571, 264), nodeSize));
-            screen.Click(new Rectangle(new Point(714, 340), nodeSize));
+            screen.Click(new Rectangle(203, 302, 19, 20));
+            screen.Click(new Rectangle(308, 184, 21, 21));
+            WaitExecution();
+            
+            WaitTurn("2");
+            screen.Click(new Rectangle(309, 182, 18, 18));
+            screen.Click(new Rectangle(488, 193, 31, 34));
+            screen.Click(new Rectangle(609, 262, 29, 33));
             WaitExecution();
             screen.Click(EndTurnButton);
         }

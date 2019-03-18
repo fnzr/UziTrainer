@@ -20,14 +20,13 @@ namespace UziTrainer.Chapters
         {
             var nodeSize = new Size(20, 20);
 
-            screen.Click(new Rectangle(new Point(1024, 550), nodeSize), EchelonFormationButton);
-            screen.Click(new Rectangle(10, 308, 94, 51));
+            screen.Click(new Rectangle(868, 643, 42, 34), EchelonFormationButton);
+            screen.Click(new Rectangle(10, 340, 73, 26));
             screen.Click(DeployEchelonButton);
 
-            screen.mouse.DragUpToDown(773, 107, 715);
-            Combat.SanityCheck.Name = $"{root}SanityCheck2";
+            screen.mouse.DragUpToDown(83, 297, 628);
 
-            var heliport = new Rectangle(new Point(1052, 193), nodeSize);
+            var heliport = new Rectangle(894, 133, 35, 35);
             screen.Click(heliport, EchelonFormationButton);
             screen.Click(DeployEchelonButton);
             screen.Click(StartOperationButton);
@@ -39,10 +38,10 @@ namespace UziTrainer.Chapters
 
             screen.Click(PlanningOffButton);
             screen.Click(heliport);
-            screen.Click(new Rectangle(new Point(843, 181), nodeSize));
-            screen.Click(new Rectangle(new Point(673, 234), nodeSize));
-            screen.Click(new Rectangle(new Point(464, 201), nodeSize));
-            screen.Click(new Rectangle(new Point(235, 233), nodeSize));
+            screen.Click(new Rectangle(714, 122, 24, 21));
+            screen.Click(new Rectangle(572, 169, 21, 27));
+            screen.Click(new Rectangle(398, 143, 17, 26));
+            screen.Click(new Rectangle(205, 161, 34, 40));
             WaitExecution();
             screen.Click(EndTurnButton);
         }

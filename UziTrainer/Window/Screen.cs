@@ -21,7 +21,7 @@ namespace UziTrainer.Window
         readonly IntPtr MessageHWND;
         bool resetTimer;
         public readonly Win32.Mouse mouse;
-        public static readonly Rectangle FullArea = new Rectangle(0, 0, 1284, 722);
+        public static readonly Rectangle FullArea = new Rectangle(0, 0, 1088, 816);
         public bool Interruptible = true;
 
         Image<Rgba, byte> _Image = new Image<Rgba, byte>(1, 1);
@@ -29,7 +29,7 @@ namespace UziTrainer.Window
 
         public Screen(string windowTitle)
         {
-            
+            /*
             var hwnd = Win32.Message.FindWindow(ScreenWindowClass, windowTitle);
             if (hwnd <= 0)
             {
@@ -39,13 +39,13 @@ namespace UziTrainer.Window
             WindowHWND = new IntPtr(hwnd);
             MessageHWND = new IntPtr(mhwnd);
             mouse = new Win32.Mouse(hwnd, mhwnd);
-            /*
+            */
             var hwnd = Win32.Message.FindWindow("QWidget", "Leapdroid (v1.8.0.0)");
             var mhwnd = Win32.Message.FindWindowEx(hwnd, 0, "QWidget", "EmulatorQtWindow");
             WindowHWND = new IntPtr(hwnd);
             MessageHWND = new IntPtr(mhwnd);
             mouse = new Win32.Mouse(hwnd, mhwnd);
-            */
+            
         }
 
         public int ExistsAny(Sample[] samples, bool debug = false)
@@ -86,8 +86,18 @@ namespace UziTrainer.Window
             return true;
         }
 
-        public void Click(Rectangle area, Sample next = null, int wait = 3000)
+        public void Click(Rectangle area, bool debug)
         {
+            Click(area, null, 0, debug);
+        }
+
+        public void Click(Rectangle area, Sample next = null, int wait = 3000, bool debug = false)
+        {
+            if (debug)
+            {
+                var sample = new Sample("", area);
+                CreateDebugForm(sample, Point.Empty, 0f);
+            }
             do
             {
                 var x = area.X + random.Next(0, area.Width);
@@ -209,7 +219,7 @@ namespace UziTrainer.Window
         public Rectangle ReferenceRectangle()
         {
             Win32.RECT rc;
-            Win32.Message.GetWindowRect(WindowHWND, out rc);
+            Win32.Message.GetWindowRect(MessageHWND, out rc);
             return rc;
         }
 
@@ -236,7 +246,7 @@ namespace UziTrainer.Window
             Interruptible = true;
         }
 
-        Image<Rgba, byte> CaptureScreen()
+        public Image<Rgba, byte> CaptureScreen()
         {
             var rc = ReferenceRectangle();
             var bitmap = new Bitmap(rc.Width, rc.Height, PixelFormat.Format32bppArgb);
@@ -253,8 +263,9 @@ namespace UziTrainer.Window
 
         Image<Rgba, byte> LimitSearchArea(Image<Rgba, byte> image, Rectangle area)
         {
-            _ImageLimited.Dispose();
-            _ImageLimited = image.Copy(area);            
+            //var rect = new Rectangle(new Point(area.X - 8, area.Y - 31), area.Size);
+            _ImageLimited.Dispose();            
+            _ImageLimited = image.Copy(area);
             return _ImageLimited;
         }
     }

@@ -19,7 +19,6 @@ namespace UziTrainer
         Screen screen;
         Sample sample;
         Point FoundAt;
-        Rectangle ClickArea;
         Form AreaForm;
         Form ClickPoint;
         Form ClickAreaForm;
@@ -27,6 +26,9 @@ namespace UziTrainer
         public FormDebug(Screen screen, Sample sample, Point foundAt, float evaluation)
         {
             InitializeComponent();
+            StartPosition = FormStartPosition.Manual;
+            var location = Program.form.DesktopLocation;
+            Location = new Point(location.X + 30, location.Y + 30);
             this.screen = screen;
             this.sample = sample;
 
@@ -65,7 +67,8 @@ namespace UziTrainer
             var reference = screen.ReferenceRectangle();
             AreaForm = CreateOverlayForm();
             AreaForm.BackColor = Color.Fuchsia;
-            AreaForm.DesktopBounds = new Rectangle(reference.Left + sample.SearchArea.Left, reference.Top + sample.SearchArea.Top, sample.SearchArea.Width, sample.SearchArea.Height);
+            AreaForm.DesktopBounds = new Rectangle(new Point(reference.X + sample.SearchArea.X, reference.Y + sample.SearchArea.Y), sample.SearchArea.Size);
+            AreaForm.TopMost = true;
             AreaForm.Show();
 
             if (FoundAt != Point.Empty)

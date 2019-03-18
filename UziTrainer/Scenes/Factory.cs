@@ -6,32 +6,33 @@ namespace UziTrainer.Scenes
 {
     class Factory
     {
-        public static readonly Sample FactoryScene = new Sample("FactoryPage/FactoryPage", new Rectangle(56, 649, 40, 40));
-        public static readonly Rectangle ReturnButton = new Rectangle(19, 58, 100, 46);
+        public static readonly Sample FactoryScene = new Sample("FactoryPage/FactoryPage", new Rectangle(161, 15, 51, 54));
+        public static readonly Rectangle ReturnButton = new Rectangle(11, 14, 91, 51);
+        public static readonly Rectangle CancelSelectFodder = new Rectangle(9, 13, 95, 50);
 
-        public static readonly Sample DollEnhancementClicked = new Sample("FactoryPage/DollEnhancementClicked", new Rectangle(9, 349, 152, 55));
-        public static readonly Button DollEnhancementButton = new Button("FactoryPage/DollEnhancement", new Rectangle(9, 349, 152, 55), DollEnhancementClicked);
+        public static readonly Sample DollEnhancementClicked = new Sample("FactoryPage/DollEnhancementClicked", new Rectangle(6, 264, 135, 55));
+        public static readonly Button DollEnhancementButton = new Button("FactoryPage/DollEnhancement", new Rectangle(6, 264, 135, 55), DollEnhancementClicked);
 
-        public static readonly Sample DollRetirementClicked = new Sample("FactoryPage/DollRetirementClicked", new Rectangle(13, 438, 145, 61));
-        public static readonly Button DollRetirementButton = new Button("FactoryPage/DollRetirement", new Rectangle(13, 438, 145, 61), DollRetirementClicked);
+        public static readonly Sample DollRetirementClicked = new Sample("FactoryPage/DollRetirementClicked", new Rectangle(9, 342, 128, 55));
+        public static readonly Button DollRetirementButton = new Button("FactoryPage/DollRetirement", new Rectangle(9, 342, 128, 55), DollRetirementClicked);
 
-        public static readonly Button FilterConfirmButton = new Button("FormationPage/FilterConfirm", new Rectangle(815, 693, 233, 36), Sample.Negative);
-        public static readonly Button FilterResetButton = new Button("FormationPage/Reset", new Rectangle(540, 694, 233, 36), Sample.Negative);
-        public static readonly Button FilterButton = new Button("FormationPage/Filter", new Rectangle(1105, 280, 105, 65), FilterResetButton);
+        public static readonly Button FilterConfirmButton = new Button("FormationPage/FilterConfirm", new Rectangle(686, 561, 192, 32), Sample.Negative);
+        public static readonly Button FilterResetButton = new Button("FormationPage/Reset", new Rectangle(459, 560, 177, 36), Sample.Negative);
+        public static readonly Button FilterButton = new Button("FormationPage/Filter", new Rectangle(941, 205, 126, 74), FilterResetButton);
 
-        public static readonly Button SmartSelectOK = new Button("FactoryPage/OKRetire", new Rectangle(1108, 624, 151, 67), null);
-        public static readonly Button SmartSelect = new Button("FactoryPage/SmartSelect", new Rectangle(1115, 621, 150, 80), null);
+        public static readonly Button SmartSelectOK = new Button("FactoryPage/OKRetire", new Rectangle(938, 491, 127, 74), null);
+        public static readonly Button SmartSelect = new Button("FactoryPage/SmartSelect", new Rectangle(938, 491, 127, 74), null);
 
-        public static readonly Button PowerUpSuccess = new Button("FactoryPage/PowerUpSuccess", new Rectangle(579, 535, 30, 30), Sample.Negative);
-        public static readonly Button NotEnoughDolls = new Button("FactoryPage/NotEnoughDolls", new Rectangle(468, 510, 30, 30), Sample.Negative);
+        public static readonly Button PowerUpSuccess = new Button("FactoryPage/PowerUpSuccess", new Rectangle(475, 520, 123, 43), Sample.Negative);
+        public static readonly Button NotEnoughDolls = new Button("FactoryPage/NotEnoughDolls", new Rectangle(385, 500, 119, 44), Sample.Negative);
 
 
 
         Screen screen;
         const int DollSlotX = 90;
         const int DollSlotY = 260;
-        const int DollSlotXSize = 165;
-        const int DollSlotYSize = 290;
+        const int DollSlotXSize = 140;
+        const int DollSlotYSize = 240;
 
         public Factory(Screen screen)
         {
@@ -43,18 +44,20 @@ namespace UziTrainer.Scenes
             Sample InTraining = new Sample("FactoryPage/InTraining", Rectangle.Empty);
             Sample InLogistics = new Sample("FactoryPage/InLogistics", Rectangle.Empty);
             Sample Zas = new Sample("Dolls/Zas", Rectangle.Empty, null, .8f);
+            var samples = new Sample[] { /*InTraining,*/ InLogistics, Zas };
             for (var j = 0; j < 2; j++)
             {
-                var y = 145 + (j * DollSlotYSize) + (20 * j);
+                var y = 130 + (j * DollSlotYSize) + (15 * j);
                 for (var i = 0; i < 6; i++)
                 {
-                    int x = (14 * (i + 1)) + (i * DollSlotXSize);
-                    InLogistics.SearchArea = new Rectangle(x, y, DollSlotXSize, 225);
+                    int x = 10 + (12 * i) + (i * DollSlotXSize);
+                    InLogistics.SearchArea = new Rectangle(x, y, DollSlotXSize, 190);
                     InTraining.SearchArea = InLogistics.SearchArea;
                     Zas.SearchArea = InLogistics.SearchArea;
-                    if (!screen.Exists(InLogistics, 0) && !screen.Exists(InTraining, 0) && !screen.Exists(Zas, 0))
+                    //!screen.Exists(InTraining, 0)                    
+                    if (screen.ExistsAny(samples) == -1)
                     {
-                        screen.Click(new Rectangle(x + 80, y, 10, 10));
+                        screen.Click(new Rectangle(x + 10, y, 20, 10));
                         return screen.Exists(DollEnhancementClicked, 2000);
                     }
                 }
@@ -72,7 +75,7 @@ namespace UziTrainer.Scenes
             }
             else
             {
-                screen.Click(new Rectangle(14, 59, 96, 49)); //Cancel select fodder
+                screen.Click(CancelSelectFodder); //Cancel select fodder
                 return false;
             }
         }
@@ -80,7 +83,7 @@ namespace UziTrainer.Scenes
         public void DollEnhancement()
         {
             screen.Wait(FactoryScene);
-            if (!screen.Exists(DollEnhancementClicked))
+            if (!screen.Exists(DollEnhancementClicked, 0))
             {
                 screen.Click(DollEnhancementButton);
                 Thread.Sleep(500);
@@ -88,20 +91,20 @@ namespace UziTrainer.Scenes
             SmartSelectOK.Next = DollEnhancementClicked;
             do
             {
-                screen.Click(new Rectangle(242, 184, 141, 273), FilterButton);
+                screen.Click(new Rectangle(200, 243, 136, 214), FilterButton);
                 if (!SelectEnhaceable())
                 {
-                    screen.Click(new Rectangle(15, 55, 100, 45), DollEnhancementClicked);
+                    screen.Click(CancelSelectFodder, DollEnhancementClicked);
                     break;
                 }
-                screen.Click(new Rectangle(465, 208, 136, 70), FilterButton);
+                screen.Click(new Rectangle(389, 148, 125, 59), FilterButton);
 
                 if (!SmartSelectFodder())
                 {
                     break;
                 };
                 Thread.Sleep(500);
-                screen.Click(new Rectangle(1106, 622, 130, 44));
+                screen.Click(new Rectangle(939, 706, 111, 37));
                 Thread.Sleep(3500);
                 if (screen.Exists(PowerUpSuccess))
                 {
@@ -129,10 +132,10 @@ namespace UziTrainer.Scenes
             }
             SmartSelectOK.Next = DollRetirementClicked;
 
-            screen.Click(new Rectangle(286, 201, 129, 52), FilterButton);
+            screen.Click(new Rectangle(236, 127, 119, 73), FilterButton);
             SmartSelectFodder();
 
-            screen.Click(new Rectangle(1100, 631, 132, 42));
+            screen.Click(new Rectangle(931, 712, 109, 37));
             Thread.Sleep(3000);
             /** TODO retire 3 stars
             screen.Click(new Rectangle(286, 201, 129, 52), FilterButton);

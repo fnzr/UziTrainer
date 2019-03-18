@@ -17,9 +17,7 @@ namespace UziTrainer.Chapters
 
         public void Map1_6()
         {
-            Size nodeSize = new Size(35, 26);
-
-            var commandPost = new Rectangle(new Point(251, 349), nodeSize);
+            var commandPost = new Rectangle(214, 269, 38, 40);
             screen.Click(commandPost, EchelonFormationButton);
             screen.Click(DeployEchelonButton);
 
@@ -31,31 +29,29 @@ namespace UziTrainer.Chapters
             screen.Click(ResupplyButton);
 
             screen.Click(PlanningOffButton);
-            screen.Click(new Rectangle(new Point(468, 353), nodeSize));
-            screen.Click(new Rectangle(new Point(357, 522), nodeSize));
+            screen.Click(new Rectangle(399, 273, 24, 22));
+            screen.Click(new Rectangle(303, 417, 23, 24));
             WaitExecution();
             WaitTurn("2");
 
-            screen.mouse.DragDownToUp(670, 600, 150);
-            var echelonSelected = new Sample($"{root}EchelonSelected", new Rectangle(368, 168, 12, 32));
-            screen.Click(new Rectangle(353, 126, 42, 31), echelonSelected);
-            screen.Click(new Rectangle(new Point(511, 283), nodeSize));
-            screen.Click(new Rectangle(new Point(419, 398), nodeSize));
+            screen.mouse.DragDownToUp(209, 687, 300);
+            screen.Click(new Rectangle(304, 270, 22, 23));
+            screen.Click(new Rectangle(436, 414, 24, 29));
+            screen.Click(new Rectangle(364, 516, 27, 36));
             WaitExecution();
             WaitTurn("3");
 
-            screen.mouse.DragDownToUp(550, 600, 200);
-            screen.Click(new Rectangle(new Point(422, 393), nodeSize));
-            screen.Click(new Rectangle(new Point(620, 501), nodeSize));
-            screen.Click(new Rectangle(new Point(947, 472), nodeSize));
-            screen.Click(new Rectangle(new Point(1055, 224), nodeSize));
+            screen.Click(new Rectangle(358, 514, 37, 34));
+            screen.Click(new Rectangle(528, 604, 21, 25));
+            screen.Click(new Rectangle(802, 578, 29, 26));
+            screen.Click(new Rectangle(900, 370, 30, 33));
             WaitExecution();
             WaitTurn("4");
 
-            screen.mouse.DragDownToUp(550, 600, 200);
-            screen.Click(new Rectangle(new Point(1055, 224), nodeSize));
-            screen.Click(new Rectangle(new Point(896, 212), nodeSize));
-            screen.Click(new Rectangle(new Point(779, 327), nodeSize));
+            screen.mouse.DragDownToUp(209, 687, 300);
+            screen.Click(new Rectangle(896, 365, 38, 38));
+            screen.Click(new Rectangle(762, 354, 23, 28));
+            screen.Click(new Rectangle(662, 451, 36, 43));
             WaitExecution();
             screen.Click(EndTurnButton);
         }

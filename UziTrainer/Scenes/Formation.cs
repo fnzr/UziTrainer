@@ -5,65 +5,65 @@ namespace UziTrainer.Scenes
 {
     class Formation
     {
-        public static readonly Rectangle ReturnToBase = new Rectangle(13, 48, 110, 69);
-        public static readonly Sample FormationScene = new Sample("FormationPage/FormationPage", new Rectangle(1188, 145, 40, 35));
-        public static readonly Sample FilterActiveSample = new Sample("FormationPage/FilterActive", new Rectangle(1105, 280, 105, 80));
-        public static readonly Button FilterResetButton = new Button("FormationPage/Reset", new Rectangle(540, 694, 233, 36), Sample.Negative);
-        public static readonly Button FilterDollButton = new Button("FormationPage/Filter", new Rectangle(1105, 280, 105, 65), FilterResetButton);
-        public static readonly Button DollFormationButton = new Button("", new Rectangle(150, 186, 902, 339), FilterDollButton, .9f, SlotArea);
+        public static readonly Rectangle ReturnToBase = new Rectangle(14, 16, 85, 55);
+        public static readonly Sample FormationScene = new Sample("FormationPage/FormationPage", new Rectangle(154, 19, 36, 53));
+        public static readonly Sample FilterActiveSample = new Sample("FormationPage/FilterActive", new Rectangle(939, 241, 110, 36));
+        public static readonly Button FilterResetButton = new Button("FormationPage/Reset", new Rectangle(460, 562, 190, 31), Sample.Negative);
+        public static readonly Button FilterDollButton = new Button("FormationPage/Filter", new Rectangle(937, 209, 131, 67), FilterResetButton);
+        public static readonly Button DollFormationButton = new Button("", new Rectangle(124, 246, 765, 282), FilterDollButton, .85f, SlotArea);
 
-        public static readonly Button FilterConfirmButton = new Button("FormationPage/FilterConfirm", new Rectangle(815, 693, 233, 36), Sample.Negative);
-        public static readonly Button DollSelectButton = new Button("", new Rectangle(5, 136, 1075, 606), FormationScene, .85f, SelectDollArea);
-        public static readonly Button FilterOptionButton = new Button("", new Rectangle(528, 169, 546, 422),
-            new Button("", new Rectangle(528, 169, 546, 412), null), .95f, FilterOptionArea);
-        public static readonly Sample EchelonClickedScene = new Sample("", new Rectangle(7, 145, 130, 596));
-        public static readonly Button EchelonButton = new Button("", new Rectangle(7, 145, 130, 596), EchelonClickedScene, .95f, EchelonClickArea);
+        public static readonly Button FilterConfirmButton = new Button("FormationPage/FilterConfirm", new Rectangle(693, 558, 186, 35), Sample.Negative);
+        public static readonly Button DollSelectButton = new Button("", new Rectangle(4, 89, 909, 719), FormationScene, .75f, SelectDollArea);
+        public static readonly Button FilterOptionButton = new Button("", new Rectangle(450, 119, 456, 355),
+            new Button("", new Rectangle(450, 119, 456, 355), null), .95f, FilterOptionArea);
+        public static readonly Sample EchelonClickedScene = new Sample("", new Rectangle(2, 126, 110, 667));
+        public static readonly Button EchelonButton = new Button("", new Rectangle(2, 126, 110, 667), EchelonClickedScene, .95f, EchelonClickArea);
 
         private static Rectangle EchelonClickArea(Point arg)
         {
-            int echelon = (arg.Y - 140) / 90;
-            int y = 140 + (90 * echelon);
-            return new Rectangle(10, y, 100, 60);
+            int echelon = (arg.Y - 140) / 80;
+            int y = 120 + (80 * echelon);
+            return new Rectangle(5, y, 80, 60);
         }
 
         private static Rectangle FilterOptionArea(Point arg)
         {
-            var filterXSize = 157;
-            var filterYSize = 90;
+            var filterXSize = 150;
+            var filterYSize = 80;
             int y;
             int line;
-            if (arg.Y > 365) // Filter Type
+            if (arg.Y > 290) // Filter Type
             {
-                line = (arg.Y - 395 - 5) / filterYSize;
-                y = 395 + (filterYSize * line - 1);
+                line = (arg.Y - 290 - 5) / filterYSize;
+                y = 290 + (filterYSize * line - 1);
             }
             else // Filter Rarity
             {
-                line = (arg.Y - 180 - 5) / filterYSize;
-                y = 185 + (filterYSize * line - 1);
+                line = (arg.Y - 125 - 5) / filterYSize;
+                y = 125 + (filterYSize * line - 1);
             }
-            var column = (arg.X - 543 - 10) / filterXSize;
-            var x = 547 + (column * filterXSize) + ((column + 1) * 15);
-            return new Rectangle(new Point(x, y), new Size(137, 55));
+            var column = (arg.X - 450 - 10) / filterXSize;
+            var x = 450 + (column * filterXSize) + ((column + 1) * 15);
+            return new Rectangle(new Point(x, y), new Size(100, 55));
         }
 
         private static Rectangle SelectDollArea(Point arg)
         {
-            var slotXSize = 165;
-            int line = arg.Y / 440;
-            var y = 170 + (line * 320);
-            int column = (arg.X - 20) / slotXSize;
+            var slotXSize = 140;
+            int line = (arg.Y - 95) / 260;
+            var y = 100 + (line * 260);
+            int column = (arg.X - 10) / slotXSize;
 
-            var x = 20 + (column * slotXSize) + (column * 20);
-            return new Rectangle(new Point(x, y), new Size(140, 150));
+            var x = 15 + (column * slotXSize) + (column * 15);
+            return new Rectangle(new Point(x, y), new Size(100, 150));
         }
 
         private static Rectangle SlotArea(Point foundAt)
         {
-            var slotXSize = 175;
+            var slotXSize = 150;
             int slot = foundAt.X / slotXSize;
-            var x = 165 * slot + (15 * (slot - 1));
-            return new Rectangle(x, 190, 151, 320);
+            var x = 135 * slot + (20 * (slot - 1));
+            return new Rectangle(x, 250, 130, 280);
         }
 
         readonly Screen screen;
@@ -81,10 +81,10 @@ namespace UziTrainer.Scenes
                 screen.Click(DollSelectButton);
                 return;
             }
-            var filterType = new Button("FormationPage/Filter" + doll.Type, new Rectangle(528, 169, 546, 422),
-            new Button($"FormationPage/Filter{doll.Type}Clicked", new Rectangle(528, 169, 546, 412), null), .95f, FilterOptionArea);
-            var filterRarity = new Button("FormationPage/Filter" + doll.Rarity, new Rectangle(528, 169, 546, 422),
-            new Button($"FormationPage/Filter{doll.Rarity}Clicked", new Rectangle(528, 169, 546, 412), null), .95f, FilterOptionArea);
+            var filterType = new Button("FormationPage/Filter" + doll.Type, new Rectangle(453, 305, 451, 147),
+            new Button($"FormationPage/Filter{doll.Type}Clicked", new Rectangle(453, 305, 451, 147), null), .95f, FilterOptionArea);
+            var filterRarity = new Button("FormationPage/Filter" + doll.Rarity, new Rectangle(453, 124, 456, 151),
+            new Button($"FormationPage/Filter{doll.Rarity}Clicked", new Rectangle(453, 124, 456, 151), null), .95f, FilterOptionArea);
             screen.Click(FilterDollButton);
             if (screen.Exists(FilterActiveSample, 1000))
             {
@@ -107,7 +107,7 @@ namespace UziTrainer.Scenes
 
         public void AddDollToEchelon(Doll doll, int echelon, int slot)
         {
-            if (echelon > 7)
+            if (echelon > 9)
             {
                 //TODO drag
             }

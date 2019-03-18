@@ -13,23 +13,25 @@ namespace UziTrainer.Chapters
     class Chapter
     {
         
-        public static readonly Rectangle ExecutePlanButton = new Rectangle(1112, 657, 146, 64);
-        public static readonly Button DeployEchelonButton = new Button("Combat/DeployOK", new Rectangle(1106, 653, 148, 53), Combat.SanityCheck);
-        public static readonly Button PlanningOnButton = new Button("Combat/PlanningOn", new Rectangle(6, 607, 122, 30), null);
-        public static readonly Button PlanningOffButton = new Button("Combat/PlanningOff", new Rectangle(6, 607, 122, 30), PlanningOnButton);
-        public static readonly Rectangle StartOperationButton = new Rectangle(1012, 651, 250, 80);
-        public static readonly Button EndTurnButton = new Button("Combat/EndTurn", new Rectangle(1097, 646, 150, 90), Sample.Negative);
-        public static readonly Button TerminateButton = new Button("Combat/Terminate", new Rectangle(263, 45, 100, 70), null);
-        public static readonly Button EchelonFormationButton = new Button("Combat/EchelonFormation", new Rectangle(159, 636, 162, 36), null);
-        public static readonly Button ResupplyButton = new Button("Combat/Resupply", new Rectangle(1089, 569, 180, 45), Combat.SanityCheck);
+        public static readonly Button ExecutePlanButton = new Button("Combat/ExecutePlan", new Rectangle(945, 735, 113, 52), Sample.Negative);
+        public static readonly Button DeployEchelonButton = new Button("Combat/DeployOK", new Rectangle(937, 632, 121, 39), Combat.SanityCheck);
+        public static readonly Button PlanningOnButton = new Button("Combat/PlanningOn", new Rectangle(4, 692, 109, 30), null);
+        public static readonly Button PlanningOffButton = new Button("Combat/PlanningOff", new Rectangle(4, 692, 109, 30), PlanningOnButton);
+        public static readonly Button StartOperationButton = new Button("Combat/StartOperation", new Rectangle(858, 729, 212, 58), Sample.Negative);
+        public static readonly Button EndTurnButton = new Button("Combat/EndTurn", new Rectangle(937, 738, 119, 55), Sample.Negative, .8f);
 
-        public static readonly Sample MissionSuccessSample = new Sample("Combat/MissionSuccess", new Rectangle(1196, 121, 50, 50));
-        public static readonly Sample MissionFailedSample = new Sample("Combat/MissionFailed", new Rectangle(1196, 121, 50, 50));
-        public static readonly Sample CombatPauseSample = new Sample("Combat/Pause", new Rectangle(917, 646, 170, 70));
-        public static readonly Sample TurnSample = new Sample("", Screen.FullArea);
+        public static readonly Button RestartButton = new Button("Combat/Restart", new Rectangle(357, 501, 100, 37), Sample.Negative);
+        public static readonly Button TerminateButton = new Button("Combat/Terminate", new Rectangle(230, 14, 70, 53), null);
+        public static readonly Button EchelonFormationButton = new Button("Combat/EchelonFormation", new Rectangle(134, 613, 94, 30), Sample.Negative);
+        public static readonly Button ResupplyButton = new Button("Combat/Resupply", new Rectangle(925, 557, 132, 45), Combat.SanityCheck);
 
-        public static readonly Sample FairyCancelSample = new Sample("Combat/FairyCancel", new Rectangle(1178, 430, 72, 19));
-        public static readonly Button FairyActivateButton = new Button("Combat/FairyActivate", new Rectangle(1178, 430, 72, 19), FairyCancelSample);
+        public static readonly Sample MissionSuccessSample = new Sample("Combat/MissionSuccess", new Rectangle(967, 37, 74, 56));
+        public static readonly Sample MissionFailedSample = new Sample("Combat/MissionFailed", new Rectangle(967, 37, 74, 56));
+        public static readonly Sample CombatPauseSample = new Sample("Combat/Pause", new Rectangle(504, 1, 72, 30));
+        public static readonly Sample TurnSample = new Sample("", new Rectangle(343, 25, 66, 58));
+
+        public static readonly Sample FairyCancelSample = new Sample("Combat/FairyCancel", new Rectangle(997, 333, 67, 21));
+        public static readonly Button FairyActivateButton = new Button("Combat/FairyActivate", new Rectangle(997, 333, 67, 21), FairyCancelSample);
 
         static Chapter()
         {
@@ -42,11 +44,11 @@ namespace UziTrainer.Chapters
         public Chapter(Screen screen, string mission)
         {
             this.screen = screen;
-            root = $"Missions/{mission}/";
-            Combat.SanityCheck.Name = $"{root}SanityCheck";
+            root = $"Missions/{mission}";
+            Combat.SanityCheck.Name = $"{root}Sanity";
             while(!screen.Exists(Combat.SanityCheck, 1000))
             {
-                screen.mouse.ZoomOut();
+                screen.mouse.ZoomOutTest();
             }
             PlanningOnButton.Next = PlanningOffButton;
         }

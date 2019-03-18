@@ -6,20 +6,21 @@ namespace UziTrainer.Win32
     public class Mouse
     {
         const int Step = 8;
-        Random random = new Random();        
+        Random random = new Random();
         readonly int WindowHWND;
         readonly int MessageHWND;
 
         public Mouse(int windowHWND, int messageHWND)
         {
             WindowHWND = windowHWND;
-            MessageHWND = messageHWND;                   
+            MessageHWND = messageHWND;
         }
 
         private static int GetLParam(int x, int y)
         {
-            y = y - 32; //default_title_barWindow offset
-            return (y << 16) | (x & 0xFFFF);            
+            //y -= 31; //default_title_barWindow offset
+            //x -= 8;
+            return (y << 16) | (x & 0xFFFF);
         }
 
         private void LButtonDown(int x, int y)
@@ -58,6 +59,19 @@ namespace UziTrainer.Win32
         {
             var lparam = GetLParam(x, y);
             Message.PostMessage(MessageHWND, Message.WM_MOUSEMOVE, 0x0001, lparam);
+        }
+
+        public void Scroll()
+        {
+            int x = 400, y = 400;
+            var lparam = GetLParam(x, y);
+            int wparam = (-120 << 16) | (0x0008 & 0xFFFF);
+            for (int _= 0; _ < 20; _++)
+            {
+                Message.PostMessage(MessageHWND, Message.WM_MOUSEWHEEL, wparam, lparam);
+                Thread.Sleep(10);
+            }
+            
         }
 
         public void DragUpToDown(int x, int y_start, int y_end)
@@ -147,22 +161,37 @@ namespace UziTrainer.Win32
             Thread.Sleep(10);
         }
 
-        public void ZoomOutTest()
+        public void T()
         {
-            RButtonDown(900, 240);
-            RButtonUp(900, 240);
-            /*
-            int x = 1194, y = 457;
-            LButtonDown(1194, 457);
-            for(int i=0; i < 15; i++)
+            RButtonDown(900, 400);
+        }
+
+        public void ZoomOutTest(int repeat = 2)
+        {
+            for (int i = 0; i < repeat; i++)
             {
-                MouseMove(x, y);
-                Thread.Sleep(20);
-                x -= 2;
-                y += 2;
+                RButtonDown(900, 240);
+                Thread.Sleep(10);
+                RButtonUp(900, 240);
+                Thread.Sleep(100);
+
+                int x = 1040, y = 60;
+                LButtonDown(1194, 457);
+                for (int _ = 0; _ < 25; _++)
+                {
+                    MouseMove(x, y);
+                    Thread.Sleep(20);
+                    x -= 2;
+                    y += 1;
+                }
+                LButtonUp(1194, 457);
+                Thread.Sleep(300);
+
+                RButtonDown(900, 240);
+                Thread.Sleep(10);
+                RButtonUp(900, 240);
             }
-            LButtonUp(1194, 457);
-            */
+
         }
 
         public void Click(int x, int y)

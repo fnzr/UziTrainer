@@ -24,6 +24,7 @@ namespace UziTrainer.Win32
         public const int WM_KEYDOWN = 0x100;
         public const int WM_KEYUP = 0x101;
         public const uint SW_RESTORE = 0x09;
+        public const int WM_MOUSEWHEEL = 0x020A;
 
         // The FindWindow function retrieves a handle to the top-level window whose class name
         // and window name match the specified strings. This function does not search child windows.

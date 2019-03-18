@@ -17,13 +17,11 @@ namespace UziTrainer.Chapters
 
         public void Map3_6()
         {
-            var nodeSize = new Size(21, 21);
-
-            var heliport = new Rectangle(new Point(699, 362), nodeSize);
+            var heliport = new Rectangle(591, 279, 34, 35);
             screen.Click(heliport, EchelonFormationButton);
             screen.Click(DeployEchelonButton);
 
-            screen.Click(new Rectangle(new Point(1036, 240), nodeSize), EchelonFormationButton);
+            screen.Click(new Rectangle(878, 174, 39, 37), EchelonFormationButton);
             screen.Click(DeployEchelonButton);
 
             screen.Click(StartOperationButton);
@@ -34,11 +32,10 @@ namespace UziTrainer.Chapters
             screen.Click(ResupplyButton);
 
             screen.Click(PlanningOffButton);
-            screen.Click(new Rectangle(new Point(555, 386), nodeSize));
-            screen.Click(new Rectangle(new Point(399, 550), nodeSize));
-            screen.mouse.DragDownToUp(485, 730, 185);
-            screen.Click(new Rectangle(new Point(366, 352), nodeSize));
-            screen.Click(new Rectangle(new Point(498, 439), nodeSize));
+            screen.Click(new Rectangle(469, 298, 20, 20));
+            screen.Click(new Rectangle(337, 439, 22, 23));
+            screen.Click(new Rectangle(309, 592, 33, 33));
+            screen.Click(new Rectangle(424, 666, 32, 34));
             WaitExecution();
             screen.Click(EndTurnButton);
         }
