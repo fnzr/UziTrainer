@@ -85,13 +85,13 @@ namespace UziTrainer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("NoxPlayer")]
-        public string NoxTitle {
+        [global::System.Configuration.DefaultSettingValueAttribute("Android Emulator - GFL_API_28:5554")]
+        public string WindowTitle {
             get {
-                return ((string)(this["NoxTitle"]));
+                return ((string)(this["WindowTitle"]));
             }
             set {
-                this["NoxTitle"] = value;
+                this["WindowTitle"] = value;
             }
         }
         

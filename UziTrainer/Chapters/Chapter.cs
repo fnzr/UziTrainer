@@ -30,8 +30,8 @@ namespace UziTrainer.Chapters
         public static readonly Sample CombatPauseSample = new Sample("Combat/Pause", new Rectangle(504, 1, 72, 30));
         public static readonly Sample TurnSample = new Sample("", new Rectangle(343, 25, 66, 58));
 
-        public static readonly Sample FairyCancelSample = new Sample("Combat/FairyCancel", new Rectangle(997, 333, 67, 21));
-        public static readonly Button FairyActivateButton = new Button("Combat/FairyActivate", new Rectangle(997, 333, 67, 21), FairyCancelSample);
+        public static readonly Sample FairyCancelSample = new Sample("Combat/FairyCancel", new Rectangle(998, 338, 63, 15));
+        public static readonly Button FairyActivateButton = new Button("Combat/FairyActivate", new Rectangle(998, 338, 63, 15), FairyCancelSample);
 
         static Chapter()
         {
@@ -48,7 +48,8 @@ namespace UziTrainer.Chapters
             Combat.SanityCheck.Name = $"{root}Sanity";
             while(!screen.Exists(Combat.SanityCheck, 1000))
             {
-                screen.mouse.ZoomOutTest();
+                Program.FlaskTaskbar();
+                Program.Pause();
             }
             PlanningOnButton.Next = PlanningOffButton;
         }

@@ -18,10 +18,11 @@ namespace UziTrainer.Window
         static Random random = new Random();
 
         readonly IntPtr WindowHWND;
-        readonly IntPtr MessageHWND;
+        readonly IntPtr RectangleHWND;
         bool resetTimer;
         public readonly Win32.Mouse mouse;
         public static readonly Rectangle FullArea = new Rectangle(0, 0, 1088, 816);
+        //public static readonly Rectangle FullArea = new Rectangle(0, 0, 1048, 813);
         public bool Interruptible = true;
 
         Image<Rgba, byte> _Image = new Image<Rgba, byte>(1, 1);
@@ -29,23 +30,15 @@ namespace UziTrainer.Window
 
         public Screen(string windowTitle)
         {
-            /*
-            var hwnd = Win32.Message.FindWindow(ScreenWindowClass, windowTitle);
-            if (hwnd <= 0)
+            var hwnd = Win32.Message.FindWindow("Qt5QWindowIcon", windowTitle);
+            var mhwnd = Win32.Message.FindWindowEx(hwnd, 0, "subWin", "sub");
+            if (hwnd <= 0 || mhwnd <= 0)
             {
-                throw new ArgumentException($"No HWND for window [{windowTitle}]");
+                throw new ArgumentException("Could not find window handles");
             }
-            var mhwnd = Win32.Message.FindWindowEx(hwnd, 0, MessageWindowClass, MessageWindowTitle);
-            WindowHWND = new IntPtr(hwnd);
-            MessageHWND = new IntPtr(mhwnd);
-            mouse = new Win32.Mouse(hwnd, mhwnd);
-            */
-            var hwnd = Win32.Message.FindWindow("QWidget", "Leapdroid (v1.8.0.0)");
-            var mhwnd = Win32.Message.FindWindowEx(hwnd, 0, "QWidget", "EmulatorQtWindow");
-            WindowHWND = new IntPtr(hwnd);
-            MessageHWND = new IntPtr(mhwnd);
-            mouse = new Win32.Mouse(hwnd, mhwnd);
-            
+            WindowHWND = new IntPtr(hwnd);            
+            RectangleHWND = new IntPtr(hwnd);            
+            mouse = new Win32.Mouse(hwnd);
         }
 
         public int ExistsAny(Sample[] samples, bool debug = false)
@@ -131,7 +124,7 @@ namespace UziTrainer.Window
                 }
                 else
                 {
-                    if (Exists(button.Next))
+                    if (Exists(button.Next, 5000))
                     {
                         break;
                     }
@@ -219,7 +212,7 @@ namespace UziTrainer.Window
         public Rectangle ReferenceRectangle()
         {
             Win32.RECT rc;
-            Win32.Message.GetWindowRect(MessageHWND, out rc);
+            Win32.Message.GetWindowRect(RectangleHWND, out rc);
             return rc;
         }
 
@@ -249,23 +242,25 @@ namespace UziTrainer.Window
         public Image<Rgba, byte> CaptureScreen()
         {
             var rc = ReferenceRectangle();
-            var bitmap = new Bitmap(rc.Width, rc.Height, PixelFormat.Format32bppArgb);
+            var bitmap = new Bitmap(rc.Width, rc.Height, PixelFormat.Format32bppRgb);
             Graphics gfxBmp = Graphics.FromImage(bitmap);            
             IntPtr hdcBitmap = gfxBmp.GetHdc();
 
             Win32.Message.PrintWindow(WindowHWND, hdcBitmap, 0x1);
             gfxBmp.ReleaseHdc(hdcBitmap);
             _Image.Dispose();
-            _Image = new Image<Rgba, byte>(bitmap);
+            _Image = new Image<Rgba, byte>(bitmap);            
             gfxBmp.Dispose();
+            //_Image.Save(@"C:\temp\out.png");
             return _Image;
         }
 
         Image<Rgba, byte> LimitSearchArea(Image<Rgba, byte> image, Rectangle area)
         {
-            //var rect = new Rectangle(new Point(area.X - 8, area.Y - 31), area.Size);
-            _ImageLimited.Dispose();            
+            //var rect = new Rectangle(new Point(area.X - 8, area.Y), area.Size);
+            _ImageLimited.Dispose();
             _ImageLimited = image.Copy(area);
+            //_ImageLimited.Save(@"C:\temp\out2.png");
             return _ImageLimited;
         }
     }

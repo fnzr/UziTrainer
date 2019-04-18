@@ -15,7 +15,7 @@ namespace UziTrainer.Scenes
         public static readonly Button FilterConfirmButton = new Button("FormationPage/FilterConfirm", new Rectangle(693, 558, 186, 35), Sample.Negative);
         public static readonly Button DollSelectButton = new Button("", new Rectangle(4, 89, 909, 719), FormationScene, .75f, SelectDollArea);
         public static readonly Button FilterOptionButton = new Button("", new Rectangle(450, 119, 456, 355),
-            new Button("", new Rectangle(450, 119, 456, 355), null), .95f, FilterOptionArea);
+            new Button("", new Rectangle(450, 119, 456, 355), null), .98f, FilterOptionArea);
         public static readonly Sample EchelonClickedScene = new Sample("", new Rectangle(2, 126, 110, 667));
         public static readonly Button EchelonButton = new Button("", new Rectangle(2, 126, 110, 667), EchelonClickedScene, .95f, EchelonClickArea);
 
@@ -29,13 +29,13 @@ namespace UziTrainer.Scenes
         private static Rectangle FilterOptionArea(Point arg)
         {
             var filterXSize = 150;
-            var filterYSize = 80;
+            var filterYSize = 60;
             int y;
             int line;
             if (arg.Y > 290) // Filter Type
             {
                 line = (arg.Y - 290 - 5) / filterYSize;
-                y = 290 + (filterYSize * line - 1);
+                y = 330 + (filterYSize * line - 1);
             }
             else // Filter Rarity
             {
@@ -44,7 +44,7 @@ namespace UziTrainer.Scenes
             }
             var column = (arg.X - 450 - 10) / filterXSize;
             var x = 450 + (column * filterXSize) + ((column + 1) * 15);
-            return new Rectangle(new Point(x, y), new Size(100, 55));
+            return new Rectangle(new Point(x, y), new Size(100, 35));
         }
 
         private static Rectangle SelectDollArea(Point arg)

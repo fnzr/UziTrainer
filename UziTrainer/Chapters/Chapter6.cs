@@ -43,7 +43,7 @@ namespace UziTrainer.Chapters
                 
                 if (screen.Exists(equipEnhancementPopup))
                 {
-                    Program.Pause();                    
+                    Program.Pause();
                 }
                 
                 Thread.Sleep(1000);

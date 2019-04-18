@@ -59,6 +59,11 @@ namespace UziTrainer
             form.PauseExecution();
         }
 
+        public static void FlaskTaskbar()
+        {
+            form.BeginInvoke((Action)(() => Win32.Message.FlashWindow(form.Handle, true)));            
+        }
+
         public static void PrepareAssets()
         {
             if (Directory.Exists("./assets"))
@@ -85,10 +90,14 @@ namespace UziTrainer
 
         public static void RunTest()
         {
-            screen = new Screen(Properties.Settings.Default.NoxTitle);
+            screen = new Screen(Properties.Settings.Default.WindowTitle);
             screen.Interruptible = false;
+            screen.Wait(Home.LvSample, true);
+            //Trace.WriteLine(screen.Exists(Chapter.FairyActivateButton));            
+            //var f = new Formation(screen);
+            //f.ReplaceDoll(Doll.Get("G11"), Doll.Get("SOPMOD"));
             //screen.mouse.Click(400, 400);
-            screen.mouse.Scroll();
+            //screen.mouse.T();            
             //screen.mouse.Click(608, 334);
             //screen.Click(new Rectangle(10, 10, 54, 19), null, 0, true);            
             //var f = new Formation(screen);
@@ -143,7 +152,7 @@ namespace UziTrainer
         public static void Run(string mission, int count)
         {
             ResetCounter();
-            screen = new Screen(Properties.Settings.Default.NoxTitle);
+            screen = new Screen(Properties.Settings.Default.WindowTitle);
             
             var repair = new Repair(screen);
             var formation = new Formation(screen);
@@ -219,7 +228,7 @@ namespace UziTrainer
         internal static void LogisticsCheck()
         {
             ResetCounter();
-            screen = new Screen(Properties.Settings.Default.NoxTitle);
+            screen = new Screen(Properties.Settings.Default.WindowTitle);
             screen.Interruptible = true;
             var random = new Random();
             var refresh = random.Next(900000, 1800000);

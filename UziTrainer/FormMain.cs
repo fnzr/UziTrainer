@@ -141,7 +141,7 @@ namespace UziTrainer
             TerminateExecutionThread();
             ExecutionThread = new Thread(new ThreadStart(delegate ()
             {
-                Program.Run(map, -1);
+                Program.Run(map, Convert.ToInt32(textRepeat.Text));
             }));
             ExecutionThread.Start();
         }

@@ -7,12 +7,10 @@ namespace UziTrainer.Win32
     {
         const int Step = 8;
         Random random = new Random();
-        readonly int WindowHWND;
         readonly int MessageHWND;
 
-        public Mouse(int windowHWND, int messageHWND)
+        public Mouse(int messageHWND)
         {
-            WindowHWND = windowHWND;
             MessageHWND = messageHWND;
         }
 
@@ -159,39 +157,6 @@ namespace UziTrainer.Win32
             Thread.Sleep(10);
             MiddleButtonUp(700, 400);
             Thread.Sleep(10);
-        }
-
-        public void T()
-        {
-            RButtonDown(900, 400);
-        }
-
-        public void ZoomOutTest(int repeat = 2)
-        {
-            for (int i = 0; i < repeat; i++)
-            {
-                RButtonDown(900, 240);
-                Thread.Sleep(10);
-                RButtonUp(900, 240);
-                Thread.Sleep(100);
-
-                int x = 1040, y = 60;
-                LButtonDown(1194, 457);
-                for (int _ = 0; _ < 25; _++)
-                {
-                    MouseMove(x, y);
-                    Thread.Sleep(20);
-                    x -= 2;
-                    y += 1;
-                }
-                LButtonUp(1194, 457);
-                Thread.Sleep(300);
-
-                RButtonDown(900, 240);
-                Thread.Sleep(10);
-                RButtonUp(900, 240);
-            }
-
         }
 
         public void Click(int x, int y)

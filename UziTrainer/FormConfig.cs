@@ -18,7 +18,7 @@ namespace UziTrainer
             StartPosition = FormStartPosition.Manual;
             var location = Program.form.DesktopLocation;
             Location = new Point(location.X + 30, location.Y + 30);
-            textNoxTitle.Text = Properties.Settings.Default.NoxTitle;
+            textNoxTitle.Text = Properties.Settings.Default.WindowTitle;
             textNoxTitle.LostFocus += TextNoxTitle_LostFocus;
             if (Properties.Settings.Default.Schedule != null)
             {
@@ -31,7 +31,7 @@ namespace UziTrainer
 
         private void TextNoxTitle_LostFocus(object sender, EventArgs e)
         {
-            Properties.Settings.Default.NoxTitle = textNoxTitle.Text;
+            Properties.Settings.Default.WindowTitle = textNoxTitle.Text;
             Properties.Settings.Default.Save();
         }
 

@@ -17,8 +17,8 @@
     <Setting Name="SelectedMission" Type="System.String" Scope="User">
       <Value Profile="(Default)">0_2</Value>
     </Setting>
-    <Setting Name="NoxTitle" Type="System.String" Scope="User">
-      <Value Profile="(Default)">NoxPlayer</Value>
+    <Setting Name="WindowTitle" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Android Emulator - GFL_API_28:5554</Value>
     </Setting>
     <Setting Name="Schedule" Type="System.Collections.Specialized.StringCollection" Scope="User">
       <Value Profile="(Default)" />

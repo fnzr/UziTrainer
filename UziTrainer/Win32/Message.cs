@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 
 namespace UziTrainer.Win32
@@ -24,7 +25,17 @@ namespace UziTrainer.Win32
         public const int WM_KEYDOWN = 0x100;
         public const int WM_KEYUP = 0x101;
         public const uint SW_RESTORE = 0x09;
-        public const int WM_MOUSEWHEEL = 0x020A;
+        public const int WM_MOUSEWHEEL = 0x020A;        
+
+        public const uint GW_HWNDPREV = 3;
+
+        public delegate bool EnumChildWindowsCallBack(int hwnd, int lParam);
+
+        public static bool Callback(int hwnd, int lParam)
+        {
+            Trace.WriteLine($"Window handle: {hwnd}");
+            return true;
+        }
 
         // The FindWindow function retrieves a handle to the top-level window whose class name
         // and window name match the specified strings. This function does not search child windows.
@@ -37,11 +48,17 @@ namespace UziTrainer.Win32
 		// with the one following the specified child window. This function does not perform a case-sensitive search.
 		[DllImport("User32.dll")]
 		public static extern int FindWindowEx(int hwndParent, int hwndChildAfter, string strClassName, string strWindowName);
-        
-		// The SendMessage function sends the specified message to a 
-		// window or windows. It calls the window procedure for the specified 
-		// window and does not return until the window procedure has processed the message. 
-		[DllImport("User32.dll")]
+
+        [DllImport("User32.dll")]
+        public static extern int GetWindow(int hwnd, uint relationship);
+
+        [DllImport("User32.dll")]
+        public static extern bool EnumChildWindows(int hWndParent, EnumChildWindowsCallBack lpEnumFunc, int lParam);
+
+        // The SendMessage function sends the specified message to a 
+        // window or windows. It calls the window procedure for the specified 
+        // window and does not return until the window procedure has processed the message. 
+        [DllImport("User32.dll")]
 		public static extern Int32 PostMessage(
 			int hWnd,               // handle to destination window
 			int Msg,                // message
@@ -70,6 +87,9 @@ namespace UziTrainer.Win32
 
         [DllImport("user32.dll")]
         public static extern int ShowWindow(IntPtr hWnd, uint Msg);
+
+        [DllImport("user32.dll")]
+        public static extern bool FlashWindow(IntPtr hwnd, bool bInvert);
 
         public static IntPtr SetWindowLongPtr(IntPtr hWnd, int nIndex, IntPtr dwNewLong)
         {
