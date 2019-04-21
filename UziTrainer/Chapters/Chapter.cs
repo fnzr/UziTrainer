@@ -14,16 +14,16 @@ namespace UziTrainer.Chapters
     {
         
         public static readonly Button ExecutePlanButton = new Button("Combat/ExecutePlan", new Rectangle(945, 735, 113, 52), Sample.Negative);
-        public static readonly Button DeployEchelonButton = new Button("Combat/DeployOK", new Rectangle(937, 632, 121, 39), Combat.SanityCheck);
+        public static readonly Button DeployEchelonButton = new Button("Combat/DeployOK", new Rectangle(937, 632, 121, 39), Sample.Negative);
         public static readonly Button PlanningOnButton = new Button("Combat/PlanningOn", new Rectangle(4, 692, 109, 30), null);
         public static readonly Button PlanningOffButton = new Button("Combat/PlanningOff", new Rectangle(4, 692, 109, 30), PlanningOnButton);
         public static readonly Button StartOperationButton = new Button("Combat/StartOperation", new Rectangle(858, 729, 212, 58), Sample.Negative);
-        public static readonly Button EndTurnButton = new Button("Combat/EndTurn", new Rectangle(937, 738, 119, 55), Sample.Negative, .8f);
+        public static readonly Button EndRoundButton = new Button("Combat/EndTurn", new Rectangle(937, 738, 119, 55), Sample.Negative, .8f);
 
         public static readonly Button RestartButton = new Button("Combat/Restart", new Rectangle(357, 501, 100, 37), Sample.Negative);
         public static readonly Button TerminateButton = new Button("Combat/Terminate", new Rectangle(230, 14, 70, 53), null);
         public static readonly Button EchelonFormationButton = new Button("Combat/EchelonFormation", new Rectangle(134, 613, 94, 30), Sample.Negative);
-        public static readonly Button ResupplyButton = new Button("Combat/Resupply", new Rectangle(925, 557, 132, 45), Combat.SanityCheck);
+        public static readonly Button ResupplyButton = new Button("Combat/Resupply", new Rectangle(925, 557, 132, 45), Sample.Negative);
 
         public static readonly Sample MissionSuccessSample = new Sample("Combat/MissionSuccess", new Rectangle(967, 37, 74, 56));
         public static readonly Sample MissionFailedSample = new Sample("Combat/MissionFailed", new Rectangle(967, 37, 74, 56));
@@ -46,11 +46,13 @@ namespace UziTrainer.Chapters
             this.screen = screen;
             root = $"Missions/{mission}";
             Combat.SanityCheck.Name = $"{root}Sanity";
+            /*
             while(!screen.Exists(Combat.SanityCheck, 1000))
             {
                 Program.FlaskTaskbar();
                 Program.Pause();
             }
+            */
             PlanningOnButton.Next = PlanningOffButton;
         }
 
@@ -78,6 +80,21 @@ namespace UziTrainer.Chapters
         protected void WaitExecution()
         {
             screen.Click(ExecutePlanButton);
+            while (true)
+            {
+                /* Maybe executed all planning */
+                if (screen.Exists(PlanningOffButton, 0))
+                {
+                    Thread.Sleep(5000);
+                    /* If PlanningOff dissapared, we're not done yet */
+                    if (screen.Exists(PlanningOffButton, 0))
+                    {
+                        break;
+                    }
+                }
+                Thread.Sleep(5000);
+            }
+            /*
             Thread.Sleep(1000);
             while (true)
             {
@@ -103,11 +120,12 @@ namespace UziTrainer.Chapters
                 }
             }
             Thread.Sleep(500);
+            */
         }
 
-        protected void WaitTurn(string turn)
+        public void WaitTurn(string turn)
         {
-            screen.Click(EndTurnButton);
+            screen.Click(EndRoundButton);
             TurnSample.Name = "Combat/Turn" + turn;
             var samples = new Sample[] { CombatPauseSample, TurnSample, MissionSuccessSample, MissionFailedSample, TerminateButton };
             while (true)

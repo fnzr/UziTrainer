@@ -31,17 +31,9 @@ namespace UziTrainer.Chapters
             
             screen.Click(PlanningOffButton);
             screen.mouse.DragUpToDown(522, 192, 530);
-
-            screen.Click(new Rectangle(203, 302, 19, 20));
-            screen.Click(new Rectangle(308, 184, 21, 21));
+            screen.Click(new Rectangle(604, 265, 38, 36));
             WaitExecution();
-            
-            WaitTurn("2");
-            screen.Click(new Rectangle(309, 182, 18, 18));
-            screen.Click(new Rectangle(488, 193, 31, 34));
-            screen.Click(new Rectangle(609, 262, 29, 33));
-            WaitExecution();
-            screen.Click(EndTurnButton);
+            screen.Click(EndRoundButton);
         }
     }
 }

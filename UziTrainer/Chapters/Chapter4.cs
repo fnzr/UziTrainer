@@ -36,12 +36,9 @@ namespace UziTrainer.Chapters
             screen.Click(ResupplyButton);
 
             screen.Click(PlanningOffButton);
-            screen.Click(new Rectangle(720, 123, 23, 17));
-            screen.Click(new Rectangle(572, 125, 23, 24));
-            screen.Click(new Rectangle(384, 136, 30, 27));
             screen.Click(new Rectangle(161, 129, 36, 34));
             WaitExecution();
-            screen.Click(EndTurnButton);
+            screen.Click(EndRoundButton);
         }
         
     }

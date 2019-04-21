@@ -37,7 +37,7 @@ namespace UziTrainer.Window
                 throw new ArgumentException("Could not find window handles");
             }
             WindowHWND = new IntPtr(hwnd);            
-            RectangleHWND = new IntPtr(hwnd);            
+            RectangleHWND = new IntPtr(mhwnd);            
             mouse = new Win32.Mouse(hwnd);
         }
 
@@ -245,8 +245,8 @@ namespace UziTrainer.Window
             var bitmap = new Bitmap(rc.Width, rc.Height, PixelFormat.Format32bppRgb);
             Graphics gfxBmp = Graphics.FromImage(bitmap);            
             IntPtr hdcBitmap = gfxBmp.GetHdc();
-
-            Win32.Message.PrintWindow(WindowHWND, hdcBitmap, 0x1);
+            
+            Win32.Message.PrintWindow(RectangleHWND, hdcBitmap, 0x00000003);
             gfxBmp.ReleaseHdc(hdcBitmap);
             _Image.Dispose();
             _Image = new Image<Rgba, byte>(bitmap);            
@@ -257,7 +257,6 @@ namespace UziTrainer.Window
 
         Image<Rgba, byte> LimitSearchArea(Image<Rgba, byte> image, Rectangle area)
         {
-            //var rect = new Rectangle(new Point(area.X - 8, area.Y), area.Size);
             _ImageLimited.Dispose();
             _ImageLimited = image.Copy(area);
             //_ImageLimited.Save(@"C:\temp\out2.png");

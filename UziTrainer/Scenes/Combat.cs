@@ -31,11 +31,11 @@ namespace UziTrainer.Scenes
         public static readonly Button EquipmentEnhancementButton = new Button("CombatPage/EquipEnhancementPopup", new Rectangle(674, 580, 146, 63), Sample.Negative);
 
         public static readonly Button NormalBattleButton = new Button("CombatPage/NormalBattle", new Rectangle(573, 571, 114, 44), Sample.Negative);
-        public static readonly Button MissionButton = new Button("", new Rectangle(531, 196, 82, 565), NormalBattleButton, .95f, MissionArea);        
+        public static readonly Button MissionButton = new Button("", new Rectangle(531, 196, 82, 565), NormalBattleButton, .95f, MissionArea);
 
         public static readonly Sample Turn0 = new Sample("Combat/Turn0", new Rectangle(357, 37, 49, 38));
         public static readonly Sample SanityCheck = new Sample("", Screen.FullArea);
-        
+
         public static readonly Sample LoadScreenSample = new Sample("LoadScreen", new Rectangle(333, 385, 100, 80));
 
         private Screen screen;
@@ -60,7 +60,7 @@ namespace UziTrainer.Scenes
         }
 
         public void PrepareMission(string mission)
-        {            
+        {
             if (!screen.Exists(CombatMissionClicked, 2000))
             {
                 screen.Click(CombatMissionButton);
@@ -68,33 +68,68 @@ namespace UziTrainer.Scenes
             var parts = mission.Split('_');
             int chapter = Convert.ToInt32(parts[0]);
             Thread.Sleep(1000);
-            if (chapter > 7)
-            {
-                screen.mouse.DragDownToUp(264, 689, 247);
-            }
             ChapterClickedSample.Name = $"CombatPage/Chapter{parts[0]}Clicked";
             if (!screen.Exists(ChapterClickedSample))
             {
                 ChapterButton.Name = $"CombatPage/Chapter{parts[0]}";
+                if (!screen.Exists(ChapterButton, 0))
+                {
+                    if (chapter < 4)
+                    {
+                        screen.mouse.DragUpToDown(264, 247, 689);
+                    }
+                    else
+                    {
+                        screen.mouse.DragDownToUp(264, 689, 247);
+                    }
+                }
                 screen.Click(ChapterButton);
             }
         }
 
+        private enum Difficulty
+        {
+            NORMAL,
+            EMERGENCY,
+            NIGHT
+        };
+
+        private Difficulty GetDifficulty()
+        {
+            var area = new Rectangle(861, 81, 44, 33);
+            if (screen.Exists(new Sample("CombatPage/DifficultyNormal", area), 0))
+            {
+                return Difficulty.NORMAL;
+            }
+            else if(screen.Exists(new Sample("CombatPage/DifficultyEmergency", area), 0))
+            {
+                return Difficulty.EMERGENCY;
+            }
+            else
+            {
+                return Difficulty.NIGHT;
+            }
+        }
+
         public MissionResult ExecuteMission(string mission)
-        {            
+        {
+            var difficulty = GetDifficulty();
             var missionTypeButton = new Rectangle(356, 100, 412, 81);
             var parts = mission.Split('_');
             var episode = parts[1];
-            if (parts[1].IndexOf('E') != -1)
+            if (parts[1].IndexOf('E') != -1 && difficulty != Difficulty.EMERGENCY)
             {
-                screen.Click(missionTypeButton);
+                screen.Click(new Rectangle(909, 147, 55, 23));
                 episode = episode.Substring(0, episode.Length - 1);
             }
-            else if (parts[1].IndexOf('N') != -1)
+            else if (parts[1].IndexOf('N') != -1 && difficulty != Difficulty.NIGHT)
             {
-                screen.Click(missionTypeButton);
-                screen.Click(missionTypeButton);
+                screen.Click(new Rectangle(1009, 150, 40, 17));
                 episode = episode.Substring(0, episode.Length - 1);
+            }
+            else if (difficulty != Difficulty.NORMAL)
+            {
+                screen.Click(new Rectangle(818, 151, 35, 16));
             }
 
             MissionButton.Name = "CombatPage/" + mission;

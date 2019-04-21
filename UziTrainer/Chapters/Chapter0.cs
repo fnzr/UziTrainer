@@ -31,27 +31,16 @@ namespace UziTrainer.Chapters
             screen.Click(heliport);
             screen.Click(heliport, ResupplyButton);
             screen.Click(ResupplyButton);
-
-            screen.Click(PlanningOffButton);
-            screen.Click(new Rectangle(529, 373, 57, 53));            
-            screen.Click(new Rectangle(402, 302, 36, 35));
-            screen.Click(new Rectangle(423, 112, 54, 53));
+            Thread.Sleep(1000);
             screen.mouse.DragUpToDown(920, 150, 640);
-            
-            screen.Click(new Rectangle(550, 287, 36, 31));
-            screen.Click(new Rectangle(424, 209, 39, 26));
-
-            WaitExecution();
-            WaitTurn("2");
-
-            var echelonPosition = new Rectangle(423, 208, 38, 30);
-            UseFairy(echelonPosition);
-
+            var echelonPosition = new Rectangle(532, 713, 55, 55);
             screen.Click(echelonPosition);
-            screen.Click(new Rectangle(669, 203, 39, 31));
-            screen.Click(new Rectangle(816, 225, 57, 48));            
+            UseFairy(echelonPosition);
+            screen.Click(PlanningOffButton);            
+            screen.Click(new Rectangle(427, 211, 38, 32));
+            screen.Click(new Rectangle(816, 230, 50, 50));
             WaitExecution();
-            screen.Click(EndTurnButton);
+            screen.Click(EndRoundButton);
         }
     }
 }

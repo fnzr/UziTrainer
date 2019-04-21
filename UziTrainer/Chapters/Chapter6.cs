@@ -51,7 +51,6 @@ namespace UziTrainer.Chapters
                 
                 screen.Click(PlanningOffButton);
                 screen.Click(heliport);
-                screen.Click(new Rectangle(new Point(629, 258), nodeSize));
                 screen.Click(new Rectangle(new Point(832, 249), nodeSize));
                 WaitExecution();
                 WaitTurn("2");

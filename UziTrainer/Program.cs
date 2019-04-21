@@ -90,9 +90,19 @@ namespace UziTrainer
 
         public static void RunTest()
         {
-            screen = new Screen(Properties.Settings.Default.WindowTitle);
-            screen.Interruptible = false;
-            screen.Wait(Home.LvSample, true);
+            screen = new Screen(Properties.Settings.Default.WindowTitle)
+            {
+                Interruptible = false
+            };
+            //screen.Wait(Home.LvSample, true);
+            //screen.Wait(Formation.FilterDollButton, true);
+            //var f = new Formation(screen);
+            //var c = new Chapter6(screen, "6_3N");
+            //c.Map6_3N();
+            var c = new Chapter(screen, "6_3N");
+            c.WaitTurn("2");
+            //f.SelectDoll(Doll.Get("SOPMOD"));
+            //f.ReplaceCorpseDragger();
             //Trace.WriteLine(screen.Exists(Chapter.FairyActivateButton));            
             //var f = new Formation(screen);
             //f.ReplaceDoll(Doll.Get("G11"), Doll.Get("SOPMOD"));

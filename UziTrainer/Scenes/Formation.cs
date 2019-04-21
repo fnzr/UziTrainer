@@ -113,7 +113,7 @@ namespace UziTrainer.Scenes
             }
             EchelonButton.Name = $"FormationPage/Echelon{echelon.ToString()}";
             EchelonClickedScene.Name = $"FormationPage/Echelon{echelon.ToString()}Clicked";
-            if (!screen.Exists(EchelonClickedScene))
+            if (!screen.Exists(EchelonClickedScene, 1000))
             {
                 screen.Click(EchelonButton);
             }
