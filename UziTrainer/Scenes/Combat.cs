@@ -34,7 +34,7 @@ namespace UziTrainer.Scenes
         public static readonly Button MissionButton = new Button("", new Rectangle(531, 196, 82, 565), NormalBattleButton, .95f, MissionArea);
 
         public static readonly Sample Turn0 = new Sample("Combat/Turn0", new Rectangle(357, 37, 49, 38));
-        public static readonly Sample SanityCheck = new Sample("", Screen.FullArea);
+        public static readonly Sample SanityCheck = new Sample("", Screen.FullArea, null);
 
         public static readonly Sample LoadScreenSample = new Sample("LoadScreen", new Rectangle(333, 385, 100, 80));
 
@@ -93,25 +93,28 @@ namespace UziTrainer.Scenes
             var parts = mission.Split('_');
             var episode = parts[1];
             Rectangle difficultyArea = new Rectangle(861, 81, 44, 33);
+            Rectangle clickArea;
             Sample difficultySample;
             if (parts[1].IndexOf('E') != -1)
             {
                 difficultySample = new Sample("CombatPage/DifficultyEmergency", difficultyArea);
+                clickArea = new Rectangle(900, 144, 67, 25);
                 episode = episode.Substring(0, episode.Length - 1);
             }
             else if (parts[1].IndexOf('N') != -1)
             {
-                difficultySample = new Sample("CombatPage/DifficultyNight", difficultyArea);                
+                difficultySample = new Sample("CombatPage/DifficultyNight", difficultyArea);
+                clickArea = new Rectangle(1009, 150, 40, 17);
                 episode = episode.Substring(0, episode.Length - 1);
             }            
             else
             {
-                difficultySample = new Sample("CombatPage/DifficultyNormal", difficultyArea);                
+                difficultySample = new Sample("CombatPage/DifficultyNormal", difficultyArea);
+                clickArea = new Rectangle(807, 138, 59, 35);
             }
-
             if (!screen.Exists(difficultySample))
             {
-                screen.Click(new Rectangle(1009, 150, 40, 17), difficultySample, 0);
+                screen.Click(clickArea, difficultySample, 0);
             }
             MissionButton.Name = "CombatPage/" + mission;
             screen.Click(MissionButton);

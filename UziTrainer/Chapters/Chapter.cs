@@ -45,14 +45,12 @@ namespace UziTrainer.Chapters
         {
             this.screen = screen;
             root = $"Missions/{mission}";
-            Combat.SanityCheck.Name = $"{root}Sanity";
-            /*
+            Combat.SanityCheck.Name = $"{root}Sanity";            
             while(!screen.Exists(Combat.SanityCheck, 1000))
             {
                 Program.FlaskTaskbar();
                 Program.Pause();
-            }
-            */
+            }            
             PlanningOnButton.Next = PlanningOffButton;
         }
 
