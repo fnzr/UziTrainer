@@ -85,53 +85,34 @@ namespace UziTrainer.Scenes
                 }
                 screen.Click(ChapterButton);
             }
-        }
-
-        private enum Difficulty
-        {
-            NORMAL,
-            EMERGENCY,
-            NIGHT
-        };
-
-        private Difficulty GetDifficulty()
-        {
-            var area = new Rectangle(861, 81, 44, 33);
-            if (screen.Exists(new Sample("CombatPage/DifficultyNormal", area), 0))
-            {
-                return Difficulty.NORMAL;
-            }
-            else if(screen.Exists(new Sample("CombatPage/DifficultyEmergency", area), 0))
-            {
-                return Difficulty.EMERGENCY;
-            }
-            else
-            {
-                return Difficulty.NIGHT;
-            }
-        }
+        }        
 
         public MissionResult ExecuteMission(string mission)
         {
-            var difficulty = GetDifficulty();
             var missionTypeButton = new Rectangle(356, 100, 412, 81);
             var parts = mission.Split('_');
             var episode = parts[1];
-            if (parts[1].IndexOf('E') != -1 && difficulty != Difficulty.EMERGENCY)
+            Rectangle difficultyArea = new Rectangle(861, 81, 44, 33);
+            Sample difficultySample;
+            if (parts[1].IndexOf('E') != -1)
             {
-                screen.Click(new Rectangle(909, 147, 55, 23));
+                difficultySample = new Sample("CombatPage/DifficultyEmergency", difficultyArea);
                 episode = episode.Substring(0, episode.Length - 1);
             }
-            else if (parts[1].IndexOf('N') != -1 && difficulty != Difficulty.NIGHT)
+            else if (parts[1].IndexOf('N') != -1)
             {
-                screen.Click(new Rectangle(1009, 150, 40, 17));
+                difficultySample = new Sample("CombatPage/DifficultyNight", difficultyArea);                
                 episode = episode.Substring(0, episode.Length - 1);
-            }
-            else if (difficulty != Difficulty.NORMAL)
+            }            
+            else
             {
-                screen.Click(new Rectangle(818, 151, 35, 16));
+                difficultySample = new Sample("CombatPage/DifficultyNormal", difficultyArea);                
             }
 
+            if (!screen.Exists(difficultySample))
+            {
+                screen.Click(new Rectangle(1009, 150, 40, 17), difficultySample, 0);
+            }
             MissionButton.Name = "CombatPage/" + mission;
             screen.Click(MissionButton);
             screen.Click(NormalBattleButton);

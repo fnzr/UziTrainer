@@ -99,8 +99,8 @@ namespace UziTrainer
             //var f = new Formation(screen);
             //var c = new Chapter6(screen, "6_3N");
             //c.Map6_3N();
-            var c = new Chapter(screen, "6_3N");
-            c.WaitTurn("2");
+            //var c = new Chapter(screen, "6_3N");
+            //c.WaitTurn("2");
             //f.SelectDoll(Doll.Get("SOPMOD"));
             //f.ReplaceCorpseDragger();
             //Trace.WriteLine(screen.Exists(Chapter.FairyActivateButton));            

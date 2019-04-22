@@ -129,8 +129,8 @@ namespace UziTrainer.Window
                         break;
                     }
                 }
-                Thread.Sleep(1000);
-                if (Exists(button, 500))
+                Thread.Sleep(2000);
+                if (Exists(button, 3000))
                 {
                     foundAt = Wait(button);
                     area = button.ClickArea(button.AbsolutePosition(foundAt));
