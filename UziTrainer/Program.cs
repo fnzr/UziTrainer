@@ -94,6 +94,7 @@ namespace UziTrainer
             {
                 Interruptible = false
             };
+            screen.Exists(Chapter.EchelonFormationButton, 0, true);
             //screen.Wait(Home.LvSample, true);
             //screen.Wait(Formation.FilterDollButton, true);
             //var f = new Formation(screen);
