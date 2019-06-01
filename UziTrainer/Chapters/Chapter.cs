@@ -48,7 +48,7 @@ namespace UziTrainer.Chapters
             Combat.SanityCheck.Name = $"{root}Sanity";            
             while(!screen.Exists(Combat.SanityCheck, 1000))
             {
-                Program.FlaskTaskbar();
+                Program.FlashTaskbar();
                 Program.Pause();
             }            
             PlanningOnButton.Next = PlanningOffButton;

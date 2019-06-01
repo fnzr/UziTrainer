@@ -56,10 +56,10 @@ namespace UziTrainer
 
         public static void Pause()
         {
-            form.PauseExecution();
+            form.TogglePauseState();
         }
 
-        public static void FlaskTaskbar()
+        public static void FlashTaskbar()
         {
             form.BeginInvoke((Action)(() => Win32.Message.FlashWindow(form.Handle, true)));            
         }

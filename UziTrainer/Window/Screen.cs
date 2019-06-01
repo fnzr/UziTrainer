@@ -154,7 +154,9 @@ namespace UziTrainer.Window
                 if (stopwatch.ElapsedMilliseconds > 120000)
                 {
                     Trace.WriteLine($"Not found [{sample.Name}] in 120s. Stopping.");
-                    //TODO pause
+                    Program.Pause();
+                    stopwatch = Stopwatch.StartNew();
+
                 }
             }
             Trace.WriteLine($"Found [{sample.Name}]");

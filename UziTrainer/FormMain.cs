@@ -116,17 +116,16 @@ namespace UziTrainer
             }
         }
 
-        public void PauseExecution()
+        public void TogglePauseState()
         {
             if (InvokeRequired)
             {
-                Invoke((Action)(() => buttonTogglePause.Text = "Resume"));
+                Invoke((Action)_TogglePauseState);
             }
             else
             {
-                buttonTogglePause.Text = "Resume";
+                _TogglePauseState();
             }
-            ExecutionThread.Suspend();
         }
 
         public void SetCounter(int value)
@@ -147,6 +146,11 @@ namespace UziTrainer
         }
 
         private void buttonTogglePause_Click(object sender, EventArgs e)
+        {
+            _TogglePauseState();
+        }
+
+        private void _TogglePauseState()
         {
             if (ExecutionThread.ThreadState == System.Threading.ThreadState.Suspended)
             {
