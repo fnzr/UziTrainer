@@ -91,8 +91,7 @@ namespace UziTrainer.Chapters
                 screen.Click(TerminateButton);
                 screen.Click(RestartButton);
                 Program.IncreaseCounter();
-            }
-            
+            }            
         }
     }
 }
