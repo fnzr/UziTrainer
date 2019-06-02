@@ -93,5 +93,26 @@ namespace UziTrainer.Chapters
                 Program.IncreaseCounter();
             }            
         }
+
+        public void Map6_6()
+        {
+            var commandPost = new Rectangle(115, 169, 37, 35);
+            screen.Click(commandPost, EchelonFormationButton);
+            screen.Click(DeployEchelonButton);
+            screen.Click(StartOperationButton);
+            Thread.Sleep(2000);
+
+            screen.Click(commandPost);
+            screen.Click(commandPost, ResupplyButton);
+            screen.Click(ResupplyButton);
+            Thread.Sleep(1000);
+
+            screen.Click(PlanningOffButton);
+            screen.Click(new Rectangle(569, 179, 33, 32));
+            screen.Click(new Rectangle(639, 338, 34, 33));
+            WaitExecution();
+            screen.Click(EndRoundButton);
+
+        }
     }
 }
