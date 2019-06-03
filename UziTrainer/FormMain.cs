@@ -199,10 +199,7 @@ namespace UziTrainer
             TerminateExecutionThread();
             ExecutionThread = new Thread(new ThreadStart(delegate ()
             {
-                foreach (string mission in Properties.Settings.Default.Schedule)
-                {
-                    Program.LogisticsCheck();
-                }
+                Program.LogisticsCheck();
             }));
             ExecutionThread.Start();
         }
