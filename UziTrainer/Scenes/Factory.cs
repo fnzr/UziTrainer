@@ -122,6 +122,31 @@ namespace UziTrainer.Scenes
             DollRetirement();
         }
 
+        public void Retire3Stars()
+        {
+            screen.Click(new Rectangle(236, 127, 119, 73), FilterButton);
+            screen.Click(FilterButton);
+
+            Formation.FilterOptionButton.Name = "FormationPage/Filter3";
+            Formation.FilterOptionButton.Next.Name = "FormationPage/Filter3Clicked";
+            screen.Click(Formation.FilterOptionButton);
+            screen.Click(Formation.FilterConfirmButton);
+
+            for (var y = 0; y < 2; y++)
+            {
+                for (var x = 0; x < 6; x++)
+                {
+                    var posX = 16 + x * 154;
+                    var posY = 130 + y * 229;
+                    screen.Click(new Rectangle(posX, posY, 125, 173));
+                }
+            }
+            screen.Click(new Rectangle(940, 513, 125, 68));
+            screen.Click(new Rectangle(931, 712, 109, 37));
+            Thread.Sleep(300);
+            screen.Click(new Rectangle(574, 506, 113, 38));
+        }
+
         public void DollRetirement()
         {
             screen.Wait(FactoryScene);
@@ -137,15 +162,8 @@ namespace UziTrainer.Scenes
 
             screen.Click(new Rectangle(931, 712, 109, 37));
             Thread.Sleep(3000);
-            /** TODO retire 3 stars
-            screen.Click(new Rectangle(286, 201, 129, 52), FilterButton);
-            screen.Click(FilterButton);
-
-            Formation.FilterOptionButton.Name = "FormationPage/Filter3";
-            Formation.FilterOptionButton.Next.Name = "FormationPage/Filter3Clicked";
-            screen.Click(Formation.FilterOptionButton);
-            screen.Click(Formation.FilterConfirmButton);
-            **/
+            Retire3Stars();
+            
         }
     }
 }

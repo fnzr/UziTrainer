@@ -94,8 +94,9 @@ namespace UziTrainer
             {
                 Interruptible = false
             };
-            var c = new Chapter6(screen, "6_6");
-            c.Map6_6();
+            var c = new Factory(screen);
+            c.Retire3Stars();
+            //c.Map6_6();
             //var c = new Combat(screen);
             //c.PrepareMission("6_6");
             //c.ExecuteMission("6_6");
