@@ -15,14 +15,13 @@ namespace UziTrainer.Scenes
         public static readonly Button LogisticsRepeatButton = new Button("LogisticsRepeat", new Rectangle(568, 501, 118, 45), Sample.Negative);
         public static readonly Sample LogisticsReturned = new Sample("LogisticsReturn", new Rectangle(974, 27, 73, 66), LogisticsRepeatButton);        
 
-        public static readonly Button DailyEvent = new Button("DailyEvent", new Rectangle(107, 144, 44, 35), null, .95f, DailyEventExit);
-        public static readonly Button SignInSuccess = new Button("SignInSuccess", new Rectangle(404, 263, 59, 30), DailyEvent, .95f, SignInSuccessExit);
-        public static readonly Button News = new Button("News", new Rectangle(520, 61, 46, 21), SignInSuccess, .95f, NewsExit);
-        public static readonly Button ImportantInformation = new Button("ImportantInformation", new Rectangle(178, 133, 72, 38), News, .95f, ImportantInformationExit);
+        public static readonly Button Event = new Button("Event", new Rectangle(102, 139, 56, 56), Sample.Negative, .95f, EventExit);
+        public static readonly Button News = new Button("News", new Rectangle(474, 88, 64, 40), Sample.Negative, .95f, NewsExit);
+        public static readonly Button ImportantInformation = new Button("ImportantInformation", new Rectangle(163, 124, 116, 60), Sample.Negative, .95f, ImportantInformationExit);
 
-        private static Rectangle DailyEventExit(Point arg)
+        private static Rectangle EventExit(Point arg)
         {
-            return new Rectangle(19, 140, 70, 38);
+            return new Rectangle(29, 142, 58, 33);
         }
 
         private static Rectangle SignInSuccessExit(Point arg)
@@ -32,12 +31,12 @@ namespace UziTrainer.Scenes
 
         private static Rectangle NewsExit(Point arg)
         {
-            return new Rectangle(11, 13, 21, 20);
+            return new Rectangle(17, 19, 33, 33);
         }
 
         private static Rectangle ImportantInformationExit(Point arg)
         {
-            return new Rectangle(61, 121, 66, 41);
+            return new Rectangle(71, 126, 53, 36);
         }
     }
 }

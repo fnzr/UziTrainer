@@ -203,6 +203,15 @@ namespace UziTrainer
                 {
                     screen.SolveInterruptions();
                 }
+                if (screen.Exists(Home.ImportantInformation))
+                {
+                    Thread.Sleep(180000);
+                    screen.Click(Home.ImportantInformation);
+                    screen.Wait(Home.News);
+                    screen.Click(Home.News);
+                    screen.Wait(Home.Event);
+                    screen.Click(Home.Event);
+                }
                 Thread.Sleep(5000);
             }
         }
