@@ -25,6 +25,8 @@ namespace UziTrainer.Chapters
         public static readonly Button EchelonFormationButton = new Button("Combat/EchelonFormation", new Rectangle(134, 613, 94, 30), Sample.Negative);
         public static readonly Button ResupplyButton = new Button("Combat/Resupply", new Rectangle(925, 557, 132, 45), Sample.Negative);
 
+        public static readonly Button OutOfAmmoSample = new Button("Combat/OutOfAmmo", new Rectangle(573, 502, 55, 45), Sample.Negative);
+
         public static readonly Sample MissionSuccessSample = new Sample("Combat/MissionSuccess", new Rectangle(967, 37, 74, 56));
         public static readonly Sample MissionFailedSample = new Sample("Combat/MissionFailed", new Rectangle(967, 37, 74, 56));
         public static readonly Sample CombatPauseSample = new Sample("Combat/Pause", new Rectangle(504, 1, 72, 30));

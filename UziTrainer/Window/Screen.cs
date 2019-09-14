@@ -30,15 +30,15 @@ namespace UziTrainer.Window
 
         public Screen(string windowTitle)
         {
-            var hwnd = Win32.Message.FindWindow("Qt5QWindowIcon", windowTitle);
-            var mhwnd = Win32.Message.FindWindowEx(hwnd, 0, "subWin", "sub");
-            if (hwnd <= 0 || mhwnd <= 0)
+            var root = Win32.Message.FindWindow("LDPlayerMainFrame", "LDPlayer");
+            var mhwnd = Win32.Message.FindWindowEx(root, 0, "RenderWindow", "TheRender");
+            if (root <= 0 || mhwnd <= 0)
             {
                 throw new ArgumentException("Could not find window handles");
             }
-            WindowHWND = new IntPtr(hwnd);            
+            WindowHWND = new IntPtr(mhwnd);
             RectangleHWND = new IntPtr(mhwnd);            
-            mouse = new Win32.Mouse(hwnd);
+            mouse = new Win32.Mouse(mhwnd);
         }
 
         public int ExistsAny(Sample[] samples, bool debug = false)
