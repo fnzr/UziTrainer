@@ -94,8 +94,10 @@ namespace UziTrainer
             {
                 Interruptible = false
             };
-            var c = new Factory(screen);
-            c.Retire3Stars();
+            var val = new Valhalla(screen, "1_5V");
+            val.Map1_5V();
+            //var c = new Factory(screen);
+            //c.Retire3Stars();
             //c.Map6_6();
             //var c = new Combat(screen);
             //c.PrepareMission("6_6");
