@@ -124,7 +124,12 @@ namespace UziTrainer.Scenes
 
         public void Retire3Stars()
         {
-            screen.Click(new Rectangle(236, 127, 119, 73), FilterButton);
+            screen.Click(new Rectangle(236, 127, 119, 73));
+            Thread.Sleep(2000);
+            if (!screen.Exists(FilterButton))
+            {
+                return;
+            }            
             screen.Click(FilterButton);
 
             Formation.FilterOptionButton.Name = "FormationPage/Filter3";
