@@ -225,7 +225,7 @@ namespace UziTrainer.Window
             var stopwatch = Stopwatch.StartNew();
             do
             {
-                Click(new Rectangle(1049, 580, 50, 50));
+                Click(new Rectangle(705, 120, 300, 640));
                 found = Exists(Home.LogisticsRepeatButton);
                 if (stopwatch.ElapsedMilliseconds > 5000)
                 {
@@ -261,7 +261,7 @@ namespace UziTrainer.Window
         {
             _ImageLimited.Dispose();
             _ImageLimited = image.Copy(area);
-            //_ImageLimited.Save(@"C:\temp\out2.png");
+            _ImageLimited.Save(@"C:\temp\out2.png");
             return _ImageLimited;
         }
     }
