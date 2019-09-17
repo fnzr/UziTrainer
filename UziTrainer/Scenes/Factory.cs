@@ -7,7 +7,7 @@ namespace UziTrainer.Scenes
     class Factory
     {
         public static readonly Sample FactoryScene = new Sample("FactoryPage/FactoryPage", new Rectangle(161, 15, 51, 54));
-        public static readonly Rectangle ReturnButton = new Rectangle(11, 14, 91, 51);
+        public static readonly Rectangle ReturnButton = new Rectangle(17, 16, 83, 49);
         public static readonly Rectangle CancelSelectFodder = new Rectangle(9, 13, 95, 50);
 
         public static readonly Sample DollEnhancementClicked = new Sample("FactoryPage/DollEnhancementClicked", new Rectangle(6, 264, 135, 55));
@@ -168,7 +168,6 @@ namespace UziTrainer.Scenes
             screen.Click(new Rectangle(931, 712, 109, 37));
             Thread.Sleep(3000);
             Retire3Stars();
-            
         }
     }
 }
