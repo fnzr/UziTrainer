@@ -13,7 +13,7 @@ namespace UziTrainer.Scenes
         public static readonly Button DollFormationButton = new Button("", new Rectangle(124, 246, 765, 282), FilterDollButton, .85f, SlotArea);
 
         public static readonly Button FilterConfirmButton = new Button("FormationPage/FilterConfirm", new Rectangle(693, 558, 186, 35), Sample.Negative);
-        public static readonly Button DollSelectButton = new Button("", new Rectangle(4, 89, 909, 719), FormationScene, .75f, SelectDollArea);
+        public static readonly Button DollSelectButton = new Button("", new Rectangle(4, 89, 909, 719), FormationScene, .74f, SelectDollArea);
         public static readonly Button FilterOptionButton = new Button("", new Rectangle(450, 119, 456, 355),
             new Button("", new Rectangle(450, 119, 456, 355), null), .98f, FilterOptionArea);
         public static readonly Sample EchelonClickedScene = new Sample("", new Rectangle(2, 126, 110, 667));
