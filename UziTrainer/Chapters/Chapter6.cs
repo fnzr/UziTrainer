@@ -42,12 +42,6 @@ namespace UziTrainer.Chapters
                 screen.Click(new Rectangle(new Point(832, 249), nodeSize));
 
                 screen.Click(ExecutePlanButton);
-                Thread.Sleep(1500);
-                screen.Click(OutOfAmmoSample);
-                screen.Wait(OutOfAmmoSample);
-                Thread.Sleep(1500);
-                screen.Click(OutOfAmmoSample);
-
                 screen.Wait(TerminateButton);
                 Thread.Sleep(1500);
                 screen.Click(TerminateButton);

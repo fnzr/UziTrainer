@@ -196,6 +196,7 @@ namespace UziTrainer
             var stopwatch = Stopwatch.StartNew();
             while (true)
             {
+                /*
                 if (stopwatch.ElapsedMilliseconds > refresh)
                 {
                     screen.Click(Home.FormationButton);
@@ -205,6 +206,7 @@ namespace UziTrainer
                     stopwatch = Stopwatch.StartNew();
                     refresh = random.Next(900000, 1800000);
                 }
+                */
                 if (screen.Exists(Home.LogisticsReturned, 1000))
                 {
                     screen.SolveInterruptions();
@@ -218,7 +220,7 @@ namespace UziTrainer
                     screen.Wait(Home.Event);
                     screen.Click(Home.Event);
                 }
-                Thread.Sleep(5000);
+                Thread.Sleep(20000);
             }
         }
     }
