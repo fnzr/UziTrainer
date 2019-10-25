@@ -17,11 +17,12 @@ namespace UziTrainer.Chapters
         }
 
         public void Map0_2()
-        { 
-            screen.Click(new Rectangle(528, 369, 61, 65), EchelonFormationButton);
+        {
+            var commandPost = new Rectangle(530, 388, 46, 43);
+            screen.Click(commandPost, EchelonFormationButton);
             screen.Click(DeployEchelonButton);
 
-            var heliport = new Rectangle(194, 373, 47, 47);
+            var heliport = new Rectangle(369, 385, 35, 39);
             screen.Click(heliport);
             screen.Click(DeployEchelonButton);
             
@@ -32,13 +33,11 @@ namespace UziTrainer.Chapters
             screen.Click(heliport, ResupplyButton);
             screen.Click(ResupplyButton);
             Thread.Sleep(1000);
-            screen.mouse.DragUpToDown(920, 150, 640);
-            var echelonPosition = new Rectangle(532, 713, 55, 55);
-            screen.Click(echelonPosition);
-            UseFairy(echelonPosition);
+            
+            screen.Click(commandPost);
             screen.Click(PlanningOffButton);            
-            screen.Click(new Rectangle(427, 211, 38, 32));
-            screen.Click(new Rectangle(816, 230, 50, 50));
+            screen.Click(new Rectangle(484, 143, 23, 21));
+            screen.Click(new Rectangle(674, 150, 39, 34));
             WaitExecution();
             screen.Click(EndRoundButton);
         }

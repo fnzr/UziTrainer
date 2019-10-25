@@ -12,15 +12,16 @@ namespace UziTrainer.Chapters
 {
     class Chapter6 : Chapter
     {
+        Random random = new Random();
         public Chapter6(Screen screen, string mission) : base(screen, mission)
         {
+           
         }
 
         public void Map6_3N()
         {
-            var nodeSize = new Size(27, 25);
-
-            var heliport = new Rectangle(new Point(365, 222), nodeSize);
+            var heliport = new Rectangle(494, 317, 38, 33);
+            var node = new Rectangle(726, 327, 25, 25);
             var equipEnhancementPopup = new Sample("CombatPage/EquipEnhancementPopup", new Rectangle(610, 501, 136, 43));
 
             for (int i = 0; ; i++)
@@ -39,11 +40,15 @@ namespace UziTrainer.Chapters
 
                 screen.Click(PlanningOffButton);
                 screen.Click(heliport);
-                screen.Click(new Rectangle(new Point(832, 249), nodeSize));
+                screen.Click(node);
 
-                screen.Click(ExecutePlanButton);
+                WaitExecution();
                 screen.Wait(TerminateButton);
-                Thread.Sleep(1500);
+
+                var sleep = random.Next(30000, 90000);
+                System.Diagnostics.Trace.WriteLine($"Sleeping for {sleep / 1000} seconds");
+                Thread.Sleep(sleep);
+
                 screen.Click(TerminateButton);
                 screen.Click(RestartButton);
                 Program.IncreaseCounter();

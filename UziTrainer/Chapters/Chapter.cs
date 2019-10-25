@@ -21,7 +21,7 @@ namespace UziTrainer.Chapters
         public static readonly Button EndRoundButton = new Button("Combat/EndTurn", new Rectangle(937, 738, 119, 55), Sample.Negative, .8f);
 
         public static readonly Button RestartButton = new Button("Combat/Restart", new Rectangle(357, 501, 100, 37), Sample.Negative);
-        public static readonly Button TerminateButton = new Button("Combat/Terminate", new Rectangle(230, 14, 70, 53), null);
+        public static readonly Button TerminateButton = new Button("Combat/Terminate", new Rectangle(230, 14, 70, 53), RestartButton);
         public static readonly Button EchelonFormationButton = new Button("Combat/EchelonFormation", new Rectangle(134, 613, 94, 30), Sample.Negative);
         public static readonly Button ResupplyButton = new Button("Combat/Resupply", new Rectangle(925, 557, 132, 45), Sample.Negative);
 
@@ -46,13 +46,15 @@ namespace UziTrainer.Chapters
         public Chapter(Screen screen, string mission)
         {
             this.screen = screen;
+            /*
             root = $"Missions/{mission}";
             Combat.SanityCheck.Name = $"{root}Sanity";            
             while(!screen.Exists(Combat.SanityCheck, 1000))
             {
                 Program.FlashTaskbar();
                 Program.Pause();
-            }            
+            }
+            */
             PlanningOnButton.Next = PlanningOffButton;
         }
 

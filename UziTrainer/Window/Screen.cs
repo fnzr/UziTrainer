@@ -11,13 +11,8 @@ namespace UziTrainer.Window
 {
     public class Screen
     {
-        const string MessageWindowClass = "Qt5QWindowIcon";
-        const string MessageWindowTitle = "ScreenBoardClassWindow";
-        const string ScreenWindowClass = "Qt5QWindowIcon";
-
         static Random random = new Random();
 
-        readonly IntPtr WindowHWND;
         readonly IntPtr RectangleHWND;
         bool resetTimer;
         public readonly Win32.Mouse mouse;
@@ -30,15 +25,17 @@ namespace UziTrainer.Window
 
         public Screen(string windowTitle)
         {
-            var root = Win32.Message.FindWindow("LDPlayerMainFrame", "LDPlayer");
-            var mhwnd = Win32.Message.FindWindowEx(root, 0, "RenderWindow", "TheRender");
+            //var root = Win32.Message.FindWindow("MSPaintApp", "Untitled - Paint");
+            //var mhwnd = Win32.Message.FindWindowEx(root, 0, "MSPaintView", "");
+            //var y = Win32.Message.FindWindowEx(mhwnd, 0, "Afx:00007FF716220000:8", "");
+            var root = Win32.Message.FindWindow("Qt5QWindowIcon", "Android Emulator - GFDevice:5554");
+            var mhwnd = Win32.Message.FindWindowEx(root, 0, "subWin", "sub");
             if (root <= 0 || mhwnd <= 0)
             {
                 throw new ArgumentException("Could not find window handles");
             }
-            WindowHWND = new IntPtr(mhwnd);
             RectangleHWND = new IntPtr(mhwnd);            
-            mouse = new Win32.Mouse(mhwnd);
+            mouse = new Win32.Mouse(root);
         }
 
         public int ExistsAny(Sample[] samples, bool debug = false)
@@ -254,7 +251,7 @@ namespace UziTrainer.Window
             _Image.Dispose();
             _Image = new Image<Rgba, byte>(bitmap);            
             gfxBmp.Dispose();
-            //_Image.Save(@"C:\temp\out.png");
+            _Image.Save(@"C:\temp\out.png");
             return _Image;
         }
 

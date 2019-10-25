@@ -8,10 +8,18 @@ namespace UziTrainer.Win32
         const int Step = 8;
         Random random = new Random();
         readonly int MessageHWND;
+        System.Diagnostics.Process Process;
 
         public Mouse(int messageHWND)
         {
             MessageHWND = messageHWND;
+            Process = new System.Diagnostics.Process();
+            var info = new System.Diagnostics.ProcessStartInfo();
+            info.UseShellExecute = true;
+            info.CreateNoWindow = true;
+            info.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;            
+            info.FileName = @"C:\Users\master\AppData\Local\Android\Sdk\platform-tools\adb.exe";
+            Process.StartInfo = info;
         }
 
         private static int GetLParam(int x, int y)
@@ -161,9 +169,16 @@ namespace UziTrainer.Win32
 
         public void Click(int x, int y)
         {
-            LButtonDown(x, y);
-            Thread.Sleep(10);
-            LButtonUp(x, y);
+            try
+            {
+                Process.StartInfo.Arguments = $"shell input tap {x} {y}";                
+                Process.Start();
+                Process.WaitForExit();
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
             var sleep = random.Next(300, 800);
             Thread.Sleep(sleep);
         }

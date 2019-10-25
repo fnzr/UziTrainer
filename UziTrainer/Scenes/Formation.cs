@@ -142,7 +142,7 @@ namespace UziTrainer.Scenes
             var dollOut = Doll.Get(Properties.Settings.Default.DollExhausted);
             var dollIn = Doll.Get(Properties.Settings.Default.DollLoaded);
             ReplaceDoll(dollOut, dollIn);
-            AddDollToEchelon(dollOut, 2, 1);
+            //AddDollToEchelon(dollOut, 2, 1);
             Properties.Settings.Default.DollExhausted = dollIn.Name;
             Properties.Settings.Default.DollLoaded = dollOut.Name;
             Properties.Settings.Default.Save();
