@@ -12,6 +12,8 @@ namespace UziTrainer.Chapters
 {
     class Chapter0 : Chapter
     {
+
+        Random random = new Random();
         public Chapter0(Screen screen, string mission) : base(screen, mission)
         {
         }
@@ -39,6 +41,11 @@ namespace UziTrainer.Chapters
             screen.Click(new Rectangle(484, 143, 23, 21));
             screen.Click(new Rectangle(674, 150, 39, 34));
             WaitExecution();
+
+            var sleep = random.Next(60000, 180000);
+            System.Diagnostics.Trace.WriteLine($"Sleeping for {sleep / 1000} seconds");
+            Thread.Sleep(sleep);
+
             screen.Click(EndRoundButton);
         }
     }

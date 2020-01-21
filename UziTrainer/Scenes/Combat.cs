@@ -36,7 +36,7 @@ namespace UziTrainer.Scenes
         public static readonly Sample Turn0 = new Sample("Combat/Turn0", new Rectangle(357, 37, 49, 38));
         public static readonly Sample SanityCheck = new Sample("", Screen.FullArea, null);
 
-        public static readonly Sample LoadScreenSample = new Sample("LoadScreen", new Rectangle(333, 385, 100, 80));
+        public static readonly Sample LoadScreenSample = new Sample("LoadScreen", new Rectangle(333, 385, 100, 80), null, .8f);
 
         private Screen screen;
 
@@ -136,7 +136,7 @@ namespace UziTrainer.Scenes
             method.Invoke(o, null);
 
             screen.Interruptible = true;
-            screen.Click(new Rectangle(481, 523, 117, 39), LoadScreenSample, 400);
+            screen.Click(new Rectangle(481, 523, 117, 39), LoadScreenSample, 1000);
             return MissionResult.Finished;
         }
     }

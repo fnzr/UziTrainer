@@ -251,7 +251,7 @@ namespace UziTrainer.Window
             _Image.Dispose();
             _Image = new Image<Rgba, byte>(bitmap);            
             gfxBmp.Dispose();
-            _Image.Save(@"C:\temp\out.png");
+            //_Image.Save(@"C:\temp\out.png");
             return _Image;
         }
 

@@ -20,7 +20,11 @@
     "type": "ar"
   },
   "G36": {
-    "rarity": 4,
+    "rarity": 5,
     "type": "ar"
+  },
+  "K11": {
+  	  "rarity": 5,
+	  "type": "ar"
   }
 }

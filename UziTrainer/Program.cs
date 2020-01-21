@@ -94,10 +94,12 @@ namespace UziTrainer
             {
                 Interruptible = false
             };
+            var sing = new Singularity(screen, "PromotionIV");
+            sing.PromotionIV();
             //screen.Wait(Home.LvSample);
             //Combat.SanityCheck.Name = $"Missions/0_2Sanity";
             //screen.Wait(Combat.SanityCheck);            
-            screen.Click(new Rectangle(12, 404, 1, 1));
+            //screen.Click(new Rectangle(12, 404, 1, 1));
             //screen.Click(Home.CombatButton);
             //var c = new Chapter6(screen, "6_3N");
             //c.Map6_3N();
