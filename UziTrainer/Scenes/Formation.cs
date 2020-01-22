@@ -6,7 +6,7 @@ namespace UziTrainer.Scenes
     class Formation
     {
         public static readonly Rectangle ReturnToBase = new Rectangle(14, 16, 85, 55);
-        public static readonly Sample FormationScene = new Sample("FormationPage/FormationPage", new Rectangle(154, 19, 36, 53));
+        public static readonly Sample FormationScene = new Sample("FormationPage/FormationPage", new Rectangle(221, 11, 72, 66), null, 0.8f);
         public static readonly Sample FilterActiveSample = new Sample("FormationPage/FilterActive", new Rectangle(939, 241, 110, 36));
         public static readonly Button FilterResetButton = new Button("FormationPage/Reset", new Rectangle(460, 562, 190, 31), Sample.Negative);
         public static readonly Button FilterDollButton = new Button("FormationPage/Filter", new Rectangle(937, 209, 131, 67), FilterResetButton);

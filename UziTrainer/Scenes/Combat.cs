@@ -139,5 +139,76 @@ namespace UziTrainer.Scenes
             screen.Click(new Rectangle(481, 523, 117, 39), LoadScreenSample, 1000);
             return MissionResult.Finished;
         }
+
+        public bool StartMission(string mission)
+        {
+            if (!screen.Exists(CombatMissionClicked, 2000))
+            {
+                screen.Click(CombatMissionButton);
+            }
+            var parts = mission.Split('_');
+            int chapter = Convert.ToInt32(parts[0]);
+            Thread.Sleep(1000);
+            ChapterClickedSample.Name = $"CombatPage/Chapter{parts[0]}Clicked";
+            if (!screen.Exists(ChapterClickedSample))
+            {
+                ChapterButton.Name = $"CombatPage/Chapter{parts[0]}";
+                if (!screen.Exists(ChapterButton, 0))
+                {
+                    if (chapter < 4)
+                    {
+                        screen.mouse.DragUpToDown(264, 247, 689);
+                    }
+                    else
+                    {
+                        screen.mouse.DragDownToUp(264, 689, 247);
+                    }
+                }
+                screen.Click(ChapterButton);
+            }
+
+            var missionTypeButton = new Rectangle(356, 100, 412, 81);
+            
+            var episode = parts[1];
+            Rectangle difficultyArea = new Rectangle(861, 81, 44, 33);
+            Rectangle clickArea;
+            Sample difficultySample;
+            if (parts[1].IndexOf('E') != -1)
+            {
+                difficultySample = new Sample("CombatPage/DifficultyEmergency", difficultyArea);
+                clickArea = new Rectangle(900, 144, 67, 25);
+                episode = episode.Substring(0, episode.Length - 1);
+            }
+            else if (parts[1].IndexOf('N') != -1)
+            {
+                difficultySample = new Sample("CombatPage/DifficultyNight", difficultyArea);
+                clickArea = new Rectangle(1009, 150, 40, 17);
+                episode = episode.Substring(0, episode.Length - 1);
+            }
+            else
+            {
+                difficultySample = new Sample("CombatPage/DifficultyNormal", difficultyArea);
+                clickArea = new Rectangle(807, 138, 59, 35);
+            }
+            if (!screen.Exists(difficultySample))
+            {
+                screen.Click(clickArea, difficultySample, 0);
+            }
+            MissionButton.Name = "CombatPage/" + mission;
+            screen.Click(MissionButton);
+            screen.Click(NormalBattleButton);
+
+
+            if (screen.Exists(DollEnhancementButton, 1000))
+            {
+                screen.Click(DollEnhancementButton);
+                return false;
+            }
+
+            screen.Interruptible = false;
+            screen.Wait(Turn0);
+            
+            return true;
+        }
     }
 }

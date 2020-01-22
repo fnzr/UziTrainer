@@ -28,7 +28,7 @@ namespace UziTrainer.Window
             //var root = Win32.Message.FindWindow("MSPaintApp", "Untitled - Paint");
             //var mhwnd = Win32.Message.FindWindowEx(root, 0, "MSPaintView", "");
             //var y = Win32.Message.FindWindowEx(mhwnd, 0, "Afx:00007FF716220000:8", "");
-            var root = Win32.Message.FindWindow("Qt5QWindowIcon", "Android Emulator - GFDevice:5554");
+            var root = Win32.Message.FindWindow("Qt5QWindowIcon", Properties.Settings.Default.WindowTitle);
             var mhwnd = Win32.Message.FindWindowEx(root, 0, "subWin", "sub");
             if (root <= 0 || mhwnd <= 0)
             {
@@ -259,7 +259,7 @@ namespace UziTrainer.Window
         {
             _ImageLimited.Dispose();
             _ImageLimited = image.Copy(area);
-            //_ImageLimited.Save(@"C:\temp\out2.png");
+            _ImageLimited.Save(@"C:\temp\out2.png");
             return _ImageLimited;
         }
     }

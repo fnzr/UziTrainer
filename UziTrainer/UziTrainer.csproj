@@ -110,6 +110,7 @@
     <Compile Include="Scenes\Factory.cs" />
     <Compile Include="Scenes\Formation.cs" />
     <Compile Include="Scenes\Home.cs" />
+    <Compile Include="Scenes\Maps.cs" />
     <Compile Include="Scenes\Repair.cs" />
     <Compile Include="Window\Button.cs" />
     <Compile Include="Window\Sample.cs" />

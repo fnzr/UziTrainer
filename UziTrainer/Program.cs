@@ -94,24 +94,11 @@ namespace UziTrainer
             {
                 Interruptible = false
             };
-            var sing = new Singularity(screen, "PromotionIV");
-            sing.PromotionIV();
-            //screen.Wait(Home.LvSample);
-            //Combat.SanityCheck.Name = $"Missions/0_2Sanity";
-            //screen.Wait(Combat.SanityCheck);            
-            //screen.Click(new Rectangle(12, 404, 1, 1));
-            //screen.Click(Home.CombatButton);
-            //var c = new Chapter6(screen, "6_3N");
-            //c.Map6_3N();
-
-            //var val = new Valhalla(screen, "1_5V");
-            //val.Map1_5V();
-            //var c = new Factory(screen);
-            //c.Retire3Stars();
-            //c.Map6_6();
-            //var c = new Combat(screen);
-            //c.PrepareMission("6_6");
-            //c.ExecuteMission("6_6");
+            //screen.Exists(Maps.PlanningOffButton, 0, true);
+            var maps = new Maps(screen);
+            maps.Drag0_2();
+            //var f = new Formation(screen);
+            //f.ReplaceCorpseDragger();
 
             Trace.WriteLine("Done");
         }
