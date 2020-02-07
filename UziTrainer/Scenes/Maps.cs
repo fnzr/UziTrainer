@@ -55,46 +55,58 @@ namespace UziTrainer.Scenes
 
         public void Drag0_2()
         {
-            this.Combat.StartMission("0_2");
-
-            var commandPost = new Rectangle(530, 388, 46, 43);
-            screen.Click(commandPost, EchelonFormationButton);
-
-            if (Properties.Settings.Default.IsCorpseDragging)
+            var criticalSample = new Sample("Combat/Critical", new Rectangle(626, 293, 163, 141));
+            var requiresRepair = false;
+            while (true)
             {
-                screen.Click(EchelonFormationButton);
-                Formation.ReplaceCorpseDragger();
-                screen.Click(Formation.ReturnToBase);
-                screen.Wait(Combat.Turn0);
+                this.Combat.StartMission("0_2");
+
+                var commandPost = new Rectangle(530, 388, 46, 43);
                 screen.Click(commandPost, EchelonFormationButton);
+
+                if (Properties.Settings.Default.IsCorpseDragging)
+                {
+                    screen.Click(EchelonFormationButton);
+                    Formation.ReplaceCorpseDragger();
+                    screen.Click(Formation.ReturnToBase, Combat.Turn0);
+                    screen.Click(commandPost, EchelonFormationButton);
+                }
+                if (requiresRepair)
+                {
+                    Program.Pause();
+                }
+                screen.Click(DeployEchelonButton);
+
+                var heliport = new Rectangle(369, 385, 35, 39);
+                screen.Click(heliport);
+                
+                screen.Click(DeployEchelonButton);
+
+                screen.Click(StartOperationButton);
+                Thread.Sleep(2000);
+
+                screen.Click(heliport);
+                screen.Click(heliport, ResupplyButton);
+                screen.Click(ResupplyButton);
+                Thread.Sleep(1000);
+
+                screen.Click(commandPost);
+                screen.Click(PlanningOffButton);
+                screen.Click(new Rectangle(484, 143, 23, 21));
+                screen.Click(new Rectangle(674, 150, 39, 34));
+                WaitExecution();
+
+                var sleep = random.Next(60000, 180000);
+                System.Diagnostics.Trace.WriteLine($"Sleeping for {sleep / 1000} seconds");
+                Thread.Sleep(sleep);
+
+                requiresRepair = screen.Exists(criticalSample, 1000);
+
+                screen.Click(EndRoundButton);
+                Thread.Sleep(7000);
+                screen.Click(new Rectangle(19, 407, 116, 378), Combat.CombatScene, 700);
             }
-            screen.Click(DeployEchelonButton);
-
-            var heliport = new Rectangle(369, 385, 35, 39);
-            screen.Click(heliport);
-            screen.Click(DeployEchelonButton);
-
-            screen.Click(StartOperationButton);
-            Thread.Sleep(2000);
-
-            screen.Click(heliport);
-            screen.Click(heliport, ResupplyButton);
-            screen.Click(ResupplyButton);
-            Thread.Sleep(1000);
-
-            screen.Click(commandPost);
-            screen.Click(PlanningOffButton);
-            screen.Click(new Rectangle(484, 143, 23, 21));
-            screen.Click(new Rectangle(674, 150, 39, 34));
-            WaitExecution();
-
-            var sleep = random.Next(60000, 180000);
-            System.Diagnostics.Trace.WriteLine($"Sleeping for {sleep / 1000} seconds");
-            Thread.Sleep(sleep);
-
-            screen.Click(EndRoundButton);
-            Thread.Sleep(7000);
-            screen.Click(new Rectangle(208, 6, 427, 36), Combat.CombatScene, 700);
+            
         }
     }
 }

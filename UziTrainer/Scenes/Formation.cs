@@ -76,7 +76,7 @@ namespace UziTrainer.Scenes
         public void SelectDoll(Doll doll)
         {
             DollSelectButton.Name = "Dolls/" + doll.Name;
-            if (screen.Exists(DollSelectButton, 1000))
+            if (screen.Exists(DollSelectButton, 3000))
             {
                 screen.Click(DollSelectButton);
                 return;

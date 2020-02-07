@@ -259,7 +259,7 @@ namespace UziTrainer.Window
         {
             _ImageLimited.Dispose();
             _ImageLimited = image.Copy(area);
-            _ImageLimited.Save(@"C:\temp\out2.png");
+            //_ImageLimited.Save(@"C:\temp\out2.png");
             return _ImageLimited;
         }
     }
