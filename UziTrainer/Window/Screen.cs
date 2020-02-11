@@ -4,6 +4,8 @@ using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
+using System.Text;
 using System.Threading;
 using UziTrainer.Scenes;
 
@@ -15,6 +17,7 @@ namespace UziTrainer.Window
 
         readonly IntPtr RectangleHWND;
         bool resetTimer;
+        private readonly System.Diagnostics.Process Process;
         public readonly Win32.Mouse mouse;
         public static readonly Rectangle FullArea = new Rectangle(0, 0, 1088, 816);
         //public static readonly Rectangle FullArea = new Rectangle(0, 0, 1048, 813);
@@ -28,6 +31,7 @@ namespace UziTrainer.Window
             //var root = Win32.Message.FindWindow("MSPaintApp", "Untitled - Paint");
             //var mhwnd = Win32.Message.FindWindowEx(root, 0, "MSPaintView", "");
             //var y = Win32.Message.FindWindowEx(mhwnd, 0, "Afx:00007FF716220000:8", "");
+            /*
             var root = Win32.Message.FindWindow("Qt5QWindowIcon", Properties.Settings.Default.WindowTitle);
             var mhwnd = Win32.Message.FindWindowEx(root, 0, "subWin", "sub");
             if (root <= 0 || mhwnd <= 0)
@@ -35,7 +39,18 @@ namespace UziTrainer.Window
                 throw new ArgumentException("Could not find window handles");
             }
             RectangleHWND = new IntPtr(mhwnd);            
+            
             mouse = new Win32.Mouse(root);
+            */
+            Process = new System.Diagnostics.Process();
+            var info = new System.Diagnostics.ProcessStartInfo();
+            info.UseShellExecute = false;
+            info.CreateNoWindow = true;
+            info.RedirectStandardOutput = true;
+            info.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+            info.FileName = @"C:\Users\master\AppData\Local\Android\Sdk\platform-tools\adb.exe";
+            info.Arguments = $"exec-out screencap -p";
+            Process.StartInfo = info;
         }
 
         public int ExistsAny(Sample[] samples, bool debug = false)
@@ -241,6 +256,7 @@ namespace UziTrainer.Window
 
         public Image<Rgba, byte> CaptureScreen()
         {
+            /*
             var rc = ReferenceRectangle();
             var bitmap = new Bitmap(rc.Width, rc.Height, PixelFormat.Format32bppRgb);
             Graphics gfxBmp = Graphics.FromImage(bitmap);            
@@ -252,6 +268,24 @@ namespace UziTrainer.Window
             _Image = new Image<Rgba, byte>(bitmap);            
             gfxBmp.Dispose();
             //_Image.Save(@"C:\temp\out.png");
+            return _Image;
+            */            
+            Process.Start();
+            FileStream baseStream = Process.StandardOutput.BaseStream as FileStream;            
+
+            using (MemoryStream ms = new MemoryStream())
+            {
+                byte[] buffer = new byte[4096];
+                int lastRead = 0;
+                do
+                {
+                    lastRead = baseStream.Read(buffer, 0, buffer.Length);
+                    ms.Write(buffer, 0, lastRead);
+                } while (lastRead > 0);
+                _Image.Dispose();
+                _Image = new Image<Rgba, byte>(new Bitmap(ms));
+                _Image.Save(@"C:\temp\out.png");
+            }
             return _Image;
         }
 

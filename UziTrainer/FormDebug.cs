@@ -64,6 +64,7 @@ namespace UziTrainer
 
         public new void Show()
         {
+            /*
             var reference = screen.ReferenceRectangle();
             AreaForm = CreateOverlayForm();
             AreaForm.BackColor = Color.Fuchsia;
@@ -89,7 +90,8 @@ namespace UziTrainer
                     ClickPoint.DesktopBounds = new Rectangle(new Point(sample.SearchArea.X + reference.X, sample.SearchArea.Y + reference.Y), sample.SearchArea.Size);
                     ClickPoint.Show();
                 }                
-            }            
+            }        
+            */
             base.Show();
         }
 

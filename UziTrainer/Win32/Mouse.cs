@@ -171,7 +171,7 @@ namespace UziTrainer.Win32
         {
             try
             {
-                Process.StartInfo.Arguments = $"shell input tap {x} {y}";                
+                Process.StartInfo.Arguments = $"shell input tap {x} {y}";
                 Process.Start();
                 Process.WaitForExit();
             }

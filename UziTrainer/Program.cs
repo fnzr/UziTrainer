@@ -94,9 +94,16 @@ namespace UziTrainer
             {
                 Interruptible = false
             };
-
-            var maps = new Maps(screen);
-            maps.Drag0_2();
+            Task.Run(() =>
+            {
+                var f = new FormImage(screen.CaptureScreen().Bitmap);
+                f.Show();
+                Application.Run(f);
+            });            
+            //screen.CaptureScreen();
+            //Console.WriteLine(screen.Exists(Combat.CombatMissionClicked, 0, true));
+            //var maps = new Maps(screen);
+            //maps.Drag0_2();
             //var f = new Formation(screen);
             //f.ReplaceCorpseDragger();
 
