@@ -94,7 +94,7 @@ namespace UziTrainer
             {
                 Interruptible = false
             };
-            //screen.Exists(Combat.CombatScene, 0, true);
+
             var maps = new Maps(screen);
             maps.Drag0_2();
             //var f = new Formation(screen);

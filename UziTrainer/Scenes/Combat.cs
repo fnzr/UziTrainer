@@ -202,6 +202,7 @@ namespace UziTrainer.Scenes
             if (screen.Exists(DollEnhancementButton, 1000))
             {
                 screen.Click(DollEnhancementButton);
+                Program.Pause();
                 return false;
             }
 

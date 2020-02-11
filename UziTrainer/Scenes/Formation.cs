@@ -102,7 +102,11 @@ namespace UziTrainer.Scenes
                 screen.Click(filterType);
             }
             screen.Click(FilterConfirmButton);
-            screen.Click(DollSelectButton);
+            do
+            {
+                screen.Click(DollSelectButton);
+            } while (screen.Exists(FilterDollButton));
+            
         }
 
         public void AddDollToEchelon(Doll doll, int echelon, int slot)

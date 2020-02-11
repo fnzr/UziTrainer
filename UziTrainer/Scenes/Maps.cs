@@ -22,6 +22,8 @@ namespace UziTrainer.Scenes
         public static readonly Button TerminateButton = new Button("Combat/Terminate", new Rectangle(230, 14, 70, 53), RestartButton);
         public static readonly Button EchelonFormationButton = new Button("Combat/EchelonFormation", new Rectangle(145, 621, 52, 31), Sample.Negative);
         public static readonly Button ResupplyButton = new Button("Combat/Resupply", new Rectangle(925, 557, 132, 45), Sample.Negative);
+
+        public static readonly Sample CriticalSample = new Sample("Combat/Critical", Screen.FullArea, null, 0.83f);
         private Combat Combat;
         private Formation Formation;
         private Screen screen;
@@ -55,7 +57,6 @@ namespace UziTrainer.Scenes
 
         public void Drag0_2()
         {
-            var criticalSample = new Sample("Combat/Critical", new Rectangle(626, 293, 163, 141));
             var requiresRepair = false;
             while (true)
             {
@@ -100,11 +101,11 @@ namespace UziTrainer.Scenes
                 System.Diagnostics.Trace.WriteLine($"Sleeping for {sleep / 1000} seconds");
                 Thread.Sleep(sleep);
 
-                requiresRepair = screen.Exists(criticalSample, 1000);
+                requiresRepair = screen.Exists(CriticalSample, 1000);
 
                 screen.Click(EndRoundButton);
                 Thread.Sleep(7000);
-                screen.Click(new Rectangle(19, 407, 116, 378), Combat.CombatScene, 700);
+                screen.Click(new Rectangle(19, 407, 116, 378), Combat.CombatScene, 1500);                
             }
             
         }
