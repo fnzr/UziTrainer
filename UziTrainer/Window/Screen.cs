@@ -256,20 +256,8 @@ namespace UziTrainer.Window
 
         public Image<Rgba, byte> CaptureScreen()
         {
+            return new Image<Rgba, byte>(new System.Drawing.Bitmap(@"C:\temp\screen.png"));
             /*
-            var rc = ReferenceRectangle();
-            var bitmap = new Bitmap(rc.Width, rc.Height, PixelFormat.Format32bppRgb);
-            Graphics gfxBmp = Graphics.FromImage(bitmap);            
-            IntPtr hdcBitmap = gfxBmp.GetHdc();
-            
-            Win32.Message.PrintWindow(RectangleHWND, hdcBitmap, 0x00000003);
-            gfxBmp.ReleaseHdc(hdcBitmap);
-            _Image.Dispose();
-            _Image = new Image<Rgba, byte>(bitmap);            
-            gfxBmp.Dispose();
-            //_Image.Save(@"C:\temp\out.png");
-            return _Image;
-            */            
             Process.Start();
             FileStream baseStream = Process.StandardOutput.BaseStream as FileStream;            
 
@@ -287,6 +275,7 @@ namespace UziTrainer.Window
                 _Image.Save(@"C:\temp\out.png");
             }
             return _Image;
+            */
         }
 
         Image<Rgba, byte> LimitSearchArea(Image<Rgba, byte> image, Rectangle area)

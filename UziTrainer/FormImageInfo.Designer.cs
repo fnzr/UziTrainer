@@ -33,7 +33,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.textImageName = new System.Windows.Forms.TextBox();
             this.labelSearchArea = new System.Windows.Forms.Label();
-            this.labelClipArea = new System.Windows.Forms.Label();
+            this.labelTemplateArea = new System.Windows.Forms.Label();
+            this.btnSave = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -59,9 +60,9 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(13, 74);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(49, 13);
+            this.label3.Size = new System.Drawing.Size(76, 13);
             this.label3.TabIndex = 2;
-            this.label3.Text = "Clip Area";
+            this.label3.Text = "Template Area";
             // 
             // textImageName
             // 
@@ -79,21 +80,31 @@
             this.labelSearchArea.TabIndex = 4;
             this.labelSearchArea.Text = "label4";
             // 
-            // labelClipArea
+            // labelTemplateArea
             // 
-            this.labelClipArea.AutoSize = true;
-            this.labelClipArea.Location = new System.Drawing.Point(86, 74);
-            this.labelClipArea.Name = "labelClipArea";
-            this.labelClipArea.Size = new System.Drawing.Size(35, 13);
-            this.labelClipArea.TabIndex = 5;
-            this.labelClipArea.Text = "label5";
+            this.labelTemplateArea.AutoSize = true;
+            this.labelTemplateArea.Location = new System.Drawing.Point(86, 74);
+            this.labelTemplateArea.Name = "labelTemplateArea";
+            this.labelTemplateArea.Size = new System.Drawing.Size(35, 13);
+            this.labelTemplateArea.TabIndex = 5;
+            this.labelTemplateArea.Text = "label5";
+            // 
+            // btnSave
+            // 
+            this.btnSave.Location = new System.Drawing.Point(98, 99);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(75, 23);
+            this.btnSave.TabIndex = 6;
+            this.btnSave.Text = "Save";
+            this.btnSave.UseVisualStyleBackColor = true;
             // 
             // FormImageInfo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(287, 109);
-            this.Controls.Add(this.labelClipArea);
+            this.ClientSize = new System.Drawing.Size(287, 134);
+            this.Controls.Add(this.btnSave);
+            this.Controls.Add(this.labelTemplateArea);
             this.Controls.Add(this.labelSearchArea);
             this.Controls.Add(this.textImageName);
             this.Controls.Add(this.label3);
@@ -113,6 +124,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox textImageName;
         private System.Windows.Forms.Label labelSearchArea;
-        private System.Windows.Forms.Label labelClipArea;
+        private System.Windows.Forms.Label labelTemplateArea;
+        private System.Windows.Forms.Button btnSave;
     }
 }

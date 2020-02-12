@@ -16,11 +16,15 @@ namespace UziTrainer
         Rectangle searchArea = new Rectangle();
         Rectangle clipArea = new Rectangle();
         Point origin;
+        string AssetName;
+        Bitmap Image;
         MouseButtons button = MouseButtons.None;
 
-        public FormImage(Bitmap image)
+        public FormImage(string name, Bitmap image)
         {
             InitializeComponent();
+            this.AssetName = name;
+            this.Image = image;
             Rectangle screenRectangle = RectangleToScreen(this.ClientRectangle);
             int titleHeight = screenRectangle.Top - this.Top;
 
@@ -41,8 +45,17 @@ namespace UziTrainer
         {
             if (e.KeyCode == Keys.Enter)
             {
-                Console.WriteLine(clipArea.ToString());
-                Console.WriteLine(searchArea.ToString());
+                var template = new Bitmap(clipArea.Width, clipArea.Height);
+                using (var g = Graphics.FromImage(template))
+                {                    
+                    g.DrawImage(Image, 0, 0, clipArea, GraphicsUnit.Pixel);
+
+                    ImageConverter converter = new ImageConverter();
+                    var bytes = (byte[])converter.ConvertTo(template, typeof(byte[]));
+                    
+                    var form = new FormImageInfo(this.AssetName, Convert.ToBase64String(bytes), searchArea);
+                    form.ShowDialog();
+                }
             }
         }
 

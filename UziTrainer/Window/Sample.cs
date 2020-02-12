@@ -42,6 +42,13 @@ namespace UziTrainer.Window
         {
             get
             {
+                var template = Template.Get(Name);
+                var bytes = Convert.FromBase64String(template.Data);
+                using (var ms = new MemoryStream(bytes))
+                {
+                    return new Image<Rgba, byte>(new Bitmap(ms));
+                }
+                /*
                 if (_Image == null)
                 {
                     string fullPath;
@@ -57,6 +64,7 @@ namespace UziTrainer.Window
                     throw new ArgumentException($"[{Name}] File does not exists");
                 }
                 return _Image;
+                */
             }
             private set { }
         }
