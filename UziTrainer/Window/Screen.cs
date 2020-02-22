@@ -4,6 +4,7 @@ using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
 using System.Threading;
 using UziTrainer.Scenes;
 
@@ -32,7 +33,7 @@ namespace UziTrainer.Window
             var mhwnd = Win32.Message.FindWindowEx(root, 0, "subWin", "sub");
             if (root <= 0 || mhwnd <= 0)
             {
-                throw new ArgumentException("Could not find window handles");
+                //throw new ArgumentException("Could not find window handles");
             }
             RectangleHWND = new IntPtr(mhwnd);            
             mouse = new Win32.Mouse(root);
@@ -241,6 +242,33 @@ namespace UziTrainer.Window
 
         public Image<Rgba, byte> CaptureScreen()
         {
+            var proc = new System.Diagnostics.Process();
+            proc.StartInfo = new System.Diagnostics.ProcessStartInfo
+            {
+                CreateNoWindow = true,
+                WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden,
+                FileName = @"C:\Users\master\AppData\Local\Android\Sdk\platform-tools\adb.exe"
+            };
+            proc.StartInfo.UseShellExecute = false;
+            proc.StartInfo.RedirectStandardOutput = true;
+            proc.StartInfo.Arguments = $"exec-out screencap -p";
+            proc.Start();
+
+            FileStream baseStream = proc.StandardOutput.BaseStream as FileStream;
+            using (MemoryStream ms = new MemoryStream())
+            {
+                byte[] buffer = new byte[4096];
+                int lastRead = 0;
+                do
+                {
+                    lastRead = baseStream.Read(buffer, 0, buffer.Length);
+                    ms.Write(buffer, 0, lastRead);
+                } while (lastRead > 0);
+                _Image.Dispose();
+                _Image = new Image<Rgba, byte>(new Bitmap(ms));
+            }
+            return _Image;
+            /*
             var rc = ReferenceRectangle();
             var bitmap = new Bitmap(rc.Width, rc.Height, PixelFormat.Format32bppRgb);
             Graphics gfxBmp = Graphics.FromImage(bitmap);            
@@ -249,10 +277,11 @@ namespace UziTrainer.Window
             Win32.Message.PrintWindow(RectangleHWND, hdcBitmap, 0x00000003);
             gfxBmp.ReleaseHdc(hdcBitmap);
             _Image.Dispose();
-            _Image = new Image<Rgba, byte>(bitmap);            
+            _Image = new Image<Rgba, byte>(bitmap);
             gfxBmp.Dispose();
             //_Image.Save(@"C:\temp\out.png");
             return _Image;
+            */
         }
 
         Image<Rgba, byte> LimitSearchArea(Image<Rgba, byte> image, Rectangle area)

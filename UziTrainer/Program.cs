@@ -94,9 +94,9 @@ namespace UziTrainer
             {
                 Interruptible = false
             };
-
             var maps = new Maps(screen);
-            maps.Drag0_2();
+            maps.CT_Scarecrow();
+            //maps.CT_PythonFarm();
             //var f = new Formation(screen);
             //f.ReplaceCorpseDragger();
 
