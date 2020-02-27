@@ -32,7 +32,7 @@ namespace UziTrainer.Scenes
         private Random random = new Random();
 
         private static Rectangle SwitchClickArea(Point arg)
-        {            
+        {
             return new Rectangle(arg.X - 5, arg.Y - 2, 10, 5);
         }
 
@@ -86,7 +86,7 @@ namespace UziTrainer.Scenes
 
                 var heliport = new Rectangle(369, 385, 35, 39);
                 screen.Click(heliport);
-                
+
                 screen.Click(DeployEchelonButton);
 
                 screen.Click(StartOperationButton);
@@ -112,7 +112,7 @@ namespace UziTrainer.Scenes
                 screen.Click(EndRoundButton);
                 Thread.Sleep(7000);
                 screen.Click(new Rectangle(19, 407, 116, 378), Combat.CombatScene, 1500);
-            }            
+            }
         }
 
         public static readonly Sample CT_Home = new Sample("ct/home", new Rectangle(43, 206, 93, 124), null, 0.83f);
@@ -121,7 +121,7 @@ namespace UziTrainer.Scenes
 
         public void CT_Scarecrow()
         {
-            for(int i = 0; i<9; i++)
+            for (int i = 0; i < 9; i++)
             {
                 var cp = new Rectangle(570, 420, 27, 30);
                 screen.Wait(CT_Home);
@@ -215,7 +215,43 @@ namespace UziTrainer.Scenes
                 screen.Wait(CT_ReturnBase);
                 screen.Click(new Rectangle(19, 407, 116, 378), CT_Home, 3000);
                 */
-            }            
+            }
+        }
+
+        public void Map_10_4E()
+        {
+            while (true)
+            {
+                screen.Click(new Rectangle(406, 260, 14, 18), DeployEchelonButton);
+                screen.Click(DeployEchelonButton);
+                screen.Click(new Rectangle(480, 402, 18, 16), DeployEchelonButton);
+                screen.Click(DeployEchelonButton);
+                screen.Click(new Rectangle(722, 693, 15, 16), DeployEchelonButton);
+                screen.Click(DeployEchelonButton);
+
+                screen.Click(StartOperationButton);
+
+                screen.Click(new Rectangle(406, 260, 14, 18));
+                screen.Click(new Rectangle(406, 260, 14, 18), ResupplyButton);
+                screen.Click(ResupplyButton);
+
+                screen.Click(PlanningOffButton);
+                screen.Click(new Rectangle(351, 344, 13, 12));
+                screen.Click(new Rectangle(406, 263, 14, 7));
+                screen.Click(new Rectangle(524, 265, 12, 11));
+                screen.Click(new Rectangle(517, 316, 11, 13));
+                screen.Click(new Rectangle(524, 265, 12, 11));
+                screen.Click(new Rectangle(406, 263, 14, 7));
+
+                WaitExecution();
+
+                screen.Click(new Rectangle(407, 402, 12, 11), ResupplyButton);
+                screen.Click(new Rectangle(790, 631, 103, 27));
+                screen.Click(new Rectangle(588, 507, 92, 38));
+
+                screen.Click(TerminateButton);
+                screen.Click(RestartButton);
+            }
         }
     }
 }

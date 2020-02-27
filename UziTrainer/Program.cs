@@ -95,7 +95,8 @@ namespace UziTrainer
                 Interruptible = false
             };
             var maps = new Maps(screen);
-            maps.CT_Scarecrow();
+            //maps.CT_Scarecrow();
+            maps.Map_10_4E();
             //maps.CT_PythonFarm();
             //var f = new Formation(screen);
             //f.ReplaceCorpseDragger();

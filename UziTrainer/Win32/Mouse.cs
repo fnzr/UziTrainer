@@ -18,7 +18,7 @@ namespace UziTrainer.Win32
             info.UseShellExecute = true;
             info.CreateNoWindow = true;
             info.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;            
-            info.FileName = @"C:\Users\master\AppData\Local\Android\Sdk\platform-tools\adb.exe";
+            info.FileName = @"C:\tools\adb\adb.exe";
             Process.StartInfo = info;
         }
 
