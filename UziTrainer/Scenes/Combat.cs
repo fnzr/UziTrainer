@@ -22,7 +22,7 @@ namespace UziTrainer.Scenes
         public static readonly Rectangle ReturnToBase = new Rectangle(12, 12, 93, 57);
         public static readonly Sample CombatScene = new Sample("CombatPage/CombatPage", new Rectangle(317, 27, 115, 40));
         public static readonly Sample CombatMissionClicked = new Sample("CombatPage/CombatMissionClicked", new Rectangle(12, 97, 134, 59));
-        public static readonly Button CombatMissionButton = new Button("CombatPage/CombatMission", new Rectangle(12, 97, 134, 59), CombatMissionClicked);
+        public static readonly Button CombatMissionButton = new Button("CombatPage/CombatMission", new Rectangle(12, 97, 134, 259), CombatMissionClicked);
 
         public static readonly Sample ChapterClickedSample = new Sample("", new Rectangle(172, 91, 165, 713));
         public static readonly Button ChapterButton = new Button("", new Rectangle(172, 91, 165, 713), ChapterClickedSample, .95f, ChapterClickedArea);

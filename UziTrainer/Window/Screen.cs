@@ -247,7 +247,7 @@ namespace UziTrainer.Window
             {
                 CreateNoWindow = true,
                 WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden,
-                FileName = @"C:\tools\adb\adb.exe"
+                FileName = @"C:\Users\master\AppData\Local\Android\Sdk\platform-tools\adb.exe"
             };
             proc.StartInfo.UseShellExecute = false;
             proc.StartInfo.RedirectStandardOutput = true;
