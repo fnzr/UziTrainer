@@ -2,29 +2,17 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="UziTrainer.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="AssetsHash" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+    <Setting Name="ADB_Path" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\tools\adb\adb.exe</Value>
     </Setting>
-    <Setting Name="DollExhausted" Type="System.String" Scope="User">
-      <Value Profile="(Default)">G11</Value>
+    <Setting Name="Template_File" Type="System.String" Scope="User">
+      <Value Profile="(Default)">templates.json</Value>
     </Setting>
-    <Setting Name="DollLoaded" Type="System.String" Scope="User">
-      <Value Profile="(Default)">M4 SOPMOD II</Value>
+    <Setting Name="DollOut" Type="System.String" Scope="User">
+      <Value Profile="(Default)">SOPMOD</Value>
     </Setting>
-    <Setting Name="IsCorpseDragging" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
-    </Setting>
-    <Setting Name="SelectedMission" Type="System.String" Scope="User">
-      <Value Profile="(Default)">0_2</Value>
-    </Setting>
-    <Setting Name="WindowTitle" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Android Emulator - GFL_API_28:5554</Value>
-    </Setting>
-    <Setting Name="Schedule" Type="System.Collections.Specialized.StringCollection" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
-    <Setting Name="FairyInterval" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">-1</Value>
+    <Setting Name="DollIn" Type="System.String" Scope="User">
+      <Value Profile="(Default)">HK416</Value>
     </Setting>
   </Settings>
 </SettingsFile>

@@ -12,7 +12,7 @@ namespace UziTrainer.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.9.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.5.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -25,96 +25,49 @@ namespace UziTrainer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string AssetsHash {
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\tools\\adb\\adb.exe")]
+        public string ADB_Path {
             get {
-                return ((string)(this["AssetsHash"]));
+                return ((string)(this["ADB_Path"]));
             }
             set {
-                this["AssetsHash"] = value;
+                this["ADB_Path"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("G11")]
-        public string DollExhausted {
+        [global::System.Configuration.DefaultSettingValueAttribute("templates.json")]
+        public string Template_File {
             get {
-                return ((string)(this["DollExhausted"]));
+                return ((string)(this["Template_File"]));
             }
             set {
-                this["DollExhausted"] = value;
+                this["Template_File"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("M4 SOPMOD II")]
-        public string DollLoaded {
+        [global::System.Configuration.DefaultSettingValueAttribute("SOPMOD")]
+        public string DollOut {
             get {
-                return ((string)(this["DollLoaded"]));
+                return ((string)(this["DollOut"]));
             }
             set {
-                this["DollLoaded"] = value;
+                this["DollOut"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool IsCorpseDragging {
+        [global::System.Configuration.DefaultSettingValueAttribute("HK416")]
+        public string DollIn {
             get {
-                return ((bool)(this["IsCorpseDragging"]));
+                return ((string)(this["DollIn"]));
             }
             set {
-                this["IsCorpseDragging"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0_2")]
-        public string SelectedMission {
-            get {
-                return ((string)(this["SelectedMission"]));
-            }
-            set {
-                this["SelectedMission"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Android Emulator - GFL_API_28:5554")]
-        public string WindowTitle {
-            get {
-                return ((string)(this["WindowTitle"]));
-            }
-            set {
-                this["WindowTitle"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::System.Collections.Specialized.StringCollection Schedule {
-            get {
-                return ((global::System.Collections.Specialized.StringCollection)(this["Schedule"]));
-            }
-            set {
-                this["Schedule"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("-1")]
-        public int FairyInterval {
-            get {
-                return ((int)(this["FairyInterval"]));
-            }
-            set {
-                this["FairyInterval"] = value;
+                this["DollIn"] = value;
             }
         }
     }
