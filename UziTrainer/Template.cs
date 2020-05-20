@@ -16,8 +16,7 @@ namespace UziTrainer
     public class Template
     {
         static readonly string TemplateFile = Properties.Settings.Default.Template_File;
-        static readonly JObject TemplateData;
-        public static Dictionary<Samples, Template> TemplateDict;
+        static JObject TemplateData;        
 
         public readonly Samples Name;
         public readonly Rectangle SearchArea;
@@ -25,8 +24,7 @@ namespace UziTrainer
         public readonly Image<Rgba, byte> Image;
         public readonly Samples? Next;        
         static Template()
-        {
-            TemplateDict = new Dictionary<Samples, Template>();
+        {            
             if (File.Exists(TemplateFile))
             {
                 TemplateData = JObject.Parse(File.ReadAllText(TemplateFile));
@@ -49,8 +47,8 @@ namespace UziTrainer
         public static void Add(Samples sample, Samples? next, Bitmap image, Rectangle searchArea, Rectangle clickArea)
         {            
             var template = new Template(sample, searchArea, image, clickArea, next);
-            TemplateDict[sample] = template;
-            Save();
+            TemplateData[sample.ToString()] = JToken.FromObject(new TemplateSerial(template));
+            File.WriteAllText(TemplateFile, TemplateData.ToString());
         }
 
         public static Template Get(Samples sample)
@@ -67,56 +65,7 @@ namespace UziTrainer
 
         static void Save()
         {
-            var serial = new Dictionary<string, TemplateSerial>();
-            foreach(var pair in TemplateDict)
-            {                
-                serial.Add(pair.Key.ToString(), new TemplateSerial(pair.Value));
-            }
-            var json = JsonConvert.SerializeObject(serial);
-
-            File.WriteAllText(TemplateFile, json);
-        }
-
-        static void Load()
-        {
-            if (!File.Exists(TemplateFile))
-            {
-                var file = File.Create(TemplateFile);
-                file.Close();
-            }
-            var text = File.ReadAllText(TemplateFile);
-            var serialDict = JsonConvert.DeserializeObject<Dictionary<string, TemplateSerial>>(text);
-            if (serialDict == null)
-            {
-                serialDict = new Dictionary<string, TemplateSerial>();
-            }
-            foreach(var pair in serialDict)
-            {
-                var cArea = pair.Value.click_area;
-                var clickArea = new Rectangle(cArea[0], cArea[1], cArea[2], cArea[3]);
-
-                var sArea = pair.Value.search_area;
-                var searchArea = new Rectangle(sArea[0], sArea[1], sArea[2], sArea[3]);
-
-                var byteArray = Convert.FromBase64String(pair.Value.image);
-                Bitmap bmp;
-                using (var ms = new MemoryStream(byteArray))
-                {
-                    bmp = new Bitmap(ms);
-                }
-                var name = (Samples)Enum.Parse(typeof(Samples), pair.Key);
-                Samples? next;
-                if (string.IsNullOrEmpty(pair.Value.next))
-                {
-                    next = null;
-                }
-                else
-                {
-                    next = (Samples)Enum.Parse(typeof(Samples), pair.Value.next);
-                }
-                var template = new Template(name, searchArea, bmp, clickArea, next);
-                TemplateDict.Add(name, template);
-            }
+            
         }
     }
     class TemplateSerial

@@ -122,7 +122,7 @@ namespace UziTrainer
 
         public static void Tap(int x, int y, Samples next, int rangeX = 10, int rangeY = 10)
         {
-            do
+            do  
             {
                 Android.Tap(x, y, rangeX, rangeY);
                 Thread.Sleep(1000);
@@ -131,7 +131,7 @@ namespace UziTrainer
 
         static bool Match(Image<Rgba, byte> haystack, Image<Rgba, byte> needle, out Tuple<Point, double> matchInfo)
         {
-            haystack.Save("c:/temp/out.png");
+            //haystack.Save("c:/temp/out.png");
             using (Image<Gray, float> result = haystack.MatchTemplate(needle, Emgu.CV.CvEnum.TemplateMatchingType.CcoeffNormed))
             {
                 double[] maxValues;
