@@ -33,7 +33,7 @@ namespace UziTrainer
                     WindowStyle = ProcessWindowStyle.Hidden,
                     FileName = ADBPath,
                     //MeMu port
-                    Arguments = $"connect localhost:21503"
+                    Arguments = $"connect localhost:7555"
                 }
             };
             proc.Start();

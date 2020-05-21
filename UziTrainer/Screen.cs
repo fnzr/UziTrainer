@@ -160,8 +160,12 @@ namespace UziTrainer
         CombatMissionClicked,
         Chapter0,
         Chapter0Clicked,
+        Chapter10,
+        Chapter10Clicked,
+        EmergencyLevel,
         NormalBattle,
         M0_2,
+        M10_4E,
         DollCapacity,
         EquipCapacity,
 
@@ -178,6 +182,10 @@ namespace UziTrainer
         ReturnToBase,
         LowHP,
         EmergencyRepair,
+        TerminateMissionMenu,
+        RestartBattle,
+        RetreatEchelon,
+        RetreatConfirm,
 
         //Formation Screen
         FormationFilter,

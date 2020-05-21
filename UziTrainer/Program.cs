@@ -24,7 +24,8 @@ namespace UziTrainer
             //Application.Run(new Form1());
             //Tap(Samples.HomeCombat);
             //Formation.ReplaceDragger(Samples.HK416,Samples.SOPMOD);
-            Exists(Samples.CombatMissionClicked);
+            //Console.WriteLine(Exists(Samples.CombatMissionClicked));
+            Maps.E10_4();
             /*
             while (true)
             {

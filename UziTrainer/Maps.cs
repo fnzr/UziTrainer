@@ -81,8 +81,6 @@ namespace UziTrainer
             }
             Wait(Samples.Turn0);
 
-
-            //Check low hp maybe
             Tap(550, 406, Samples.DeployOK);
 
             PerformRepairs();
@@ -115,6 +113,67 @@ namespace UziTrainer
             Tap(Samples.EndRound);
 
             ReturnToBase(Samples.CombatScreen);
+        }
+
+
+        public static void E10_4()
+        {
+            Wait(Samples.CombatScreen);
+            if (!Exists(Samples.CombatMissionClicked))
+            {
+                Tap(Samples.CombatMission);
+            }
+
+            if (!Exists(Samples.Chapter10Clicked))
+            {
+                Tap(Samples.Chapter10);
+            }
+
+            if (!Exists(Samples.EmergencyLevel))
+            {
+                Tap(Samples.EmergencyLevel);
+            }
+            Tap(Samples.M10_4E);
+            Tap(Samples.NormalBattle);
+            while (true)
+            {
+                Wait(Samples.Turn0);
+
+                Tap(415, 267, Samples.DeployOK);
+                Tap(Samples.DeployOK);
+
+                Tap(490, 405, Samples.DeployOK);
+                Tap(Samples.DeployOK);
+
+                Tap(726, 698, Samples.DeployOK);
+                Tap(Samples.DeployOK);
+
+                Tap(Samples.StartOperation);
+                Thread.Sleep(3000);
+
+                Android.Tap(410, 265);
+                Tap(410, 265, Samples.Resupply);
+                Tap(Samples.Resupply);
+
+                Tap(Samples.PlanningOff);
+
+                Android.Tap(357, 422);
+                Android.Tap(412, 266);
+                Android.Tap(532, 268);
+                Android.Tap(521, 323);
+                Android.Tap(532, 268);
+                Android.Tap(412, 267);
+
+                ExecutePlan();
+                
+                Android.Tap(412, 406);
+                Tap(412, 406, Samples.RetreatEchelon);
+                Tap(Samples.RetreatEchelon);
+                Tap(Samples.RetreatConfirm);
+
+                Tap(Samples.TerminateMissionMenu);
+                Tap(Samples.RestartBattle);
+            }
         }
     }
 }
